@@ -1,7 +1,7 @@
 {
   "name": "cedricbontems.fr",
   "version": "0.0.1",
-  "description": "A starter blog template to build a website with Astro and Open Props",
+  "description": "My personal website, built with Astro and Open Props",
   "main": "index.js",
   "scripts": {
     "build": "astro build",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cbontems/astroprops.git"
+    "url": "git+https://github.com/cbontems/cedricbontems.fr.git"
   },
   "keywords": [
     "Astro",
@@ -25,9 +25,9 @@
   "author": "Cédric Bontems <cedric@thewebforge.dev> (https://cedricbontems.fr/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cbontems/astroprops/issues"
+    "url": "https://github.com/cbontems/cedricbontems.fr/issues"
   },
-  "homepage": "https://astroprops.netlify.app/",
+  "homepage": "https://cedricbontems.fr/",
   "dependencies": {
     "@astrojs/image": "0.16.9",
     "@astrojs/rss": "2.4.3",

@@ -41,14 +41,3 @@ switch (theme) {
 		}
 	}
 </style>
-<script>
-	import { createDisclosure } from "~/helpers/disclosure";
-
-	createDisclosure({
-		button: document.querySelector("#astroprops-drawer-trigger") as HTMLElement,
-		content: document.querySelector("#astroprops-drawer") as HTMLElement,
-		animated: true,
-		/** matches the `lg-n-above` custom media query above */
-		closeAt: 1024,
-	});
-</script>
