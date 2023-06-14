@@ -1,6 +1,7 @@
 ---
 import { getEntryBySlug } from "astro:content";
 import { resolveImage } from "~/helpers/authors";
+import { Image } from "@astrojs/image/components";
 
 type Props = {
 	name?: string;
@@ -18,12 +19,12 @@ if (!image && name) {
 
 {
 	image && (
-		<img
+		<Image
 			src={image}
 			alt=""
 			aria-hidden="true"
-			width={48}
-			height={48}
+			width={80}
+			height={80}
 			loading="lazy"
 			decoding="async"
 		/>
@@ -31,18 +32,12 @@ if (!image && name) {
 }
 
 <style>
-	@import "open-props/src/props.media.css";
-
 	img {
 		margin-block: 0;
 		display: inline-block;
 		border-radius: var(--radius-round);
-		border: var(--border-size-1) solid var(--brand);
-		inline-size: var(--size-6);
-		block-size: var(--size-6);
-		@media (--md-n-above) {
-			inline-size: var(--size-8);
-			block-size: var(--size-8);
-		}
+		inline-size: var(--size-10);
+		block-size: var(--size-10);
+		object-fit: cover;
 	}
 </style>

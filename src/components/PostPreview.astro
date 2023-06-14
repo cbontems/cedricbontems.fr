@@ -1,8 +1,8 @@
 ---
-import { type CollectionEntry } from "astro:content";
+import { CollectionEntry, getEntryBySlug } from "astro:content";
+import HomeAuthorBlock from "~/components/HomeAuthorBlock.astro";
+import PostCategories from "~/components/PostCategories.astro";
 import { format } from "date-fns";
-import { resolveCoverImage } from "~/helpers/posts";
-import { Picture } from "@astrojs/image/components";
 
 export type Props = {
 	post: CollectionEntry<"blog">;
@@ -10,69 +10,122 @@ export type Props = {
 
 const { post } = Astro.props;
 
-const image = await resolveCoverImage(post);
+const authors = await Promise.all(
+	post.data.authors.map((author) => getEntryBySlug("authors", author)),
+).then((authors) => authors.filter(Boolean) as CollectionEntry<"authors">[]);
+
+const displayedCategories =
+	post.data.categories.length >= 3
+		? post.data.categories.slice(0, 3)
+		: post.data.categories;
+const remainingCategories =
+	post.data.categories.length > 3 ? post.data.categories.slice(3) : [];
+if (remainingCategories.length > 0) {
+	displayedCategories.pop();
+	displayedCategories.push(
+		`+ ${remainingCategories.length + 1} more...:/posts/${post.slug}/`,
+	);
+}
 ---
 
 <article>
-	<a href={`/posts/${post.slug}/`} rel="prefetch">
-		<hgroup>
-			<h3>{post.data.title}</h3>
-			<time datetime={post.data.publishDate.toISOString()}>
-				{format(post.data.publishDate, "MMMM d, yyyy")}
-			</time>
-		</hgroup>
-
-		{
-			image && (
-				<Picture
-					src={image.src}
-					alt={post.data.title}
-					sizes="(max-width: 768px) 100vw, 768px"
-					widths={[240, 360, 480, 768]}
-					aspectRatio="4:1"
-					fit="cover"
-					position="entropy"
-					loading="lazy"
-					decoding="async"
-				/>
-			)
-		}
-		<p class="text-astro-gray-200">{post.data.description}</p>
-	</a>
+	<h3>
+		<a
+			aria-label={`${post.data.title}, authored by ${authors.map(
+				(author) => author.data.name,
+			)}, published on ${format(post.data.publishDate, "MMMM d, yyyy")}`}
+			href={`/posts/${post.slug}/`}
+			rel="prefetch">{post.data.title}</a
+		>
+	</h3><div class="body">
+		<div class="by">
+			{
+				authors.map((author, index) => {
+					return (
+						<HomeAuthorBlock
+							author={author}
+							publishDate={
+								index === authors.length - 1 ? post.data.publishDate : undefined
+							}
+						/>
+					);
+				})
+			}
+		</div>
+		<PostCategories categories={displayedCategories} showTitle={false} />
+	</div>
+	<p>{post.data.description}</p>
 </article>
 
 <style>
+		@import "~/styles/media.css";
+
 	article {
-		inline-size: 100%;
-		max-inline-size: var(--size-content-3);
-		margin-inline: auto;
-		padding: 0;
-		background-color: var(--surface-2);
-		border-radius: var(--radius-2);
+		--_avatar-filter: grayscale(100%);
+		--_avatar-scale: 1;
+		display: grid;
+		row-gap: var(--size-8);
+		position: relative;
+		padding-block: var(--size-8);
+		padding-inline: var(--size-3);
+		--border-scaleX: 102%;
+		@media (--md-n-above) {
+			padding-inline: var(--size-8);
+		}
+		@media (--xl-n-above) {
+			--border-scaleX: 115%;
+		}
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			inset-inline: 0;
+			inset-block-end: 0;
+			block-size: 1px;
+			background: var(--black);
+			transition: transform 0.3s var(--ease-elastic-3);
+			transform-origin: center;
+		}
+		&::before {
+			inset-block-start: 0;
+		}
+		&:hover {
+			--_avatar-filter: none;
+			--_avatar-scale: 1.125;
+			&::before,
+			&::after {
+				background-color: var(--black);
+				transform: scaleX(var(--border-scaleX));
+				block-size: 3px;
+			}
+		}
 	}
-	hgroup {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: var(--size-4);
-		padding: var(--size-4);
-	}
-	a {
-		display: block;
+	h3 > a[href] {
+		color: var(--black);
 		text-decoration: none;
-		color: inherit;
+		transition: color 0.3s var(--ease-elastic-3);
+		&:hover {
+			color: var(--brand);
+			text-decoration: underline;
+		}
+		&::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+		}
 	}
-	time {
-		font-family: var(--font-mono);
-		color: var(--text-2);
-		opacity: 0.7;
+	div.body {
+		display: flex;
+		flex-direction: column;
+		gap: var(--size-8);
+		justify-content: space-between;
+		@media(--md-n-above) {
+			flex-direction: row;
+		}
 	}
-	h3 {
-		marginmargin: 0;
-	}
-	p {
-		padding: var(--size-4);
-		margin: 0;
-		color: var(--text-2);
+	div.by {
+		display: grid;
+		grid-auto-flow: row;
+		gap: 20px;
 	}
 </style>

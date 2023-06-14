@@ -1,32 +1,31 @@
----
-export type Props = {
-	text: string;
-};
-
-const { text } = Astro.props;
----
-
-<a href="#main">{text}</a>
+<div>
+	<button id="skip-button"> Skip to content</button>
+</div>
 
 <style>
-	@import "open-props/src/props.media.css";
-	a {
-		padding-inline: var(--size-6);
-		padding-block: var(--size-2);
-		background-color: var(--link);
-		color: var(--surface-1);
-		font-size: var(--font-size-fluid-1);
-		font-weight: var(--font-weight-7);
-		left: calc(50% - 100px);
+	@import "~/styles/media.css";
+	div {
+		position: relative;
+		width: 100vi;
+	}
+	button {
+		background: var(--accent);
+		color: var(--always-white);
+		font-family: var(--font-display);
+		font-size: var(--font-size-5);
+		block-size: var(--size-9);
+		inset-inline-start: 5%;
+		border: 0;
+		inline-size: 90%;
 		position: absolute;
-		transform: translateY(-200%);
-		transition: none;
+		inset-block-start: calc(-1*var(--size-14));
 		z-index: var(--layer-important);
-		&:visited {
-			color: var(--surface-1);
-		}
 		@media (--motionOK) {
 			transition: all 0.3s ease-in-out;
+		}
+		&:focus {
+			margin-block-start: var(--size-3);
+			inset-block-start: var(--size-2);
 		}
 	}
 
@@ -34,3 +33,15 @@ const { text } = Astro.props;
 		transform: translateY(15px);
 	}
 </style>
+<script>
+	const skipButton: HTMLButtonElement | null =
+		document.querySelector("#skip-button");
+	const skipDestination: HTMLAnchorElement | null =
+		document.querySelector("#skip-destination");
+	if (null === skipButton) {
+		throw new Error("No skip button found");
+	}
+	skipButton.addEventListener("click", (e) => {
+		null !== skipDestination && skipDestination.focus();
+	});
+</script>

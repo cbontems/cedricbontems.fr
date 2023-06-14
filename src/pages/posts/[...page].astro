@@ -1,14 +1,15 @@
 ---
 import { GetStaticPathsOptions, Page } from "astro";
 import { CollectionEntry, getCollection } from "astro:content";
-import Pagination from "~/components/Pagination.astro";
 import Layout from "~/layouts/MainLayout.astro";
-import PostPreview from "~/components/PostPreview.astro";
+import Header from "~/components/Header.astro";
+import Breadcrumbs from "~/components/Breadcrumbs.astro";
 import siteInfo from "~/data/site-info";
-import HistoryBackButton from "~/components/HistoryBackButton.astro";
-import StyledHr from "~/components/StyledHr.astro";
+import PostFooter from "~/components/PostFooter.astro";
+import HomeBody from "~/components/HomeBody.astro";
+import PostPagination from "~/components/PostPagination.astro";
+import { getCategories } from "~/helpers/categories";
 
-export const prerender = true;
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 	// fetch all showcase sites
@@ -22,15 +23,14 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 
 	return paginate(sortedPosts, { pageSize: siteInfo.postPerPage });
 }
-
+const posts = await getCollection("blog");
+const categories = getCategories(posts);
 const { page } = Astro.props as { page: Page<CollectionEntry<"blog">> };
 
 const allPages = [...Array(page.lastPage).keys()].map((num) => {
 	return `/posts${num === 0 ? "" : `/${String(num + 1)}`}`;
 });
-const placeholderGradient = `var(--gradient-${
-	Math.floor(Math.random() * 30) + 1
-})`;
+
 ---
 
 <Layout
@@ -38,94 +38,60 @@ const placeholderGradient = `var(--gradient-${
 	description={`Get all the latest news from ${siteInfo.name}`}
 	image={{ src: "/og/blog.jpg", alt: `The ${siteInfo.name} Blog` }}
 >
-	<div class="container">
-		<div class="placeholder-gradient"></div>
-		<header>
-			<HistoryBackButton text="Back" />
-			<h1>{`${siteInfo.name} Blog`}</h1>
-			<p>Explore our articles.</p>
-		</header>
-		<StyledHr rand />
-
-		<ul>
-			{
-				page.data.map((post) => (
-					<li>
-						<PostPreview post={post} />
-					</li>
-				))
-			}
-		</ul>
-
-		<Pagination restRoute allPages={allPages} page={page} />
+	<div
+		class="page-header"
+	>
+		<Header />
 	</div>
+	<HomeBody posts={page.data} categories={categories} />
+	<PostPagination restRoute allPages={allPages} page={page} />
+	<PostFooter />
 </Layout>
 
-<style define:vars={{ placeholderGradient }}>
-	@import "open-props/src/props.media.css";
-	@import "open-props/gradients";
-	ul {
-		list-style: none;
-		padding-inline-start: 0;
-		margin-block-start: 0;
-		margin-block-end: 0;
-		& > * + * {
-			margin-block-start: var(--size-9);
-		}
-	}
-	li {
-		max-inline-size: initial;
-	}
-	header {
-		background-color: var(--surface-1);
-		padding: var(--size-6);
-		margin-inline: auto;
-		inline-size: 100%;
-		text-align: center;
-		max-inline-size: min(var(--size-content-3), 80vi);
-		border-radius: var(--radius-2);
-	}
-	div.placeholder-gradient {
+<style>
+	@import "~/styles/media.css";
+
+	div.page-header {
+		grid-column: 1 / -1;
+		display: grid;
+		grid-template-columns: 1fr;
+		
 		position: relative;
-		aspect-ratio: var(--ratio-widescreen);
-		clip-path: circle(200% at center -200%);
-		object-fit: cover;
-		box-shadow: var(--shadow-2);
-		z-index: -1;
-		max-inline-size: 100vi;
-		inset-inline-start: 50%;
-		inset-inline-end: 50%;
-		margin-left: -50vi;
-		margin-right: -50vi;
-		margin-block-end: calc(-1 * var(--size-12));
-		@media (--sm-n-above) {
-			margin-block-end: calc(-1 * var(--size-11));
-			aspect-ratio: var(--ratio-ultrawide);
-			clip-path: circle(200% at center -430%);
-		}
-		@media (--lg-n-above) {
-			inline-size: 100%;
-			max-inline-size: initial;
-			inset-inline-start: initial;
-			inset-inline-end: initial;
-			margin-left: 0;
-			margin-right: 0;
-			margin-block-end: calc(-1 * var(--size-11));
-		}
-	}
-	br {
-		display: initial;
+		overflow: hidden;
+		margin-block-end: var(--size-9);
 		@media (--md-n-above) {
-			display: none;
+			grid-template-columns: var(--site-columns);
 		}
 	}
-	div.placeholder-gradient {
-		background-image: var(--placeholderGradient);
-		background-size: cover;
+	div.overlap {
+		margin-inline: var(--size-3);
+		display: grid;
+		grid-column: 1;
+		@media (--md-n-above) {
+			grid-column: 2 / -1;
+		}
 	}
-	p {
+	div.bigText {
+		grid-column: 1;
+		grid-row: 1;
+		font-size: clamp(4rem, 38vw + 1rem, 36.25rem);
 		font-family: var(--font-mono);
-		color: var(--text-2);
-		opacity: 0.7;
+		font-weight: 700;
+		line-height: normal;
+		color: var(--brand);
+	}
+	h1 {
+		grid-column: 1;
+		grid-row: 1;
+		color: var(--black);
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: clamp(2rem, 8vw + 1rem, 4rem);
+		line-height: normal;
 	}
 </style>
+
+
+
+
+	

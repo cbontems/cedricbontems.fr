@@ -1,6 +1,15 @@
-@import "open-props/src/props.media.css";
+@import "~/styles/media.css";
+
+::selection {
+	background-color: var(--brand, var(--link));
+	color: var(--surface-1);
+}
 
 :where(html) {
+	--font-display: 'Fraunces Variable', var(--font-sans);
+	/* --font-display: 'Atkinson Hyperlegible', var(--font-sans); */
+	/* --font-display: 'Gloock', var(--font-serif); */
+	--font-text: 'Atkinson Hyperlegible', var(--font-sans);
 	-webkit-text-size-adjust: none;
 	accent-color: var(--brand, var(--link));
 	background-color: var(--surface-1);
@@ -8,7 +17,7 @@
 	caret-color: var(--brand, var(--link));
 	color: var(--text-2);
 	color-scheme: light;
-	font-family: var(--font-sans);
+	font-family: var(--font-text);
 	line-height: var(--font-lineheight-4);
 	scrollbar-color: var(--scrollthumb-color) transparent;
 	&:where(dialog) {
@@ -42,6 +51,7 @@
 }
 
 :where(h1, h2, h3, h4, h5, h6, dt) {
+	font-family: var(--font-display);
 	color: var(--text-1);
 }
 :where(a[href]) {

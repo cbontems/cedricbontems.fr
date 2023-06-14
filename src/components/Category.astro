@@ -1,35 +1,56 @@
 ---
 export interface Props {
 	name: string;
+	lg?: boolean;
 }
 
 const { name } = Astro.props;
+const isMore = name.includes("more...:/");
+const url = isMore ? name.split(":")[1] : "";
 ---
 
-<a href={`/categories/${name.toLowerCase()}`}>
-	{name.toLowerCase()}
+<a
+	href={isMore ? url : `/categories/${name.toLowerCase()}`}
+	aria-label={isMore
+		? `Go to the post to view all categories`
+		: `Go to the ${name.split(":")[0]} category page`}
+	class:list={[{ isMore: isMore }]}
+>
+	{name.split(":")[0].toLowerCase()}
 </a>
 
 <style>
-	@import "open-props/src/props.media.css";
+	@import "~/styles/media.css";
 	a {
-		color: var(--link);
+		color: var(--_color, var(--black));
 		text-decoration: none;
-		font-size: var(--font-size-1);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-0);
 		font-weight: var(--font-weight-5);
 		padding-block: var(--size-1);
-		padding-inline: var(--size-4);
-		border: var(--border-size-2) solid var(--link);
+		padding-inline: var(--size-3);
+		border: var(--border-size-1) solid var(--_color, var(--black));
 		border-radius: var(--radius-round);
 		background-color: transparent;
 		@media (--motionOK) {
-			transition: background-color 0.2s ease-in-out;
+			transition: background-color, border-color 0.2s ease-in-out;
 		}
 		&:visited {
-			border-color: var(--link-visited);
+			color: var(--_color, var(--black));
+			border-color: var(--_color, var(--black));
 		}
 		&:hover {
-			background-color: hsl(var(--link-hsl) / 15%);
+			color: var(--always-white);
+			border-color: var(--brand);
+			background-color: var(--brand);
+		}
+		&.isMore {
+			border: none;
+			&:hover {
+				color: var(--black);
+				background-color: transparent;
+				text-decoration: underline;
+			}
 		}
 	}
 </style>

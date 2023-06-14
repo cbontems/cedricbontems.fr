@@ -1,0 +1,53 @@
+---
+import type { TocItem } from "~/helpers/generateToc";
+import TableOfContentChildItem from "~/components/TableOfContentChildItem.astro";
+
+interface Props {
+	toc: TocItem[];
+}
+
+const { toc = [] }: Props = Astro.props;
+---
+
+<h5>On this page</h5>
+<nav  aria-label="Table of Content">
+	<ul>
+		{
+			toc.map((heading) => (
+				<li>
+					<a href={`#${heading.slug}`}>{heading.text}</a>
+					{heading.children.length > 0 ? (
+						<TableOfContentChildItem children={heading.children} />
+					) : null}
+				</li>
+			))
+		}
+	</ul>
+</nav>
+
+<style>
+    h5 {
+		margin-block-start: var(--size-6);
+    }
+	nav {
+		position: sticky;
+		top: var(--size-4);
+		margin-inline-end: var(--size-3);
+	}
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		margin-block-start: var(--size-3);
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+	a[href] {
+		font-family: var(--font-mono);
+		color: var(--black);
+		font-size: var(--font-size-0);
+		font-weight: 700;
+		display: block;
+	}
+</style>

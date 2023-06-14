@@ -1,6 +1,10 @@
+---
+const randInteger = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+const suffix = randInteger(1, 1000000);
+---
 <button
 	class="theme-toggle"
-	id="theme-toggle"
+	id={`theme-toggle-${suffix}`}
 	title="Toggles light & dark"
 	aria-label="auto"
 	aria-live="polite"
@@ -28,8 +32,12 @@
 <style is:global>
 	.theme-toggle {
 		background: none;
-		--nav-icon: var(--text-2);
-		--nav-icon-hover: var(--brand);
+		--nav-icon: var(--_color);
+		--nav-icon-hover: var(--_color);
+		transition: scale 0.15s var(--ease-in-out-3);
+            &:hover {
+                scale: 0.8;
+            }
 	}
 
 	#moon,
@@ -106,9 +114,13 @@
 			"data-theme",
 			theme.value ?? "light",
 		);
-		document
-			.querySelector("#theme-toggle")
-			?.setAttribute("aria-label", theme.value ?? "light");
+		// document
+		// 	.querySelector("#theme-toggle")
+		// 	?.setAttribute("aria-label", theme.value ?? "light");
+
+		document.querySelectorAll(".theme-toggle").forEach((el) => {
+			el.setAttribute("aria-label", theme.value ?? "light");
+		});
 	};
 
 	const theme = {
@@ -122,10 +134,15 @@
 		// set on load so screen readers can see latest value on the button
 		reflectPreference();
 
-		document.querySelector("#theme-toggle")?.addEventListener("click", (e) => {
-			theme.value = theme.value === "light" ? "dark" : "light";
-
-			setPreference();
+		// document.querySelector("#theme-toggle")?.addEventListener("click", (e) => {
+		// 	theme.value = theme.value === "light" ? "dark" : "light";
+		// 	setPreference();
+		// });
+		document.querySelectorAll(".theme-toggle").forEach((el) => {
+			el.addEventListener("click", (e) => {
+				theme.value = theme.value === "light" ? "dark" : "light";
+				setPreference();
+			});
 		});
 	};
 

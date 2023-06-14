@@ -1,71 +1,44 @@
 ---
-import { Icon } from "astro-icon";
-import HeaderDrawerContent from "~/components/HeaderDrawerContent.astro";
 import HeaderNav from "~/components/HeaderNav.astro";
-import SchemeToggle from "~/components/SchemeToggle.astro";
+import HeaderIcons from "~/components/HeaderIcons.astro";
+import HeaderSocialLinks from "./HeaderSocialLinks.astro";
+type Props = {
+	theme?: "dark" | "light" | undefined;
+};
+const { theme } = Astro.props as Props;
+let textColor;
+switch (theme) {
+	case "dark":
+		textColor = "var(--always-white)";
+		break;
+	case "light":
+		textColor = "var(--always-black)";
+		break;
+	default:
+		textColor = "var(--black)";
+		break;
+}
 ---
 
-<header id="nav">
-	<nav aria-label="Primary" class="container">
-		<HeaderNav />
-		<SchemeToggle />
-		<button id="astroprops-drawer-trigger" type="button">
-			<Icon name="mdi:menu" />
-			<span class="sr-only">Show Menu</span>
-		</button>
-	</nav>
-	<div id="astroprops-drawer" style="display: none;">
-		<HeaderDrawerContent />
-	</div>
+<header>
+	<HeaderNav />
+	<HeaderIcons />
+	<HeaderSocialLinks />
 </header>
 
-<style>
-	@import "open-props/src/props.media.css";
-	div {
-		transform: translateX(calc(-1 * var(--size-3)));
-		border-block-start-width: var(--border-size-1);
-		border-block-start-color: var(--surface-2);
-		opacity: 0;
-		@media (--motionOK) {
-			transition-property: opacity, transform;
-			transition-timing-function: var(--ease-out-3);
-			transition-duration: 0.15s;
-		}
-	}
-	div[data-open="true"] {
-		transform: translateX(0);
-		opacity: 1;
-	}
+<style define:vars={{textColor}}>
+	@import "~/styles/media.css";
 	header {
-		position: sticky;
-		inset-block-start: 0;
-		z-index: var(--layer-2);
-		max-block-size: 100dvb;
-		background-color: var(--surface-1);
-		box-shadow: var(--shadow-1);
-		border-block-end: var(--border-size-1) solid hsl(var(--surface-2-hsl) / 50%);
-	}
-	nav {
+		--_color: var(--textColor);
 		display: flex;
-		align-items: center;
-		min-block-size: var(--size-10);
-		gap: var(--size-3);
-	}
-	button {
-		margin-inline-start: var(--size-5);
-		background-color: transparent;
-		background-image: none;
-		color: var(--text-2);
-		&:hover {
-			color: var(--text-1);
+		align-items: flex-end;
+		justify-content: space-between;
+		font-family: var(--font-text);
+		padding-block-start: var(--size-3);
+		margin-inline: var(--size-3);
+		@media (--md-n-above) {
+			grid-column: 2 / -2;
 		}
-		@media (--lg-n-above) {
-			display: none;
-		}
-	}
-	[astro-icon="mdi:menu"] {
-		width: var(--size-8);
-		height: var(--size-8);
 	}
 </style>
 <script>

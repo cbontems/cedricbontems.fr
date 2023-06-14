@@ -1,0 +1,50 @@
+---
+type Props = {
+	words: string;
+};
+
+const { words }: Props = Astro.props;
+---
+<div role="presentation" class="under" aria-hidden="true">
+	{words}
+</div>
+<div role="presentation" class="over" aria-hidden="true">
+	{words}
+</div>
+
+<style>
+	@import "~/styles/media.css";
+	div {
+		position: absolute;
+		font-family: var(--font-display);
+		font-size: clamp(96px, 36vw + 1rem, 520px);
+		font-weight: 900;
+		pointer-events: none;
+		left: clamp(0px, 4vw - 1rem, 56px);
+		top: 80px;
+		opacity: 0.1;
+		contain: layout;
+		font-display: block;
+		line-height: normal;
+		-webkit-background-clip: text;
+		-moz-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		-moz-text-fill-color: transparent;
+		z-index: var(--layer-1);
+	}
+	div.under {
+		background-image: linear-gradient(
+			90deg,
+			var(--surface-3),
+			var(--surface-4)
+		);
+		z-index: 0;
+	}
+	div.over {
+		background-image: linear-gradient(
+			90deg,
+			var(--surface-3),
+			var(--surface-4)
+		);
+	}
+</style>

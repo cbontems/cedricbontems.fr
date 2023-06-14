@@ -1,71 +1,66 @@
 ---
-import MainLayout from "~/layouts/MainLayout.astro";
-import FourOFour from "./_assets/fail.webp";
+import Layout from "~/layouts/MainLayout.astro";
+import Header from "~/components/Header.astro";
+import Breadcrumbs from "~/components/Breadcrumbs.astro";
 import siteInfo from "~/data/site-info";
-
-export const prerender = true;
+import PostFooter from "~/components/PostFooter.astro";
 ---
 
-<MainLayout title="Page not found" canonicalURL={null}>
-	<section id="four-o-four" data-goal={siteInfo.fathom404GoalId}>
-		<div>
-			<img
-				src={FourOFour.src}
-				width={FourOFour.width}
-				height={FourOFour.height}
-				alt=""
-			/>
-			<div>
-				<h1>404</h1>
-				<p>Looks like we have a problem...</p>
-				<p>
-					We couldn’t find that link.<br /> Check the address or <a
-						href="/"
-						rel="prefetch">head back home</a
-					>.
-				</p>
-			</div>
-		</div>
-	</section>
-</MainLayout>
+<Layout title="Page not found" canonicalURL={null}>
+	<div
+		class="page-header"
+		id="four-o-four"
+		data-goal={siteInfo.fathom404GoalId}
+	>
+		<Header />
+		<Breadcrumbs text="« Go back to the Blog homepage" url="/" />
+	</div>
+	<div class="overlap">
+		<div class="bigText">404</div>
+		<h1>Sorry, page not found!</h1>
+	</div>
+	<PostFooter />
+</Layout>
 
 <style>
-	@import "open-props/src/props.media.css";
-	section {
+	@import "~/styles/media.css";
+
+	div.page-header {
+		grid-column: 1 / -1;
 		display: grid;
-		place-items: center;
+		grid-template-columns: 1fr;
+		
 		position: relative;
 		overflow: hidden;
-		padding-block: var(--size-fluid-5);
-		min-block-size: 100dvb;
-	}
-	img {
-		margin-inline: auto;
-		inline-size: auto;
-		block-size: var(--size-fluid-8);
-		@media (--motionOK) {
-			animation: var(--animation-fade-in-bloom) forwards, var(--animation-float);
-			animation-duration: 3s, 30s;
+		@media (--md-n-above) {
+			grid-template-columns: var(--site-columns);
 		}
+	}
+	div.overlap {
+		margin-inline: var(--size-3);
+		display: grid;
+		grid-column: 1;
+		@media (--md-n-above) {
+			grid-column: 2 / -1;
+		}
+	}
+	div.bigText {
+		grid-column: 1;
+		grid-row: 1;
+		font-size: clamp(4rem, 38vw + 1rem, 36.25rem);
+		font-family: var(--font-mono);
+		font-weight: 700;
+		line-height: normal;
+		color: var(--brand);
 	}
 	h1 {
+		grid-column: 1;
+		grid-row: 1;
+		color: var(--black);
 		font-family: var(--font-mono);
-		font-size: calc(2 * var(--font-size-fluid-3));
-		color: var(--accent);
-		text-align: center;
-	}
-	p {
-		text-align: center;
-		&:first-of-type {
-			font-size: var(--font-size-fluid-1);
-			margin-block: var(--size-fluid-2);
-		}
-	}
-	br {
-		display: none;
-		@media (--sm-n-above) {
-			display: initial;
-		}
+		font-weight: 700;
+		font-size: clamp(2rem, 8vw + 1rem, 4rem);
+		line-height: normal;
 	}
 </style>
 

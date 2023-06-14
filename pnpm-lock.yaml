@@ -17,6 +17,12 @@ dependencies:
   '@astrojs/solid-js':
     specifier: 2.2.0
     version: 2.2.0(@babel/core@7.22.5)(solid-js@1.7.6)
+  '@fontsource-variable/fraunces':
+    specifier: 5.0.4
+    version: 5.0.4
+  '@fontsource/atkinson-hyperlegible':
+    specifier: 5.0.3
+    version: 5.0.3
   astro:
     specifier: 2.5.7
     version: 2.5.7(@types/node@20.3.0)(sharp@0.32.1)
@@ -1129,6 +1135,14 @@ packages:
     resolution: {integrity: sha512-6SWlXpWU5AvId8Ac7zjzmIOqMOba/JWY8XZ4A7q7Gn1Vlfg/SFFIlrtHXt9nPn4op9ZPAkl91Jao+QQv3r/ukw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@fontsource-variable/fraunces@5.0.4:
+    resolution: {integrity: sha512-s/x+pIv2KTzkmGs5wjJzQdr609Pj8savmHecQNoK+7spsdUgJdfDNJM17YSpKhCpklI4NVptnFMZKxY3zPHD0g==}
+    dev: false
+
+  /@fontsource/atkinson-hyperlegible@5.0.3:
+    resolution: {integrity: sha512-15b4HD7XVNgxkPn8el3a0Fr1adK10QZbZggzvix6uXUCjUOiLnuP7k3Ebv2fK5prH2A+G9/OZMpvo6SpEjJUxw==}
+    dev: false
 
   /@humanwhocodes/config-array@0.11.10:
     resolution: {integrity: sha512-KVVjQmNUepDVGXNuoRRdmmEjruj0KfiGSbS8LVc12LMsWDQzRXJ0qdhN8L8uUigKpfEHRhlaQFY0ib1tnUbNeQ==}

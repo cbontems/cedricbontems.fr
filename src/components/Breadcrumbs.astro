@@ -1,0 +1,57 @@
+---
+import siteInfo from "~/data/site-info";
+
+type Props = {
+	text?: string;
+	url?: string;
+	theme?: "dark" | "light" | undefined;
+};
+
+const {
+	text = `${siteInfo.name}' blog`,
+	url = "/",
+	theme,
+}: Props = Astro.props;
+
+let textColor;
+switch (theme) {
+	case "dark":
+		textColor = "var(--always-white)";
+		break;
+	case "light":
+		textColor = "var(--always-black)";
+		break;
+	default:
+		textColor = "var(--black)";
+		break;
+}
+---
+
+<div class="breadcrumbs">
+	<h2>
+		<a href={url}>{text}</a>
+	</h2>
+</div>
+
+<style define:vars={{ textColor }}>
+	@import "~/styles/media.css";
+	div {
+		--_color: var(--textColor);
+		position: relative;
+		@media (--md-n-above) {
+			grid-column: 2 / -2;
+		}
+		& h2 {
+			margin-block: var(--size-8);
+			margin-inline: var(--size-3);
+			position: relative;
+			& a[href] {
+				color: var(--_color);
+				text-decoration-color: currentColor;
+				font-weight: var(--font-weight-4);
+				font-size: var(--font-size-4);
+				font-family: var(--font-display);
+			}
+		}
+	}
+</style>

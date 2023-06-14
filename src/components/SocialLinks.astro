@@ -5,12 +5,13 @@ import ExternalLink from "~/components/ExternalLink.astro";
 
 export type Props = {
 	links: SocialLink[];
+	class?: string;
 };
 
-const { links } = Astro.props;
+const { links, class: className  } = Astro.props;
 ---
 
-<div>
+<div class={className}>
 	{
 		links.map((link) => (
 			<ExternalLink href={link.href}>
@@ -22,19 +23,27 @@ const { links } = Astro.props;
 </div>
 
 <style>
+		@import "~/styles/media.css";
+
 	div {
 		display: flex;
 		align-items: center;
 		gap: var(--size-3);
 		& a {
-			color: var(--text-2);
+			color: var(--_color, var(--always-white));
 			&:visited {
-				color: var(--text-2);
+				color: var(--_color, var(--always-white));
 			}
-			&:hover {
-				color: var(--text-1);
-				text-decoration: none;
-			}
+			transition: scale 0.15s var(--ease-in-out-3);
+            &:hover {
+                scale: 0.9;
+            }
+		}
+	}
+	.footerSocial{
+		order: -1;
+		@media(--md-n-above){
+			order: 4;
 		}
 	}
 </style>

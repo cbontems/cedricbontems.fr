@@ -6,6 +6,8 @@ export const collections = {
 			image: z.string().optional(),
 			name: z.string(),
 			title: z.string().optional(),
+			company: z.string().optional(),
+			companyLogo: z.string().optional(),
 			github: z.string().optional(),
 			twitter: z.string().optional(),
 		}),

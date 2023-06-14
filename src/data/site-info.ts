@@ -26,10 +26,10 @@ export type SiteInfo = {
 };
 
 const siteInfo: SiteInfo = {
-	name: "AstroProps",
-	title: "Beautiful Astro blog theme styled with Open Props",
+	name: "Cédric Bontems",
+	title: "Front-End Development Insights, Tutorials & Courses",
 	description:
-		"AstroProps is an accessible, performant and responsive Astro blog theme.",
+		"Welcome to Cédric Bontems' personal website, where I share valuable insights, step-by-step tutorials, and offer engaging courses on HTML, CSS, JavaScript, PHP, WordPress, React, and Astro. Join me on my front-end development journey and boost your skills today.",
 	image: {
 		src: "/og/social.jpg",
 		alt: "Beautiful Astro blog theme styled with Open Props",
@@ -40,27 +40,27 @@ const siteInfo: SiteInfo = {
 			href: "https://youtube.com/@cedricbontems",
 			me: "https://youtube.com/@cedricbontems",
 			text: "AstroProps' Youtube demo video",
-			icon: "mdi:youtube",
+			icon: "iconoir:youtube",
 		},
 		{
 			platform: "twitter",
 			href: "https://twitter.com/cedricbontems",
 			me: "https://twitter.com/cedricbontems/",
 			text: "Find the author on twitter",
-			icon: "mdi:twitter",
+			icon: "iconoir:twitter",
 		},
 		{
 			platform: "github",
 			href: "https://github.com/cbontems/astroprops",
 			me: "https://github.com/cbontems/",
 			text: "Go to AstroProps' GitHub repo",
-			icon: "mdi:github",
+			icon: "iconoir:github",
 		},
 		{
 			platform: "feed",
 			href: "/feed.xml",
 			text: "Subscribe to our RSS feed",
-			icon: "mdi:rss",
+			icon: "iconoir:rss-feed",
 			footerOnly: true,
 		},
 	],

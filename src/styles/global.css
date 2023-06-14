@@ -1,4 +1,4 @@
-@import "open-props/src/props.media.css";
+@import "~/styles/media.css";
 @import "open-props/gradients";
 @import "~/styles/color-theme.css";
 @import "~/styles/custom-normalize.css";
@@ -6,6 +6,13 @@
 
 :root {
 	--site-width: 60rem;
+	--site-columns: 1fr;
+	--site-columns-wide:  1fr;
+	--_curtains: hsl(var(--brand-hsl) / 75%);
+	@media(--md-n-above) {
+		--site-columns: 1fr min(660px, 100%) minmax(0%, 260px) minmax(0%, 360px) 1fr;
+		--site-columns-wide:  1fr min(760px, 100%) minmax(0%, 210px) minmax(0%, 310px) 1fr;
+	}
 }
 
 .container {
@@ -17,6 +24,7 @@
 		padding-inline: var(--size-7);
 	}
 }
+
 .sr-only {
 	position: absolute;
 	width: 1px;

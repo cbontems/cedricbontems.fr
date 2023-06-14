@@ -3,6 +3,12 @@ import smartypants from "smartypants";
 import siteInfo from "~/data/site-info";
 import Favicon from "~/components/Favicon.astro";
 import SEO from "~/components/SEO.astro";
+import Fraunces from "@fontsource-variable/fraunces/files/fraunces-latin-ext-full-normal.woff2";
+import AtkinsonHyperlegible700 from "@fontsource/atkinson-hyperlegible/files/atkinson-hyperlegible-latin-ext-700-normal.woff2";
+import AtkinsonHyperlegible400 from "@fontsource/atkinson-hyperlegible/files/atkinson-hyperlegible-latin-ext-400-normal.woff2";
+import '@fontsource-variable/fraunces';
+import '@fontsource/atkinson-hyperlegible/400.css';
+import '@fontsource/atkinson-hyperlegible/700.css';
 
 export type Props = {
 	title?: string;
@@ -60,3 +66,8 @@ const resolvedImage = {
 	)
 }
 <!-- / Fathom -->
+
+<!-- Font preloads -->
+<link rel="preload" href={Fraunces} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={AtkinsonHyperlegible400} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={AtkinsonHyperlegible700} as="font" type="font/woff2" crossorigin />

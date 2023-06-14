@@ -1,0 +1,48 @@
+---
+import type { TocItem } from "~/helpers/generateToc";
+interface Props {
+	children: TocItem[];
+}
+
+const { children = [] }: Props = Astro.props;
+---
+
+<ul>
+	{
+		children.map((heading) => (
+			<li>
+				<a href={`#${heading.slug}`}>{heading.text}</a>
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	ul {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		padding-block: var(--size-1);
+		padding-inline: var(--size-3) 0;
+		gap: var(--size-1);
+		position: relative;
+		&::before {
+			content: "";
+			position: absolute;
+			height: 90%;
+			width: var(--border-size-1);
+			background-color: var(--black);
+			opacity: 0.2;
+			inset-inline-start: 0;
+			inset-block-start: 5%;
+			display: flex;
+		}
+	}
+	a[href] {
+		font-family: var(--font-mono);
+		color: var(--black);
+		font-size: var(--font-size-0);
+		font-weight: 400;
+		display: block;
+	}
+</style>

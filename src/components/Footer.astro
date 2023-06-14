@@ -5,33 +5,38 @@ import SocialLinks from "./SocialLinks.astro";
 const socialLinks = siteInfo.socialLinks;
 ---
 
-<footer class="container">
+<footer>
 	<nav aria-label="Legal">
-		<a class="link" href="/privacy">Privacy Policy</a>
-		<a class="link mr-auto" href="/terms">Terms of Use</a>
-		<p class="col-span-2 text-center md:col-span-1">
+		<a href="/privacy">Privacy Policy</a>
+		<a href="/terms">Terms of Use</a>
+		<p>
 			<a href="/license" target="_blank">MIT License</a> &copy; {
 				new Date().getFullYear()
 			}
 			<a href="/contributors" target="_blank">AstroProps Contributors</a>
 		</p>
-		<SocialLinks links={socialLinks} />
+		<SocialLinks links={socialLinks} class="footerSocial"/>
 	</nav>
 </footer>
 
 <style>
-	@import "open-props/src/props.media.css";
+	@import "~/styles/media.css";
 
 	footer {
 		margin-block-start: auto;
+		@media (--md-n-above) {
+			grid-column: 2 / -2;
+		}
 	}
+
 	nav {
 		display: grid;
-		grid-template-columns: 1fr auto;
+		grid-template-columns: 1fr;
 		gap: 1rem;
 		align-items: center;
 		padding-block: var(--size-5);
-		opacity: 0.6;
+		margin-inline: var(--size-3);
+		opacity: 0.75;
 		@media (--md-n-above) {
 			grid-template-columns: auto auto 1fr auto;
 			padding-block: var(--size-7);
@@ -39,6 +44,14 @@ const socialLinks = siteInfo.socialLinks;
 	}
 	nav,
 	p {
+		color: white;
 		font-size: var(--font-size-0);
+	}
+	a[href]{
+		color: white;
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 </style>

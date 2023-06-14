@@ -1,0 +1,104 @@
+---
+import type { Page } from "astro";
+import type { HTMLAttributes } from "astro/types";
+import Pagination from "~/components/Pagination.astro";
+
+export type Props = Omit<HTMLAttributes<"nav">, "slot"> & {
+	page: Page<unknown>;
+	allPages: string[];
+	restRoute?: boolean;
+};
+
+const {
+	page,
+	allPages,
+	restRoute = false,
+	"aria-label": ariaLabel = "Pagination",
+	...attrs
+} = Astro.props;
+---
+
+<div>
+	<footer class="_footer_gp01v_1">
+		<ul>
+			<li><Pagination restRoute allPages={allPages} page={page} /></li>
+			<li>/</li>
+			<li>
+				<button id="back-to-top">Back to Top</button>
+			</li>
+		</ul>
+	</footer>
+</div>
+
+<style>
+	@import "~/styles/media.css";
+	div {
+		grid-column: 1 / -1;
+		display: flex;
+		justify-content: center;
+		padding-block: var(--size-7);
+		@media (--md-n-above) {
+			padding-block: var(--size-11);
+			grid-column: 2 / 3;
+		}
+	}
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		grid-auto-flow: row;
+		align-items: center;
+		justify-content: center;
+		gap: 0;
+		@media (--md-n-above) {
+			grid-auto-flow: column;
+			column-gap: var(--size-9);
+		}
+	}
+	li {
+		padding: 0;
+	}
+	li:nth-of-type(2) {
+		display: none;
+		@media (--md-n-above) {
+			display: block;
+		}
+	}
+
+	li:nth-of-type(3) {
+		order: -1;
+		@media (--md-n-above) {
+			order: 3;
+		}
+	}
+	a {
+		color: var(--black);
+		font-family: var(--font-mono);
+		&:visited {
+			color: var(--black);
+			text-decoration-color: var(--black);
+		}
+	}
+	button {
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		color: var(--black);
+		font-family: var(--font-mono);
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+</style>
+<script>
+	const button = document.querySelector("#back-to-top");
+	if (button) {
+		button.addEventListener("click", () => {
+			window.scrollTo({
+				top: 0,
+				behavior: "smooth",
+			});
+		});
+	}
+</script>

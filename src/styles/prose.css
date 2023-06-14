@@ -3,7 +3,6 @@
 .prose {
 	margin-inline: auto;
 	inline-size: 100%;
-	max-inline-size: var(--size-content-3);
 	letter-spacing: var(--font-letterspacing-1);
 	color: var(--text-2);
 
@@ -32,7 +31,7 @@
 	}
 
 	& strong {
-		font-weight: var(--font-weight-5);
+		font-weight: var(--font-weight-7);
 	}
 
 	& ul {
@@ -99,7 +98,7 @@
 		border-width: var(--border-size-1);
 		border-color: var(--surface-3);
 		background-color: transparent;
-		padding: var(--size-2) var(--size-4);
+		padding: var(--size-4);
 		font-size: 85%;
 		line-height: var(--font-lineheight-3);
 	}

@@ -1,0 +1,59 @@
+---
+import { CollectionEntry } from "astro:content";
+import PostAside from "~/components/PostAside.astro";
+import PostPreview from "~/components/PostPreview.astro";
+
+type Props = {
+	posts: CollectionEntry<"blog">[];
+	categories: string[];
+};
+
+const { posts, categories } = Astro.props;
+---
+
+<div>
+	<ul id="catalog">
+		{
+			posts.map((post) => (
+				<li>
+					<PostPreview post={post} />
+				</li>
+			))
+		}
+	</ul>
+	<PostAside categories={categories} headings={undefined} />
+</div>
+
+<style>
+	@import "~/styles/media.css";
+	div {
+		display: grid;
+		grid-template-columns: var(--site-columns-wide);
+		position: relative;
+		grid-column: 1 / -1;
+		margin-block-end: var(--size-8);
+		margin-inline: var(--size-3);
+	}
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		grid-column: 2 / 4;
+		display: grid;
+		grid-template-columns: min(760px, 100%);
+		height: fit-content;
+	}
+	li {
+		padding: 0;
+		margin: 0;
+		max-inline-size: 100%;
+		&:not(:first-child){
+			margin-top: -1px;
+		}
+	}
+	time {
+		font-family: var(--font-mono);
+		color: var(--black);
+		opacity: 0.7;
+	}
+</style>

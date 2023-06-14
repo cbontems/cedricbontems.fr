@@ -1,0 +1,67 @@
+---
+import Category from "~/components/Category.astro";
+type Props = {
+	categories: string[];
+	showTitle?: boolean;
+	theme?: "light" | "dark" | undefined;
+};
+
+const { categories, showTitle = true, theme = undefined } = Astro.props as Props;
+
+let textColor;
+
+switch (theme) {
+	case "dark":
+		textColor = "var(--always-white)";
+		break;
+	case "light":
+		textColor = "var(--always-black)";
+		break;
+	default:
+		textColor = "var(--black)";
+		break;
+}
+---
+
+{showTitle && <h5 id="categories-list-heading">Categories</h5>}
+<ul aria-labelledby="categories-list-heading">
+	{
+		categories.map((category) => (
+			<li>
+				<Category name={category} />
+			</li>
+		))
+	}
+</ul>
+
+<style define:vars={{ textColor }}>
+	@import "~/styles/media.css";
+	h5 {
+		--_color: var(--textColor);
+		color: var(--_color);
+		margin-block-end: var(--size-6);
+	}
+	ul {
+		--_color: var(--textColor);
+		color: var(--_color);
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+		place-items: flex-start;
+		gap: var(--size-4);
+		list-style: none;
+		height: fit-content;
+		padding: 0;
+		margin: 0;
+		z-index: var(--layer-1);
+		
+		@media (--md-n-above) {
+			display: grid;
+			row-gap: var(--size-2);
+		}
+	}
+	li {
+		padding: 0;
+		margin: 0;
+	}
+</style>
