@@ -8,7 +8,8 @@ import SchemeToggle from "~/components/SchemeToggle.astro";
 		<SchemeToggle />
 	</div>
     <a href="/feed.xml">
-        <Icon name="mdi:rss" size={32} />
+        <Icon name="mdi:rss" size={32} aria-hidden="true" />
+		<span class="sr-only">RSS feed</span>
     </a>
 </div>
 
