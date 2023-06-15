@@ -1,6 +1,6 @@
 {
   "name": "cedricbontems.fr",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "My personal website, built with Astro and Open Props",
   "main": "index.js",
   "scripts": {
