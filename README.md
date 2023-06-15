@@ -65,8 +65,7 @@ A deploy is automatically triggered on Nelify when changes are pushed to the git
 [![Netlify Status](https://api.netlify.com/api/v1/badges/07235d8d-a1be-49b2-a998-47aae27ddf14/deploy-status)](https://app.netlify.com/sites/cedricbontems/deploys)
 
     $ cd cedricbontems.fr
-    $ npm run build
-    $ npm run deploy
+    $ git push
 
 ---
 
