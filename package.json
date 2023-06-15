@@ -1,6 +1,6 @@
 {
   "name": "cedricbontems.fr",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "My personal website, built with Astro and Open Props",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "start": "astro dev",
     "preview": "astro preview",
     "release": "cz bump",
-		"update": "npm-check-updates"
+    "update": "npm-check-updates"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
     "starter",
     "blog"
   ],
-  "author": "Cédric Bontems <cedric@thewebforge.dev> (https://cedricbontems.fr/)",
+  "author": "C\u00e9dric Bontems <cedric@thewebforge.dev> (https://cedricbontems.fr/)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/cbontems/cedricbontems.fr/issues"
