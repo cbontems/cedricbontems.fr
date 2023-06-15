@@ -1,31 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="330" fill="none">
   <style>
-    @keyframes load-gauge{0%{stroke-dasharray:0 352.858}}.gauge-base{opacity:.1}.gauge-arc{fill:none;animation-delay:250ms;stroke-linecap:round;transform:rotate(-90deg);transform-origin:100px 60px;animation:load-gauge 1s ease forwards}.gauge-text{font-size:40px;font-family:monospace;text-align:center;fill:currentcolor;stroke:none}.gauge-green{color:#0cce6b;fill:#0cce6b;stroke:#0cce6b}.gauge-title{stroke:none;font-size:26px;line-height:26px;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Open Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif;fill:gray}
+    @keyframes load-gauge{0%{stroke-dasharray:0 350}}.gauge-base{opacity:.1}.gauge-arc{fill:none;animation-delay:250ms;stroke-linecap:round;transform:rotate(-90deg);transform-origin:100px 60px;animation:load-gauge 1s ease forwards}.gauge-text{font-size:40px;font-family:monospace;text-align:center;fill:currentcolor;stroke:none}.gauge-green{color:#0cce6b;fill:#0cce6b;stroke:#0cce6b}.gauge-title{stroke:none;font-size:26px;line-height:26px;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Open Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif;fill:gray}
   </style>
   <svg width="200" height="200" x="100" class="gauge-perf gauge-green" viewBox="0 0 200 200">
     <circle cx="100" cy="60" r="56" stroke-width="8" class="gauge-base"/>
-    <circle cx="100" cy="60" r="56" stroke-dasharray="351.858 351.858" stroke-width="8" class="gauge-arc"/>
-    <text x="100" y="60" alignment-baseline="central" class="gauge-text" dominant-baseline="central" text-anchor="middle">100</text>
+    <circle cx="100" cy="60" r="56" stroke-dasharray="340 351.858" stroke-width="8" class="gauge-arc"/>
+    <text x="100" y="60" alignment-baseline="central" class="gauge-text" dominant-baseline="central" text-anchor="middle">99</text>
     <text x="100" y="160" alignment-baseline="central" class="gauge-title" dominant-baseline="central" text-anchor="middle">Performance</text>
   </svg>
   ,
   <svg width="200" height="200" x="300" class="gauge-perf gauge-green" viewBox="0 0 200 200">
     <circle cx="100" cy="60" r="56" stroke-width="8" class="gauge-base"/>
-    <circle cx="100" cy="60" r="56" stroke-dasharray="351.858 351.858" stroke-width="8" class="gauge-arc"/>
-    <text x="100" y="60" alignment-baseline="central" class="gauge-text" dominant-baseline="central" text-anchor="middle">100</text>
+    <circle cx="100" cy="60" r="56" stroke-dasharray="320 300" stroke-width="8" class="gauge-arc"/>
+    <text x="100" y="60" alignment-baseline="central" class="gauge-text" dominant-baseline="central" text-anchor="middle">93</text>
     <text x="100" y="160" alignment-baseline="central" class="gauge-title" dominant-baseline="central" text-anchor="middle">Accessibility</text>
   </svg>
   ,
   <svg width="200" height="200" x="500" class="gauge-perf gauge-green" viewBox="0 0 200 200">
     <circle cx="100" cy="60" r="56" stroke-width="8" class="gauge-base"/>
-    <circle cx="100" cy="60" r="56" stroke-dasharray="351.858 351.858" stroke-width="8" class="gauge-arc"/>
+    <circle cx="100" cy="60" r="56" stroke-dasharray="350 350" stroke-width="8" class="gauge-arc"/>
     <text x="100" y="60" alignment-baseline="central" class="gauge-text" dominant-baseline="central" text-anchor="middle">100</text>
     <text x="100" y="160" alignment-baseline="central" class="gauge-title" dominant-baseline="central" text-anchor="middle">Best Practices</text>
   </svg>
   ,
   <svg width="200" height="200" x="700" class="gauge-perf gauge-green" viewBox="0 0 200 200">
     <circle cx="100" cy="60" r="56" stroke-width="8" class="gauge-base"/>
-    <circle cx="100" cy="60" r="56" stroke-dasharray="351.858 351.858" stroke-width="8" class="gauge-arc"/>
+    <circle cx="100" cy="60" r="56" stroke-dasharray="350 350" stroke-width="8" class="gauge-arc"/>
     <text x="100" y="60" alignment-baseline="central" class="gauge-text" dominant-baseline="central" text-anchor="middle">100</text>
     <text x="100" y="160" alignment-baseline="central" class="gauge-title" dominant-baseline="central" text-anchor="middle">SEO</text>
   </svg>

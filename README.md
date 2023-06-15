@@ -8,6 +8,14 @@
 
 Astro build of Cédric Bontems' personal websitebuilt using Astro as the SSG, Open Props for design tokens, hosted on NEtlify with automatic deployment form Github.
 
+## Lighthouse Score
+
+<p align="center">
+  <a href="https://pagespeed.web.dev/analysis/https-cedricbontems-fr/71cpfg78ac?form_factor=desktop">
+    <img width="710" alt="cedricbontems.fr Lighthouse Score" src="lighthouse-score.svg">
+  <a>
+</p>
+
 ---
 
 ## Local Setup
