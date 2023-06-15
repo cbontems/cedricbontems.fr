@@ -16,12 +16,14 @@ const { words }: Props = Astro.props;
 	@import "~/styles/media.css";
 	div {
 		position: absolute;
+		overflow: hidden;
 		font-family: var(--font-display);
-		font-size: clamp(96px, 36vw + 1rem, 520px);
+		font-size: clamp(var(--size-12), 36vw + 1rem, var(--size-15));
 		font-weight: 900;
 		pointer-events: none;
-		left: clamp(0px, 4vw - 1rem, 56px);
-		top: 80px;
+		inset-inline-start: clamp(0rem, 4vw - 1rem, var(--size-9));
+		inset-inline-end: 0;
+		top: var(--size-10);
 		opacity: 0.1;
 		contain: layout;
 		font-display: block;
