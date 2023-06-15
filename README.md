@@ -11,10 +11,12 @@ Astro build of Cédric Bontems' personal websitebuilt using Astro as the SSG, Op
 ## Lighthouse Score
 
 <p align="center">
-  <a href="https://pagespeed.web.dev/analysis/https-cedricbontems-fr/71cpfg78ac?form_factor=desktop">
+  <a href="https://pagespeed.web.dev/analysis/https-cedricbontems-fr/te3161lnkn?form_factor=desktop">
     <img width="710" alt="cedricbontems.fr Lighthouse Score" src="lighthouse-score.svg">
   <a>
 </p>
+
+Last report run: june 15, 2023 @12:17:27
 
 ---
 

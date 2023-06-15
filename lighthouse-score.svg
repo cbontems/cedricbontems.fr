@@ -4,15 +4,15 @@
   </style>
   <svg width="200" height="200" x="100" class="gauge-perf gauge-green" viewBox="0 0 200 200">
     <circle cx="100" cy="60" r="56" stroke-width="8" class="gauge-base"/>
-    <circle cx="100" cy="60" r="56" stroke-dasharray="340 351.858" stroke-width="8" class="gauge-arc"/>
-    <text x="100" y="60" alignment-baseline="central" class="gauge-text" dominant-baseline="central" text-anchor="middle">99</text>
+    <circle cx="100" cy="60" r="56" stroke-dasharray="340 350" stroke-width="8" class="gauge-arc"/>
+    <text x="100" y="60" alignment-baseline="central" class="gauge-text" dominant-baseline="central" text-anchor="middle">98</text>
     <text x="100" y="160" alignment-baseline="central" class="gauge-title" dominant-baseline="central" text-anchor="middle">Performance</text>
   </svg>
   ,
   <svg width="200" height="200" x="300" class="gauge-perf gauge-green" viewBox="0 0 200 200">
     <circle cx="100" cy="60" r="56" stroke-width="8" class="gauge-base"/>
-    <circle cx="100" cy="60" r="56" stroke-dasharray="320 300" stroke-width="8" class="gauge-arc"/>
-    <text x="100" y="60" alignment-baseline="central" class="gauge-text" dominant-baseline="central" text-anchor="middle">93</text>
+    <circle cx="100" cy="60" r="56" stroke-dasharray="350 350" stroke-width="8" class="gauge-arc"/>
+    <text x="100" y="60" alignment-baseline="central" class="gauge-text" dominant-baseline="central" text-anchor="middle">100</text>
     <text x="100" y="160" alignment-baseline="central" class="gauge-title" dominant-baseline="central" text-anchor="middle">Accessibility</text>
   </svg>
   ,
