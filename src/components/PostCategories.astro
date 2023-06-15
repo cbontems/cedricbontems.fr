@@ -23,7 +23,7 @@ switch (theme) {
 }
 ---
 
-{showTitle && <h5 id="categories-list-heading">Categories</h5>}
+{showTitle && <h2 id="categories-list-heading">Categories</h2>}
 <ul aria-labelledby="categories-list-heading">
 	{
 		categories.map((category) => (
@@ -36,9 +36,10 @@ switch (theme) {
 
 <style define:vars={{ textColor }}>
 	@import "~/styles/media.css";
-	h5 {
+	h2 {
 		--_color: var(--textColor);
 		color: var(--_color);
+		font-size: var(--font-size-3);
 		margin-block-end: var(--size-6);
 	}
 	ul {

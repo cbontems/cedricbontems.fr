@@ -1,0 +1,70 @@
+---
+import { Page } from "astro";
+import { CollectionEntry } from "astro:content";
+import HeroImage from "~/components/HeroImage.astro";
+import Header from "~/components/Header.astro";
+
+
+type Props = {
+	page: Page<CollectionEntry<"blog">>;
+};
+
+const { page } = Astro.props as Props;
+---
+
+<div class="page-header">
+	<HeroImage />
+	<Header theme="dark" />
+	<hgroup>
+		<h1 id="skip-destination">
+			The posts archive
+		</h1>
+		<p>
+			You are viewing page {page.currentPage} of {page.lastPage}.<br/>There are
+			{page.total} posts in the archive.
+		</p>
+	</hgroup>
+	<div class="spacer"></div>
+</div>
+
+<style>
+	@import "~/styles/media.css";
+
+	div.page-header {
+		grid-column: 1 / -1;
+		display: grid;
+		grid-template-columns: 1fr;
+		background-color: var(--accent);
+		clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+		position: relative;
+		overflow: hidden;
+		/* min-block-size: 40vb; */
+		@media (--md-n-above) {
+			grid-template-columns: var(--site-columns);
+		}
+	}
+
+	hgroup {
+		display: grid;
+		grid-template-columns: 3fr 1fr;
+		grid-column: 2/-2;
+		gap: var(--size-9);
+		padding-block-start: var(--size-11);
+		margin-inline: var(--size-3);
+		color: var(--always-white);
+		& h1 {
+			font-size: clamp(2rem, 5vw + 1rem, 4rem);
+			grid-column: 1/-1;
+			color: var(--always-white);
+		}
+		& p {
+			grid-column: 1 / 3;
+			margin-block-end: clamp(16px, 4vw, 52px);
+			font-size: clamp(1.25rem, 2vw + 1rem, 2.5rem);
+		}
+	}
+	div.spacer {
+		padding-block-end: 80px;
+		grid-row: 5;
+	}
+</style>

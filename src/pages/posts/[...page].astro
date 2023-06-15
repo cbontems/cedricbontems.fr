@@ -2,14 +2,12 @@
 import { GetStaticPathsOptions, Page } from "astro";
 import { CollectionEntry, getCollection } from "astro:content";
 import Layout from "~/layouts/MainLayout.astro";
-import Header from "~/components/Header.astro";
-import Breadcrumbs from "~/components/Breadcrumbs.astro";
+import PostArchiveHeader from "~/components/PostArchiveHeader.astro";
 import siteInfo from "~/data/site-info";
 import PostFooter from "~/components/PostFooter.astro";
 import HomeBody from "~/components/HomeBody.astro";
 import PostPagination from "~/components/PostPagination.astro";
 import { getCategories } from "~/helpers/categories";
-
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 	// fetch all showcase sites
@@ -30,7 +28,6 @@ const { page } = Astro.props as { page: Page<CollectionEntry<"blog">> };
 const allPages = [...Array(page.lastPage).keys()].map((num) => {
 	return `/posts${num === 0 ? "" : `/${String(num + 1)}`}`;
 });
-
 ---
 
 <Layout
@@ -38,60 +35,8 @@ const allPages = [...Array(page.lastPage).keys()].map((num) => {
 	description={`Get all the latest news from ${siteInfo.name}`}
 	image={{ src: "/og/blog.jpg", alt: `The ${siteInfo.name} Blog` }}
 >
-	<div
-		class="page-header"
-	>
-		<Header />
-	</div>
+	<PostArchiveHeader page={page}  />
 	<HomeBody posts={page.data} categories={categories} />
 	<PostPagination restRoute allPages={allPages} page={page} />
 	<PostFooter />
 </Layout>
-
-<style>
-	@import "~/styles/media.css";
-
-	div.page-header {
-		grid-column: 1 / -1;
-		display: grid;
-		grid-template-columns: 1fr;
-		
-		position: relative;
-		overflow: hidden;
-		margin-block-end: var(--size-9);
-		@media (--md-n-above) {
-			grid-template-columns: var(--site-columns);
-		}
-	}
-	div.overlap {
-		margin-inline: var(--size-3);
-		display: grid;
-		grid-column: 1;
-		@media (--md-n-above) {
-			grid-column: 2 / -1;
-		}
-	}
-	div.bigText {
-		grid-column: 1;
-		grid-row: 1;
-		font-size: clamp(4rem, 38vw + 1rem, 36.25rem);
-		font-family: var(--font-mono);
-		font-weight: 700;
-		line-height: normal;
-		color: var(--brand);
-	}
-	h1 {
-		grid-column: 1;
-		grid-row: 1;
-		color: var(--black);
-		font-family: var(--font-mono);
-		font-weight: 700;
-		font-size: clamp(2rem, 8vw + 1rem, 4rem);
-		line-height: normal;
-	}
-</style>
-
-
-
-
-	

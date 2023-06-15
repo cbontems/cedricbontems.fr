@@ -9,7 +9,7 @@ interface Props {
 const { toc = [] }: Props = Astro.props;
 ---
 
-<h5>On this page</h5>
+<h2>On this page</h2>
 <nav  aria-label="Table of Content">
 	<ul>
 		{
@@ -26,7 +26,8 @@ const { toc = [] }: Props = Astro.props;
 </nav>
 
 <style>
-    h5 {
+    h2 {
+		font-size: var(--font-size-3);
 		margin-block-start: var(--size-6);
     }
 	nav {

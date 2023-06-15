@@ -29,7 +29,7 @@ if (remainingCategories.length > 0) {
 ---
 
 <article>
-	<h3>
+	<h2>
 		<a
 			aria-label={`${post.data.title}, authored by ${authors.map(
 				(author) => author.data.name,
@@ -37,7 +37,7 @@ if (remainingCategories.length > 0) {
 			href={`/posts/${post.slug}/`}
 			rel="prefetch">{post.data.title}</a
 		>
-	</h3><div class="body">
+	</h2><div class="body">
 		<div class="by">
 			{
 				authors.map((author, index) => {
@@ -100,7 +100,7 @@ if (remainingCategories.length > 0) {
 			}
 		}
 	}
-	h3 > a[href] {
+	h2 > a[href] {
 		color: var(--black);
 		text-decoration: none;
 		transition: color 0.3s var(--ease-elastic-3);
