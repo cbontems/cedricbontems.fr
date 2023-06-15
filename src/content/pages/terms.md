@@ -1,7 +1,7 @@
 ---
 seo:
   title: Terms of Service
-  description: cedricbontems.fr' terms of service
+  description: "Understand the guidelines, rights, and responsibilities that govern your usage of our services."
 updated_date: 2023-06-07
 ---
 

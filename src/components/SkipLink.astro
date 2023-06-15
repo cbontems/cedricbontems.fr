@@ -1,5 +1,5 @@
 <div>
-	<button id="skip-button"> Skip to content</button>
+	<a id="skip-button" href="#skip-destination"> Skip to content</a>
 </div>
 
 <style>
@@ -8,7 +8,7 @@
 		position: relative;
 		width: 100vi;
 	}
-	button {
+	a {
 		background: var(--accent);
 		color: var(--always-white);
 		font-family: var(--font-display);
@@ -18,6 +18,8 @@
 		border: 0;
 		inline-size: 90%;
 		position: absolute;
+		text-align: center;
+		text-decoration: none;
 		inset-block-start: calc(-1*var(--size-14));
 		z-index: var(--layer-important);
 		@media (--motionOK) {
@@ -29,19 +31,4 @@
 		}
 	}
 
-	a:focus-visible {
-		transform: translateY(15px);
-	}
 </style>
-<script>
-	const skipButton: HTMLButtonElement | null =
-		document.querySelector("#skip-button");
-	const skipDestination: HTMLAnchorElement | null =
-		document.querySelector("#skip-destination");
-	if (null === skipButton) {
-		throw new Error("No skip button found");
-	}
-	skipButton.addEventListener("click", (e) => {
-		null !== skipDestination && skipDestination.focus();
-	});
-</script>

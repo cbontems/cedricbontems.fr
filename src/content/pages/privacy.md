@@ -1,11 +1,11 @@
 ---
 seo:
   title: Privacy Policy
-  description: cedricbontems.fr' privacy policy
+  description: "Our Privacy Policy ensures the security and confidentiality of your personal information. Learn how we handle data and maintain transparency."
 updated_date: 2023-03-01
 ---
 
-_In addition to this Privacy Policy, cedricbontems.fr also has [Terms of Use](/terms)._
+_In addition to this Privacy Policy, cedricbontems.fr also has [Terms of Service](/terms)._
 
 The cedricbontems.fr Privacy Policy describes the privacy practices of cedricbontems.fr website and services. The laws of France apply.
 

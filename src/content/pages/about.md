@@ -1,38 +1,32 @@
 ---
 seo:
-  title: About
-  description: All about AstroProps starter blog theme for Astro
+  title: About me
+  description: "Welcome to my front-end development website! Join me on a journey to learn HTML, CSS, JavaScript, PHP, WordPress, React, Astro, and more..."
 updated_date: 2023-06-07
 ---
 
-AstroProps is a starter blog theme designed for [Astro](/astro), a modern static site builder.
+Welcome to my website dedicated to front-end development! I'm passionate about creating amazing user experiences through web development and excited to share my knowledge and insights with you. Whether you're a beginner looking to learn the basics or an experienced developer seeking to level up your skills, this is the place for you.
 
-## Features
+## What to Expect
 
-- **Accessibility**: The theme is built with accessibility in mind, ensuring that your blog is usable by a wide range of users.
-- **Light and Dark Mode**: Supports both light and dark modes by default, providing a pleasant reading experience for your visitors.
-- **Customizable Color Schemes**: Easily configure additional color schemes to match your personal style or brand.
-- **Responsive Design**: The theme is fully responsive, ensuring that your blog looks great on all devices and screen sizes.
-- **SEO-Friendly**: Designed with search engine optimization in mind, helping your blog rank higher in search results.
-- **Fuzzy Search**: Enables users to quickly search for articles with a fuzzy search functionality.
-- **Super Fast Performance**: Optimized for performance to provide a smooth browsing experience for your visitors.
-- **Draft Posts**: Easily mark posts as drafts to work on them privately before publishing.
-- **Pagination**: Supports pagination for long lists of blog posts, improving navigation for readers.
-- **Sitemap & RSS Feed**: Generates a sitemap and RSS feed to help search engines discover and index your content.
-- **Highly Customizable**: Offers extensive customization options to tailor the theme to your specific needs.
+On this website, I aim to provide valuable resources, tutorials, and courses on a variety of front-end development topics. You can find content covering HTML, CSS, JavaScript, PHP, WordPress, React, and Astro. I believe in a hands-on and practical approach to learning, so expect to find practical examples, code snippets, and interactive exercises to help you grasp these concepts effectively.
 
-## Tech Stack
+## Who am I?
 
-This theme is built using the following technologies:
+I'm Cédric, a front-end developer with a passion for creating visually appealing and user-friendly websites. I have several years of experience working on various web projects and have gained expertise in a wide range of technologies. My goal is to simplify complex concepts and make front-end development accessible to everyone.
 
-- **JavaScript**: The theme is written in vanilla JavaScript, with TypeScript used for type checking.
-- **SolidJS**: Utilizes SolidJS mobile menu interactions to enhance the user experience.
-- **Open Props**: Employs Open Props for styling, providing a flexible and CSS props first approach.
-- **Markdown**: Uses Markdown for writing and managing blog content.
+I am the creator and developer of [OxyProps](https://oxyprops.com), a premium WordPress plugin for Oxygen and Bricks Builders. I also run a [YouTube channel](https://youtube.com/@oxyprops) where I share tutorials and tips on WordPress and front-end development.
 
-## Get Involved
+## Why This Website?
 
-If you like this theme and find it useful, you can show your support by starring or contributing to the [GitHub repository](/repo).  
-Feel free to share any feedback or suggestions by contacting me via [email](mailto:hello@thewebforge.dev).
+I created this website to share my learnings and insights with the vibrant community of front-end developers. Through tutorials and articles, I aim to contribute to the growth of aspiring developers and provide valuable resources that can empower them in their journey. Additionally, I'm exploring the possibility of offering courses to provide a structured learning experience for those looking to dive deeper into specific topics.
 
-![Coding](https://doodleipsum.com/700/hand-drawn?i=5bce67149b2466b121831ce7b140a39d)
+## Join the Community
+
+Learning is best done together, and I encourage you to join our community. Engage with other developers, ask questions, and share your own experiences. Together, we can learn, grow, and create amazing things.
+
+Thank you for visiting my website, and I hope you find the content here helpful and inspiring. Feel free to reach out to me with any questions, suggestions, or collaboration opportunities. Let's embark on this front-end development journey together!
+
+Happy coding!
+
+Cédric Bontems
