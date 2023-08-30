@@ -1,7 +1,7 @@
 ---
 import { getEntryBySlug } from "astro:content";
 import { resolveImage } from "~/helpers/authors";
-import { Image } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 
 type Props = {
 	name?: string;
@@ -13,7 +13,7 @@ let { name, image, lg = false } = Astro.props;
 
 if (!image && name) {
 	const author = await getEntryBySlug("authors", name);
-	image = author && (await resolveImage(author))?.src;
+	image = author && (await resolveImage(author));
 }
 ---
 

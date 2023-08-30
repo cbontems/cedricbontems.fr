@@ -1,7 +1,7 @@
 ---
 import { getEntryBySlug } from "astro:content";
 import { resolveImage } from "~/helpers/authors";
-import { Image } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 
 type Props = {
 	name?: string;
@@ -14,7 +14,7 @@ let { name, image, lg = false, hero = false } = Astro.props;
 
 if (!image && name) {
 	const author = await getEntryBySlug("authors", name);
-	image = author && (await resolveImage(author))?.src;
+	image = author && (await resolveImage(author));
 }
 ---
 
@@ -29,7 +29,7 @@ if (!image && name) {
 				height={100}
 				loading="lazy"
 				decoding="async"
-				class:list={[{"main-story-photo": hero}]}
+				class:list={[{ "main-story-photo": hero }]}
 			/>
 		</div>
 	)
@@ -53,6 +53,8 @@ if (!image && name) {
 		z-index: -1;
 		filter: var(--_avatar-filter);
 		scale: var(--_avatar-scale);
-		transition: filter, scale 0.3s var(--ease-elastic-3);
+		transition:
+			filter,
+			scale 0.3s var(--ease-elastic-3);
 	}
 </style>
