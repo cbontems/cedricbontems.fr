@@ -1,0 +1,12 @@
+/* TEAM */
+	Developer: Cédric Bontems
+	Contact: hello [at] cedricbontems.fr
+	Twitter: @cedricbontems
+	From: Provence, France
+
+/* SITE */
+	Last update: 2023/09/19
+	Language: English
+	Doctype: HTML5
+    Framework: Astro, Open Props
+	IDE: VSCode

@@ -1,0 +1,10 @@
+title: Sanity
+description: "Sanity is a headless content management system that provides a flexible and customizable platform for managing digital content. Unlike traditional CMSs, Sanity separates the content creation and storage from its presentation, allowing developers and content creators to work independently."
+category:
+  singular: " CMS"
+  plural: Content Management Systems (CMS)
+checkDate: 2023-10-13
+tags:
+  - cms
+  - php
+link: https://www.sanity.io/

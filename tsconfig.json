@@ -1,18 +1,17 @@
 {
-  "extends": "astro/tsconfigs/strict",
+  "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": {
-      "~/*": [
-        "./src/*"
-      ]
-    },
-    "importsNotUsedAsValues": "remove",
     "jsx": "preserve",
-    "jsxImportSource": "solid-js"
+    "jsxImportSource": "solid-js",
+    "paths": {
+      "~config": ["src/site.config.ts"],
+      "~/*": ["src/*"]
+    },
+    "strictNullChecks": true,
+    "types": ["bun-types"],
+    "verbatimModuleSyntax": true
   },
-  "include": [
-    "**/*",
-    ".eslintrc.cjs"
-  ]
+  "exclude": ["node_modules", "dist", "public"],
+  "include": ["**/*", ".eslintrc.cjs"]
 }

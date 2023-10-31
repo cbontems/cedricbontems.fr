@@ -1,0 +1,48 @@
+<a href="#skip-target" accesskey="s">Skip to content →</a>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		a {
+			display: grid;
+			place-items: center;
+			font-size: 80%;
+			padding-block: 0;
+			border-radius: var(--radius);
+			color: var(--surface-1);
+			:global([data-theme="dark"]) & {
+				color: var(--text-1);
+			}
+			text-decoration: none;
+			transition:
+				translate 500ms ease-out,
+				color 500ms ease;
+			outline-color: transparent;
+		}
+		a:hover:not(:focus) {
+			color: var(--neon);
+			@media (--motionOK) {
+				translate: 1em;
+			}
+		}
+		a:focus {
+			position: absolute;
+			inset: 0;
+			background-color: var(--text-1);
+			color: var(--surface-1);
+			:global([data-theme="dark"]) & {
+				background-color: var(--surface-2);
+				color: var(--teext-1);
+			}
+			font-family: var(--font-body);
+			font-size: 1.5em;
+			border: var(--border-size-3) solid var(--neon);
+			border-radius: 0;
+			box-shadow:
+				inset var(--border-size-4) var(--border-size-4) 0 0 var(--neon),
+				inset calc(-1 * var(--border-size-4)) calc(-1 * var(--border-size-4)) 0
+					0 var(--neon);
+			z-index: 10;
+		}
+	}
+</style>

@@ -1,0 +1,10 @@
+title: Cassie Evans
+description: "Cassie is a front-end developer who loves to play with SVGs and animations. She also has a great blog where she shares her knowledge."
+category:
+  singular: ’s Blog
+  plural: Blogs
+checkDate: 2023-10-06
+tags:
+  - greensock
+  - svg
+link: https://www.cassie.codes

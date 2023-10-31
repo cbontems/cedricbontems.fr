@@ -1,0 +1,14 @@
+---
+import config from "~config";
+---
+
+<!-- Fathom - beautiful, simple website analytics -->{
+	config.fathomSiteId && (
+		<script
+			src="https://cdn.usefathom.com/script.js"
+			data-site={config.fathomSiteId}
+			defer
+		/>
+	)
+}
+<!-- / Fathom -->

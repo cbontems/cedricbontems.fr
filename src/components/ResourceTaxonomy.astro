@@ -1,0 +1,57 @@
+---
+import Search from "./Search.astro";
+---
+
+<aside role="note">
+	<Search
+		selector="main li"
+		groupSelector="main section"
+		placeholder="Search"
+	/>
+	{/* categories && categories.length > 0 && <CategoriesList {categories} /> */}
+	{/* tags && tags.length > 0 && <TagsList {tags} /> */}
+</aside>
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		aside {
+			grid-column: sidebar;
+			grid-row: taxonomy-start / taxonomy-end;
+			background-color: var(--surface-1);
+			display: flex;
+			justify-content: flex-end;
+			align-items: stretch;
+			gap: 1em;
+			@media (--xl-n-above) {
+				flex-direction: column;
+				justify-content: flex-start;
+				align-items: flex-start;
+			}
+		}
+		.category {
+			--_color: var(--text-1);
+			position: relative;
+			padding-block: 0.5ch;
+			padding-inline: 1ch;
+			border-color: var(--neon);
+			border-block-start-width: var(--border-size-3);
+			border-block-end-width: var(--border);
+			& > a {
+				color: var(--_color);
+				text-transform: uppercase;
+				font-style: normal;
+				font-family: var(--font-display);
+				text-decoration: none;
+				&::before {
+					content: "";
+					position: absolute;
+					inset: 0;
+				}
+			}
+			&:hover {
+				background-color: var(--neon);
+				--_color: var(--surface-1);
+			}
+		}
+	}
+</style>

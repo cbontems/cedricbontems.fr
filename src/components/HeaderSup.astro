@@ -1,0 +1,38 @@
+---
+import config from "~config";
+import SkipToContent from "./SkipToContent.astro";
+import SchemeToggle from "./SchemeToggle.astro";
+const pathname = new URL(Astro.request.url).pathname;
+const [locale, ..._] = pathname.split("/").filter(Boolean);
+const lang = locale as keyof typeof config.locales;
+---
+
+<div class="sup">
+	<SkipToContent {lang} />
+	<div class="prefs">
+		<SchemeToggle />
+	</div>
+</div>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		.sup {
+			inline-size: 100%;
+			padding-inline: var(--_gutter);
+			display: flex;
+			align-self: center;
+			justify-content: space-between;
+			padding-block: 0.25em;
+			gap: 1em;
+		}
+	}
+	.prefs {
+		display: flex;
+		align-items: center;
+		gap: 1em;
+		padding-inline-start: 1em;
+		border-inline-start-width: var(--border);
+		border-inline-start-color: transparent;
+	}
+</style>

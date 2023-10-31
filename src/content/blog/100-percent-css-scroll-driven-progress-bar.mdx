@@ -1,0 +1,148 @@
+---
+title:
+  - 100% CSS
+  - Scroll-Driven
+  - Progress Bar
+publishDate: 2023-10-11
+description: "Dive into the world of JavaScript variables and unravel the differences between var, let, and const. Learn how each keyword works, their scoping rules, and when to use them in your code. Gain a clear understanding of variable declaration in JavaScript and level up your programming skills."
+summary: The article introduces the Scroll-Driven Animations API, which enables the creation of smooth, scroll-responsive animations on the web. This new API, supported in Chrome 115, integrates with existing animation APIs and offers Scroll Timelines and View Timelines, allowing developers to link animations to scroll position and element visibility. It provides precise control over animation ranges, enhancing the user experience through synchronized, high-performance scroll-driven animations.
+tldr:
+  - The Scroll-Driven Animations API empowers developers to create scroll-responsive animations on websites.
+  - It integrates with existing animation APIs, offering Scroll Timelines and View Timelines for animation synchronization with scrolling and element visibility.
+  - This API provides precise control over animation ranges, enhancing user experiences through high-performance, scroll-driven animations.
+  - Currently supported from Chrome / Edge 115, Opera 101, the API promises to bring smoother, more interactive web animations to the forefront of web development.
+authors:
+  - cedric
+category: css
+tags:
+  - beginner
+  - animation
+  - css-only
+  - scroll-driven
+coverImage: "./images/mouse.jpeg"
+coverImageAlt: "AI generated illustration in the style of marc chagall. A mouse aneimates his puppet in a fatasy, colorful environment."
+socialImage: "./images/mouse.jpeg"
+lang: "en"
+featured: 1
+---
+
+The Scroll-Driven Animations API is a new web standard that enables the creation of smooth, scroll-responsive animations on the web. This new API integrates with existing animation APIs and offers Scroll Timelines and View Timelines, allowing developers to link animations to scroll position and element visibility. It provides precise control over animation ranges, enhancing the user experience through synchronized, high-performance scroll-driven animations.
+
+At the time of writing, the Scroll-Driven Animations API is supported in Chrome 115, Opera 101, and Edge 115. It can be used in Firefox behind flags and is under consideration for implementation in Safari. [Current browser support is 62.78% according to caniuse](https://caniuse.com/?search=animation-timeline).
+
+Let's explore the fundamental principles by creating a basic reading progress indicator exclusively using the new CSS Scroll-Driven Animations API.
+
+## Demo
+
+Scroll the codepen to see the progress bar in action at the top of the pen viewport.
+
+<p
+	class="codepen"
+	data-height="470"
+	data-default-tab="html,result"
+	data-slug-hash="xxmBYwv"
+	data-user="cbontems"
+	style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;"
+>
+	<span>
+		See the Pen{" "}
+		<a href="https://codepen.io/cbontems/pen/xxmBYwv">
+			CSS only scroll progress bar with percentage
+		</a>{" "}
+		by cbontems (<a href="https://codepen.io/cbontems">@cbontems</a>) on{" "}
+		<a href="https://codepen.io">CodePen</a>.
+	</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+The CSS scroll-driven animations API make it super easy to create. All we need is these few lines of css:
+
+```css
+#progress {
+	transform-origin: 0 50%;
+	animation-timeline: scroll();
+	animation: progress auto linear;
+}
+
+@keyframes progress {
+	from {
+		transform: scaleX(0);
+	}
+	to {
+		transform: scaleX(1);
+	}
+}
+```
+
+Let's break it down and see how it works.
+
+## transform-origin
+
+This declaration is straightforward and not specific to the Scroll-Driven Animations API.
+
+The `transform-origin` property defines the origin of the transformation applied to the element. In this case, we want to scale the element from left to right, so we set the origin to the left of the element, 0, and 50% of its height.
+
+## animation-timeline
+
+The `animation-timeline` property is the key to the Scroll-Driven Animations API. It defines the timeline to which the animation is linked. In this case, we want the animation to be linked to the scroll position, so we use the most simple version of it and we set the timeline to the `scroll()` function.
+
+By using the `scroll()` function with no arguments, we create an anonymous scroll progress timeline. This links the animation to the scroll position of the document. The animation will start when the scroll position is 0 and will end when the scroll position is equal to the height of the document.
+
+## animation
+
+The `animation` shorthand property is used to define the animation's keyframes, duration, timing function, delay, iteration count, direction, fill mode, and play state. In this case, we only define the animation's keyframes, duration, and timing function.
+
+Beinng more verbose, we could have detailed the shorthand by writting:
+
+```css
+#progress {
+  ...
+  animation: progress auto linear;
+}
+/* is equivalent to */
+#progress {
+  ...
+  animation-name: progress;
+  animation-duration: auto;
+  animation-timing-function: linear;
+}
+```
+
+### progress
+
+The `progress` value is the name of the animation. It is used to reference the animation in the `animation-timeline` property.
+
+```css
+@keyframes progress {
+	from {
+		transform: scaleX(0);
+	}
+	to {
+		transform: scaleX(1);
+	}
+}
+```
+
+Looking at our animation, we can see that it has two keyframes, `from` and `to`. The `from` keyframe is the starting point of the animation, and the `to` keyframe is the ending point of the animation. In this case, we use the `from` and `to` keywords, which means that the animation will start at the beginning of the timeline, the top of the document, with a scale of 0 and will end at the end of the timeline, the bottom of the document, with a scale of 1.
+
+### auto
+
+The `auto` value is the duration of the animation. It is used to define the duration of the animation. In this case, we use the `auto` value, which means that the duration of the animation will be equal to the duration of the timeline. Since we use the `scroll()` function, the duration of the timeline is equal to the time our visitor will use to scroll all the way to the bottom of the document.
+
+### linear
+
+The `linear` value is the timing function of the animation. It is used to define the timing function of the animation. In this case, we use the `linear` value, which means that the animation will progress at a constant rate.
+
+## Conclusion
+
+The Scroll-Driven Animations API makes it extremely easy to create scroll-responsive animations on the web. In our example, this simple line of CSS:
+
+```css
+#progress {
+  ...
+  animation-timeline: scroll();
+  ...
+}
+```
+
+Does most of the work for us. It creates an anonymous scroll progress timeline and links the animation to it. We then only have to define the animation's keyframes, duration, and timing function as we would normally do for any other CSS animation.

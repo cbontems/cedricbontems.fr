@@ -1,0 +1,92 @@
+---
+import TableOfContents from "./TableOfContents";
+import type { Heading } from "./TableOfContents";
+
+type Props = {
+	headings: Heading[];
+};
+const { headings }: Props = Astro.props;
+const tocLabel = `Table of Contents`;
+---
+
+<div class="slider">
+	<details open>
+		<summary>Table of Contents</summary>
+		<nav aria-label={tocLabel}>
+			<TableOfContents {headings} client:load />
+		</nav>
+		<div id="progress"></div>
+	</details>
+</div>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		.slider {
+			grid-area: toc;
+			background-color: var(--surface-1);
+		}
+		details {
+			position: static;
+			@media (--lg-n-above) {
+				position: sticky;
+				inset-block-start: 1em;
+			}
+			&[open] > summary::before {
+				rotate: 45deg;
+			}
+		}
+		summary {
+			position: relative;
+			list-style: none;
+			margin-block-end: 1em;
+			cursor: pointer;
+			border-radius: var(--radius);
+			font-family: var(--font-display);
+			&::before {
+				content: "";
+				display: block;
+				position: absolute;
+				inset-inline-end: 1em;
+				@media (--md-n-above) {
+					inset-inline-end: unset;
+					inset-inline-start: -1em;
+				}
+				inset-block-start: 50%;
+				translate: 0 -50%;
+				rotate: -45deg;
+				inline-size: 0.5em;
+				block-size: 0.5em;
+				border-right: var(--border) solid var(--neon);
+				border-top: 0px solid transparent;
+				border-left: 0px solid transparent;
+				border-bottom: var(--border) solid var(--neon);
+				transform-origin: 50% 50%;
+				transition: rotate 145ms ease-in-out;
+				/* font-size: 200%; */
+			}
+			&::after {
+				content: "";
+				position: absolute;
+				inset-inline-start: 0;
+				inset-block-end: -0.1em;
+				inline-size: 100%;
+				block-size: var(--border);
+				background-color: var(--neon);
+				color: var(--surface-1);
+				transform-origin: 0 50%;
+				animation: progress auto linear;
+				animation-timeline: --page-scroll;
+				z-index: 2;
+			}
+		}
+		@keyframes progress {
+			from {
+				transform: scaleX(0);
+			}
+			to {
+				transform: scaleX(1);
+			}
+		}
+	}
+</style>

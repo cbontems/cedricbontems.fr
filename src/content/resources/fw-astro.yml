@@ -1,0 +1,11 @@
+title: Astro
+description: The framework I use for this site. Astro builds fast content sites, powerful web applications, dynamic server APIs, and everything in-between.
+category:
+  singular: ""
+  plural: Frameworks
+checkDate: 2023-10-06
+tags:
+  - javascript
+  - ssg
+  - ssr
+link: https://astro.build

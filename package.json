@@ -8,6 +8,7 @@
     "commit": "cz c",
     "dev": "astro dev",
     "start": "astro dev",
+    "secure": "astro dev --secure",
     "preview": "astro preview",
     "release": "cz bump",
     "update": "npm-check-updates"
@@ -31,46 +32,45 @@
   },
   "homepage": "https://cedricbontems.fr/",
   "dependencies": {
-    "@astrojs/rss": "3.0.0",
-    "@astrojs/sitemap": "3.0.0",
-    "@astrojs/solid-js": "3.0.0",
-    "@fontsource-variable/fraunces": "5.0.9",
-    "@fontsource/atkinson-hyperlegible": "5.0.9",
-    "astro": "3.0.1",
-    "astro-icon": "0.8.1",
-    "astro-robots-txt": "0.5.0",
-    "open-props": "1.5.15",
-    "postcss-import": "15.1.0",
-    "postcss-jit-props": "1.0.13",
-    "postcss-preset-env": "9.1.2",
-    "sharp": "0.32.5",
-    "solid-js": "1.7.11"
+    "@astrojs/mdx": "^1.1.3",
+    "@astrojs/solid-js": "^3.0.2",
+    "astro": "^3.4.0",
+    "date-fns": "^2.30.0",
+    "html-escaper": "^3.0.3",
+    "mdast-util-mdx-jsx": "^3.0.0",
+    "mdast-util-to-string": "^4.0.0",
+    "open-props": "^1.6.10",
+    "postcss-import": "^15.1.0",
+    "postcss-jit-props": "^1.0.14",
+    "postcss-preset-env": "^9.2.0",
+    "reading-time": "^1.5.0",
+    "rehype": "^13.0.1",
+    "rehype-autolink-headings": "^7.0.0",
+    "rehype-slug": "^6.0.0",
+    "remark": "^15.0.1",
+    "remark-directive": "^3.0.0",
+    "solid-js": "^1.8.5",
+    "unist-util-remove": "^4.0.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "6.5.0",
-    "@typescript-eslint/parser": "6.5.0",
-    "cz-conventional-changelog": "3.3.0",
-    "date-fns": "2.30.0",
-    "eslint": "8.48.0",
-    "eslint-config-prettier": "9.0.0",
-    "eslint-plugin-astro": "0.29.0",
-    "eslint-plugin-jsx-a11y": "6.7.1",
-    "eslint-plugin-prettier": "5.0.0",
-    "eslint-plugin-react": "7.33.2",
-    "github-slugger": "2.0.0",
-    "lint-staged": "14.0.1",
-    "prettier": "3.0.3",
-    "prettier-plugin-astro": "0.12.0",
-    "simple-git-hooks": "2.9.0",
-    "smartypants": "0.2.2"
+    "@types/html-escaper": "^3.0.1",
+    "@types/mdast": "^4.0.2",
+    "bun-types": "^1.0.7",
+    "cz-conventional-changelog": "^3.3.0",
+    "prettier": "^3.0.3",
+    "prettier-plugin-astro": "^0.12.1",
+    "typescript": "^5.2.2"
   },
+  "trustedDependencies": [
+    "sharp"
+  ],
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
   "lint-staged": {
-    "!(*.{png,jpg,jpeg,webp,xsl})": [
+    "!(*.{png,jpg,jpeg,webp,xsl,woff, woff2})": [
       "prettier --plugin-search-dir=. --write"
     ]
   },

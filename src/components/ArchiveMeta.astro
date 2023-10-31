@@ -1,0 +1,172 @@
+---
+import type { ReadTimeResults } from "reading-time";
+import {
+	format,
+	formatISO,
+	add,
+	intervalToDuration,
+	formatDuration,
+	formatISODuration,
+} from "date-fns";
+import enLocale from "date-fns/locale/en-US";
+import TimerIcon from "~/icons/TimerIcon";
+type Props = {
+	publishDate: Date;
+	updateDate?: Date | undefined;
+	readingTime: ReadTimeResults;
+};
+const { publishDate, updateDate, readingTime }: Props = Astro.props;
+const dummyDate = new Date();
+const interval = {
+	start: dummyDate,
+	end: add(dummyDate, { seconds: readingTime.time / 1000 }),
+};
+const duration = intervalToDuration(interval);
+---
+
+<aside role="note">
+	{
+		updateDate && (
+			<p>
+				<span>Updated:</span>
+				<time id="update-date" datetime={formatISO(updateDate)}>
+					{format(updateDate, "PPP", { locale: enLocale })}
+				</time>
+			</p>
+		)
+	}
+	<p>
+		<span>Published:</span>
+		<time id="publish-date" datetime={formatISO(publishDate)}>
+			{format(publishDate, "PPP", { locale: enLocale })}
+		</time>
+	</p>
+
+	<p class="with-icon">
+		<TimerIcon width="1em" aria-hidden="true" /><time
+			id="reading-time"
+			datetime={formatISODuration(duration)}
+			>{`${formatDuration(duration, { format: ["minutes"] })} read`}</time
+		>
+	</p>
+</aside>
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		aside {
+			grid-column: page;
+			grid-row: meta;
+			padding-inline: var(--_gutter);
+			padding-block-end: 2em;
+			background-color: var(--text-1);
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: center;
+			@media (--md-n-above) {
+				flex-direction: row;
+				justify-content: space-between;
+			}
+			@media (--lg-n-above) {
+				flex-direction: row;
+				justify-content: center;
+				column-gap: 3em;
+			}
+			:global([data-theme="dark"]) & {
+				background-color: var(--surface-2);
+			}
+		}
+		p {
+			margin: 0;
+			padding-block: 0.25ch;
+			/* border: var(--border) solid var(--neon); */
+			/* background-color: var(--neon); */
+			color: var(--surface-1);
+			:global([data-theme="dark"]) & {
+				color: var(--text-1);
+			}
+		}
+		.with-icon {
+			display: flex;
+			align-items: center;
+			gap: 0.25em;
+		}
+		span {
+			font-family: var(--font-body);
+			margin-inline-end: 1em;
+		}
+		time {
+			font-family: var(--font-code);
+			font-variation-settings:
+				"wght" 500,
+				"wdth" 70;
+		}
+	}
+</style>
+<script>
+	// Adapted from this answer by TheBrain & mplungian on StackOverflow
+	// https://stackoverflow.com/a/12475270
+	const timeAgo = (time: Date) => {
+		const time_formats = [
+			[60, "seconds", 1], // 60
+			[120, "1 minute ago", "1 minute from now"], // 60*2
+			[3600, "minutes", 60], // 60*60, 60
+			[7200, "1 hour ago", "1 hour from now"], // 60*60*2
+			[86400, "hours", 3600], // 60*60*24, 60*60
+			[172800, "Yesterday", "Tomorrow"], // 60*60*24*2
+			[604800, "days", 86400], // 60*60*24*7, 60*60*24
+			[1209600, "Last week", "Next week"], // 60*60*24*7*4*2
+			[2419200, "weeks", 604800], // 60*60*24*7*4, 60*60*24*7
+			[4838400, "Last month", "Next month"], // 60*60*24*7*4*2
+			[29030400, "months", 2419200], // 60*60*24*7*4*12, 60*60*24*7*4
+			[58060800, "Last year", "Next year"], // 60*60*24*7*4*12*2
+			[2903040000, "years", 29030400], // 60*60*24*7*4*12*100, 60*60*24*7*4*12
+			[5806080000, "Last century", "Next century"], // 60*60*24*7*4*12*100*2
+			[58060800000, "centuries", 2903040000], // 60*60*24*7*4*12*100*20, 60*60*24*7*4*12*100
+		];
+		let seconds = (new Date().getTime() - time.getTime()) / 1000;
+		let token = "ago";
+		let list_choice = 1;
+
+		if (seconds == 0) return "Just now";
+
+		if (seconds < 0) {
+			seconds = Math.abs(seconds);
+			token = "from now";
+			list_choice = 2;
+		}
+
+		let i = 0;
+		let format;
+		while ((format = time_formats[i++]))
+			if (format[0] && seconds < (format[0] as number)) {
+				if (typeof format[2] == "string") return format[list_choice] as string;
+				else
+					return (
+						Math.floor(seconds / (format[2] || 1)) +
+						" " +
+						format[1] +
+						" " +
+						token
+					);
+			}
+		return time.toString();
+	};
+
+	const publishDateElement = document.getElementById(
+		"publish-date",
+	) as HTMLTimeElement;
+	const updateDateElement = document.getElementById(
+		"update-date",
+	) as HTMLTimeElement;
+	if (publishDateElement && publishDateElement.dateTime) {
+		publishDateElement.textContent = timeAgo(
+			new Date(publishDateElement.dateTime),
+		);
+	}
+	if (updateDateElement) {
+		updateDateElement.textContent = timeAgo(
+			new Date(updateDateElement.dateTime),
+		);
+	}
+</script>

@@ -7,8 +7,9 @@ dist
 # Dependencies
 node_modules
 
-# Environment variables
+# environment variables
 .env
+.env.development
 .env.production
 
 # Log files

@@ -1,0 +1,121 @@
+---
+import NavLink from "~/components/NavLink.astro";
+const pathname = new URL(Astro.request.url).pathname;
+const [section, ..._] = pathname.split("/").filter(Boolean);
+---
+
+<div>
+	<a
+		href={`/`}
+		accesskey="1"
+		class="logo"
+		aria-current={section === undefined ? "page" : undefined}
+		><span class="first-name">cédric</span>
+		<span class="last-name">bontems</span>
+	</a>
+	<nav role="navigation" id="PrimaryNavigation">
+		<ul>
+			<li>
+				<NavLink slug={`/blog/`} text="Blog" active={section === "blog"} />
+			</li>
+			<li>
+				<NavLink
+					slug={`/resources/`}
+					text="Resources"
+					active={section === "resources"}
+				/>
+			</li>
+		</ul>
+	</nav>
+</div>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		div {
+			padding-inline: var(--_gutter);
+			inline-size: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background-color: var(--neon);
+			&:has([href="/"][aria-current="page"]) {
+				@media (--sm-n-below) {
+					border-color: var(--color-bright);
+				}
+			}
+			@media (--sm-n-above) {
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+			}
+		}
+		nav {
+			inline-size: 100%;
+			@media (--sm-n-above) {
+				inline-size: initial;
+			}
+		}
+
+		.logo {
+			display: none;
+			@media (--sm-n-above) {
+				display: unset;
+			}
+			color: var(--text-1);
+			font-style: normal;
+			border-radius: var(--radius);
+			outline-color: var(--surface-1);
+			:global([data-theme="dark"]) & {
+				outline-color: var(--text-1);
+			}
+			& .first-name {
+				font-family: "RoslindaleDisplay";
+				font-style: normal;
+				font-weight: 500;
+				margin-inline-end: 0.15em;
+			}
+			& .last-name {
+				font-family: "RoslindaleDisplay";
+				font-style: normal;
+				font-weight: 900;
+			}
+		}
+
+		ul {
+			inline-size: 100%;
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			list-style: none;
+			padding-inline-start: 0;
+			margin-block: 0;
+			border-block-color: var(--neon);
+			border-block-width: var(--border);
+			@media (--sm-n-above) {
+				inline-size: initial;
+				border-width: 0;
+				border-color: transparent;
+				gap: 0em;
+			}
+		}
+		li {
+			padding-inline: 1rem;
+			padding-block: 0.2ch;
+			display: grid;
+			place-items: center;
+
+			&:not(:last-child) {
+				border-inline-end-color: var(--color-bright);
+				border-inline-end-width: var(--border);
+				@media (--sm-n-above) {
+					border-width: 0;
+					border-color: transparent;
+				}
+			}
+			&:has(a[aria-current="page"]) {
+				@media (--sm-n-above) {
+				}
+			}
+		}
+	}
+</style>

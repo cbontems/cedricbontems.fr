@@ -1,0 +1,9 @@
+title: SVGOMG
+description: "SVGO's Missing GUI. Easy & visual compression of SVG images."
+category:
+  singular: ""
+  plural: Online Tools
+checkDate: 2023-10-06
+tags:
+  - svg
+link: https://jakearchibald.github.io/svgomg/

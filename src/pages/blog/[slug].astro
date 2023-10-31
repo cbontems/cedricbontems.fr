@@ -1,0 +1,58 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import MarkDownContent from "~/components/MarkDownContent.astro";
+import PostMeta from "~/components/PostMeta.astro";
+import PostTitle from "~/components/PostTitle.astro";
+import PostTaxonomy from "~/components/PostTaxonomy.astro";
+import CopyButtons from "~/components/CopyButtons.astro";
+import PostToc from "~/components/PostToc.astro";
+import { taxonomize } from "~/helpers/taxonomies";
+
+type Props = {
+	entry: CollectionEntry<"blog">;
+};
+
+export async function getStaticPaths() {
+	const blogEntries = await getCollection("blog");
+	return blogEntries.map((entry) => ({
+		params: { slug: entry.slug },
+		props: { entry },
+	}));
+}
+
+// Get base data for this page
+const { entry } = Astro.props as Props;
+const { Content, headings, remarkPluginFrontmatter } = await entry.render();
+const { title, description, publishDate, updateDate, category, tags } =
+	entry.data;
+---
+
+<BaseLayout title={title.join(" ")} {description} type="single">
+	<CopyButtons />
+	<PostTitle {title} />
+	<PostTaxonomy categories={taxonomize([category])} tags={taxonomize(tags)} />
+	<PostMeta
+		{publishDate}
+		{updateDate}
+		readingTime={remarkPluginFrontmatter.readingStats}
+	/>
+	<PostToc {headings} />
+	<main>
+		<MarkDownContent>
+			<Content />
+		</MarkDownContent>
+	</main>
+</BaseLayout>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer layout {
+		main {
+			grid-column: md;
+			grid-row: md;
+			background-color: var(--surface-1);
+			container: main / inline-size;
+		}
+	}
+</style>

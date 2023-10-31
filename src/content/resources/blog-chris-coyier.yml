@@ -1,0 +1,10 @@
+title: Chris Coyier
+description: "Chris is a web designer and developer. He created and ran CSS Tricks, and co-founded CodePen!"
+category:
+  singular: ’s Blog
+  plural: Blogs
+checkDate: 2023-10-06
+tags:
+  - css
+  - code-pen
+link: https://chriscoyier.net

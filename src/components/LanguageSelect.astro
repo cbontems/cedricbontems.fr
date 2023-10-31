@@ -1,0 +1,34 @@
+---
+import config from "~config";
+import Select from "~/components/Select.astro";
+const lang = "en";
+---
+
+<site-lang-select>
+	<Select
+		label="Language"
+		value="/"
+		options={Object.entries(config.locales).map(([code, locale]) => ({
+			value: `/${code}/`,
+			selected: code === lang,
+			label: locale!.label,
+		}))}
+	/>
+</site-lang-select>
+
+<script>
+	class SiteLanguageSelect extends HTMLElement {
+		constructor() {
+			super();
+			const select = this.querySelector("select");
+			if (select) {
+				select.addEventListener("change", (e) => {
+					if (e.currentTarget instanceof HTMLSelectElement) {
+						window.location.pathname = e.currentTarget.value;
+					}
+				});
+			}
+		}
+	}
+	customElements.define("site-lang-select", SiteLanguageSelect);
+</script>

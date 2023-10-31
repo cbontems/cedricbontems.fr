@@ -1,0 +1,105 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PostTitle from "~/components/PostTitle.astro";
+import PostToc from "~/components/PostToc.astro";
+import LinkedHeading from "~/components/LinkedHeading.astro";
+import ResourceCard from "~/components/ResourceCard.astro";
+import MarkDownContent from "~/components/MarkDownContent.astro";
+import ResourceTaxonomy from "~/components/ResourceTaxonomy.astro";
+
+let resourcesEntries = await getCollection("resources");
+
+const categories = [
+	...new Set(resourcesEntries.map((resource) => resource.data.category.plural)),
+]
+	.map((category: string) => {
+		return {
+			name: category,
+			resources: resourcesEntries
+				.filter((resource) => resource.data.category.plural === category)
+				.sort((a, b) => {
+					return a.data.title.toLowerCase() > b.data.title.toLowerCase()
+						? 1
+						: -1;
+				}),
+		};
+	})
+	.sort((a, b) => {
+		return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+	});
+const headings = categories.map((category) => {
+	return {
+		depth: 2,
+		slug: category.name.toLowerCase().replace(/\s/g, "-"),
+		text: category.name,
+	};
+});
+
+// Get base data for this page
+const title = ["My Best Resources"];
+const description = "A list of my favorite online resources.";
+---
+
+<BaseLayout title={title.join(" ")} {description} type="single">
+	<PostTitle {title} />
+	<PostToc {headings} />
+	<ResourceTaxonomy />
+	<main>
+		<MarkDownContent>
+			{
+				categories.map((category) => (
+					<section
+						aria-labelledby={category.name.toLowerCase().replace(/\s/g, "-")}
+					>
+						<LinkedHeading
+							level={2}
+							text={category.name}
+							id={category.name.toLowerCase().replace(/\s/g, "-")}
+						/>
+						<ul class="cards not-content">
+							{category.resources.map((resource) => (
+								<li>
+									<ResourceCard {resource} />
+								</li>
+							))}
+						</ul>
+					</section>
+				))
+			}
+		</MarkDownContent>
+	</main>
+
+	<style>
+		@import "open-props/media" layer(base.media);
+		@layer layout {
+			main {
+				grid-column: md;
+				grid-row: md;
+				background-color: var(--surface-1);
+				container: main / inline-size;
+			}
+			section {
+				padding-inline: 2em;
+			}
+			ul.cards {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(min(100%, 28ch), 1fr));
+				grid-template-rows: auto;
+				align-items: stretch;
+				padding-block: 2em;
+				padding-inline: 0;
+				gap: 2ch;
+				list-style: none;
+				li {
+					list-style: none;
+					padding: 0;
+					margin: 0;
+					&::before {
+						content: none;
+					}
+				}
+			}
+		}
+	</style>
+</BaseLayout>

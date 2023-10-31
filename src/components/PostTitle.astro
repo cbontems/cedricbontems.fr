@@ -1,0 +1,58 @@
+---
+type Props = {
+	title: string[];
+};
+const { title }: Props = Astro.props;
+---
+
+<div class="title">
+	<h1 class="single">{title.join(" ")}</h1>
+	<h1 set:html={title.join("<br/>")} class="multiple" />
+</div>
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		.title {
+			position: relative;
+			grid-column: page;
+			grid-row: title;
+			padding-inline: var(--_gutter);
+			background-color: var(--text-1);
+			display: grid;
+			place-items: center;
+			overflow: hidden;
+			:global([data-theme="dark"]) & {
+				background-color: var(--surface-2);
+			}
+		}
+		h1 {
+			padding-block: 1ch;
+			color: var(--surface-1);
+			max-inline-size: min(100%, 25ch);
+			:global([data-theme="dark"]) & {
+				color: var(--text-1);
+			}
+			&::after {
+				content: "-";
+				margin-inline-start: 0.25em;
+				color: var(--neon);
+			}
+			@supports (animation-timeline: scroll()) {
+				animation-timeline: --page-scroll;
+				animation-range: 0 90dvb;
+				animation-fill-mode: both;
+				animation-name: heading-fades-on-scroll;
+			}
+			&.multiple {
+				display: none;
+			}
+		}
+		@keyframes heading-fades-on-scroll {
+			100% {
+				opacity: 0;
+				scale: 0.8;
+				translate: 0px 0.6em;
+			}
+		}
+	}
+</style>

@@ -1,0 +1,58 @@
+[data-theme] {
+	--neon-h: 25;
+	--neon-l: 65%;
+	@media print {
+		--text-1: black;
+		--text-2: #333;
+		--surface-1: white;
+		--surface-2: whitesmoke;
+		--surface-3: gainsboro;
+		--surface-4: silver;
+		--accent: var(--neon);
+	}
+}
+
+[data-theme="light"] {
+	--text-1: black;
+	--text-2: #333;
+	--surface-1: white;
+	--surface-2: whitesmoke;
+	--surface-3: gainsboro;
+	--surface-4: silver;
+	--neon-l: 65%;
+	--accent: var(--neon);
+
+	--astro-code-color-text: var(--text-2);
+	--astro-code-color-background: var(--surface-1);
+	--astro-code-token-constant: var(--neon-blue);
+	--astro-code-token-string: var(--neon-green);
+	--astro-code-token-comment: var(--surface-4);
+	--astro-code-token-keyword: var(--neon-purple);
+	--astro-code-token-parameter: var(--neon-red);
+	--astro-code-token-function: var(--neon-red);
+	--astro-code-token-string-expression: var(--neon-green);
+	--astro-code-token-punctuation: var(--text-2);
+	--astro-code-token-link: var(--neon-blue);
+}
+[data-theme="dark"] {
+	--text-1: white;
+	--text-2: gainsboro;
+	--surface-1: black;
+	--surface-2: #151515;
+	--surface-3: #303030;
+	--surface-4: #454545;
+	--neon-l: 65%;
+	--accent: var(--neon);
+
+	--astro-code-color-text: var(--text-2);
+	--astro-code-color-background: var(--surface-1);
+	--astro-code-token-constant: var(--neon-blue);
+	--astro-code-token-string: var(--neon-green);
+	--astro-code-token-comment: var(--surface-4);
+	--astro-code-token-keyword: var(--neon-purple);
+	--astro-code-token-parameter: var(--neon-red);
+	--astro-code-token-function: var(--neon-red);
+	--astro-code-token-string-expression: var(--neon-green);
+	--astro-code-token-punctuation: var(--text-2);
+	--astro-code-token-link: var(--neon-blue);
+}

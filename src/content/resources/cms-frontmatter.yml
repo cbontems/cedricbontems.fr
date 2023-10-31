@@ -1,0 +1,10 @@
+title: FrontMatter
+description: "Front Matter is a CMS that runs within Visual Studio Code, giving you enhanced control over your static generator's content. This approach enables you to craft and preview your work in real-time without the need for complex configurations."
+category:
+  singular: " CMS"
+  plural: Content Management Systems (CMS)
+checkDate: 2023-10-13
+tags:
+  - cms
+  - javascript
+link: https://frontmatter.codes/

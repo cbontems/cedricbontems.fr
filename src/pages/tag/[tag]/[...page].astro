@@ -1,0 +1,121 @@
+---
+import type { GetStaticPathsOptions, Page } from "astro";
+import config from "~config";
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PostTitle from "~/components/PostTitle.astro";
+import ArchiveTaxonomy from "~/components/ArchiveTaxonomy.astro";
+import BlogCard from "~/components/BlogCard.astro";
+import Pagination from "~/components/Pagination.astro";
+import { categoriesAndCounts } from "~/helpers/taxonomies";
+import { capitalize } from "~/helpers/typography";
+
+type Params = {
+	tag: string;
+};
+
+const { tag } = Astro.params as Params;
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+	const allPosts = await getCollection(
+		"blog",
+		({ data }) => data.publishDate <= new Date(),
+	);
+
+	const allTags = allPosts.flatMap((post) => post.data.tags);
+	const uniqueTags = [...new Set(allTags)];
+
+	const sortedPosts = allPosts.sort(
+		(a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
+	);
+
+	const paths = uniqueTags.flatMap((tag) => {
+		const tagPosts = sortedPosts.filter((post) => post.data.tags.includes(tag));
+		return paginate(tagPosts, {
+			params: {
+				tag,
+			},
+			props: {
+				tag,
+				posts: tagPosts,
+			},
+			pageSize: config.postsPerPage,
+		});
+	});
+	return paths;
+}
+
+type Props = {
+	page: Page<CollectionEntry<"blog">>;
+};
+const { page }: Props = Astro.props;
+
+const allPages = [...Array(page.lastPage).keys()].map((num) => {
+	return `/tag/${tag}${num === 0 ? "" : `/${String(num + 1)}`}`;
+});
+const title = ["All Posts", `Tagged ${capitalize(tag)}`];
+const description = `A collection of all available posts tagged with ${capitalize(
+	tag,
+)}.`;
+
+const categories = categoriesAndCounts(tag);
+---
+
+<BaseLayout
+	title={`Posts tagged ${capitalize(tag)}`}
+	{description}
+	type="single"
+>
+	<PostTitle title={title} />
+	<ArchiveTaxonomy {categories} />
+	<main>
+		<ul>
+			{
+				page.data.map((post) => {
+					return (
+						<li>
+							<BlogCard {post} />
+						</li>
+					);
+				})
+			}
+		</ul>
+		<Pagination allPages={allPages} page={page} />
+	</main>
+</BaseLayout>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer layout {
+		main {
+			grid-column: md-start / toc-end;
+			grid-row: md;
+			background-color: var(--surface-1);
+			container: main / inline-size;
+		}
+	}
+	@layer component {
+		ul {
+			display: grid;
+			grid-template-columns: repeat(
+				auto-fill,
+				[col-start] minmax(30ch, 1fr) [col-end]
+			);
+			grid-template-rows: repeat(
+				auto-fill,
+				[row-start] minmax(auto, 100%) [row-end]
+			);
+			padding-block-end: 2em;
+			padding-inline: 0;
+			gap: 1em;
+			@media (--sm-n-above) {
+				gap: 3vi;
+			}
+		}
+		li {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+	}
+</style>

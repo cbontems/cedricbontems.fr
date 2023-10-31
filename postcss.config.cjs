@@ -8,7 +8,8 @@ module.exports = {
 		postcssImport(),
 		postcssJitProps({
 			...OpenProps,
-			custom_selector: "html",
+			custom_selector: ":root",
+			layer: "base.tokens",
 		}),
 		postcssPresetEnv({
 			stage: 0,
@@ -24,6 +25,8 @@ module.exports = {
 				"focus-within-pseudo-class": false,
 				"color-functional-notation": false,
 				"double-position-gradients": false,
+				"cascade-layers": false,
+				"is-pseudo-class": false,
 			},
 		}),
 	],

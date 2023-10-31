@@ -1,0 +1,9 @@
+title: Using ARIA
+description: "This document is a practical guide for developers on how to add accessibility information to HTML elements using the Accessible Rich Internet Applications specification [WAI-ARIA-1.1]."
+category:
+  singular: ""
+  plural: Accessibility
+checkDate: 2023-10-13
+tags:
+  - a11y
+link: https://www.w3.org/TR/using-aria/

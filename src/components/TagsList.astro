@@ -1,0 +1,36 @@
+---
+import type { Taxonomy } from "~/helpers/taxonomies";
+import Tag from "~/components/Tag.astro";
+
+type Props = {
+	tags: Taxonomy[];
+};
+
+const { tags }: Props = Astro.props;
+---
+
+<ul aria-label="Tags" class="tags">
+	{
+		tags.map((tag) => (
+			<li>
+				<Tag {tag}>{tag}</Tag>
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		.tags {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			font-size: 80%;
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 0.25em;
+		}
+	}
+</style>

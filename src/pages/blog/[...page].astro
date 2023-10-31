@@ -1,0 +1,108 @@
+---
+import type { GetStaticPathsOptions, Page } from "astro";
+import { type CollectionEntry, getCollection } from "astro:content";
+import config from "~config";
+import { categoriesAndCounts, tagsAndCounts } from "~/helpers/taxonomies";
+
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PostTitle from "~/components/PostTitle.astro";
+import BlogCard from "~/components/BlogCard.astro";
+import Pagination from "~/components/Pagination.astro";
+import ArchiveTaxonomy from "~/components/ArchiveTaxonomy.astro";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+	const allPosts = await getCollection(
+		"blog",
+		({ data }) => data.publishDate <= new Date(),
+	);
+	const sortedPosts = allPosts.sort(
+		(a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
+	);
+
+	// Future i18n. ---------------------
+	// const allLangs = Object.keys(config.locales);
+	//   return allLangs.flatMap((lang) => {
+	//     const filteredPosts = sortedPosts.filter((post) => {
+	//       const [postLang, ..._] = post.slug.split("/");
+	//       return postLang === lang;
+	//     });
+	//     return paginate(filteredPosts, {
+	//       params: { lang },
+	//       pageSize: config.postsPerPage,
+	//     });
+	//   });
+
+	return paginate(sortedPosts, {
+		pageSize: config.postsPerPage,
+	});
+}
+
+type Props = {
+	page: Page<CollectionEntry<"blog">>;
+};
+const { page }: Props = Astro.props;
+
+const allPages = [...Array(page.lastPage).keys()].map((num) => {
+	return `/blog${num === 0 ? "" : `/${String(num + 1)}`}`;
+});
+
+const title = "All Posts Archive";
+const description = "A list of all posts on the site.";
+const categories = categoriesAndCounts();
+const tags = tagsAndCounts();
+---
+
+<BaseLayout title={title} {description} type="single">
+	<PostTitle title={[title]} />
+	<ArchiveTaxonomy {categories} {tags} />
+	<main>
+		<ul>
+			{
+				page.data.map((post) => {
+					return (
+						<li>
+							<BlogCard {post} />
+						</li>
+					);
+				})
+			}
+		</ul>
+		<Pagination allPages={allPages} page={page} />
+	</main>
+</BaseLayout>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer layout {
+		main {
+			grid-column: md-start / toc-end;
+			grid-row: md;
+			background-color: var(--surface-1);
+			container: main / inline-size;
+		}
+	}
+	@layer component {
+		ul {
+			display: grid;
+			grid-template-columns: repeat(
+				auto-fill,
+				[col-start] minmax(30ch, 1fr) [col-end]
+			);
+			grid-template-rows: repeat(
+				auto-fill,
+				[row-start] minmax(auto, 100%) [row-end]
+			);
+			padding-block-end: 2em;
+			padding-inline: 0;
+			gap: 1em;
+			@media (--sm-n-above) {
+				gap: 3vi;
+			}
+		}
+		li {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+	}
+</style>

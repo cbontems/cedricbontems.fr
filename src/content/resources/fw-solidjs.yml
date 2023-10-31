@@ -1,0 +1,9 @@
+title: SolidJS
+description: Solid is a purely reactive library. It was designed from the ground up with a reactive core. It's influenced by reactive principles developed by previous libraries like React.
+category:
+  singular: ""
+  plural: Frameworks
+checkDate: 2023-10-06
+tags:
+  - javascript
+link: https://www.solidjs.com/

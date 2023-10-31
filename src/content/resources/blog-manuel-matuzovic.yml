@@ -1,0 +1,10 @@
+title: Manuel Matuzović
+description: "Manuel is a frontend developer from Vienna. I'm specialized in HTML, accessibility, and CSS layout and architecture."
+category:
+  singular: ’s Blog
+  plural: Blogs
+checkDate: 2023-10-06
+tags:
+  - a11y
+  - css
+link: https://lea.verou.me

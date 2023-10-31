@@ -1,0 +1,61 @@
+---
+type Props = {
+	level: number;
+	id: string;
+	text: string;
+	label?: string;
+};
+type Heading = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+const { level, id, text, label }: Props = Astro.props;
+const Element = `h${level.toString()}` as Heading;
+---
+
+<Element id={id} class="element">
+	{text}<a class="anchor-link noprint" href={`#${id}`}
+		><span aria-hidden="true" class="anchor-hash">#</span><span class="sr-only"
+			>Section titled {label ? label : text}</span
+		></a
+	>
+</Element>
+
+<style>
+	.element {
+		@media (--xl-n-above) {
+			margin-inline-start: -1rem;
+		}
+		padding-inline-end: 1em;
+		position: relative;
+		& :global(a) {
+			position: absolute;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			inline-size: 1em;
+			block-size: 1em;
+			padding: 0;
+			margin: 0;
+			inset-inline-end: 0;
+			color: var(--neon);
+			text-decoration: none;
+			font-style: normal;
+			border: var(--border) solid transparent;
+			border-radius: var(--radius-round);
+			&:hover {
+				background-color: var(--neon);
+				color: var(--surface-1);
+				border-color: var(--neon);
+			}
+			@media (--lg-n-above) {
+				inset-block-start: 25%;
+				font-size: 0.65em;
+			}
+			@media (--xl-n-above) {
+				inset-block-start: 50%;
+				inset-inline-end: unset;
+				inset-inline-start: -1rem;
+				transform: translate(-100%, -50%);
+			}
+		}
+	}
+</style>

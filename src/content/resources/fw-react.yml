@@ -1,0 +1,9 @@
+title: React
+description: My first pick for SPA and WordPress plugins. React lets you build user interfaces out of individual pieces called components.
+category:
+  singular: ""
+  plural: Frameworks
+checkDate: 2023-10-06
+tags:
+  - javascript
+link: https://react.dev/

@@ -1,79 +1,37 @@
 ---
-import { Icon } from "astro-icon";
+import SearchIcon from "~/icons/SearchIcon";
 export interface Props {
-	id: string;
 	placeholder: string;
 	selector: string;
 	groupSelector?: string;
 }
-const { id, placeholder, selector, groupSelector } = Astro.props as Props;
+const { placeholder, selector, groupSelector } = Astro.props as Props;
+const inlineStyle = `
+    ${selector}[hidden] {
+        display: none;
+    }
+`;
 ---
 
-<form>
-	<label>
-		<input type="text" id={id} placeholder={placeholder} autofocus />
-		<div>
-			<Icon
-				pack="heroicons-outline"
-				name="search"
-				size={24}
-				aria-hidden="true"
-			/>
-		</div>
-		<span class="sr-only">Search</span>
-	</label>
-</form>
+<label>
+	<input
+		type="text"
+		id="resourcesSearch"
+		placeholder={placeholder}
+		data-selector={selector}
+		data-group-selector={groupSelector}
+	/>
+	<div>
+		<SearchIcon width={24} aria-hidden="true" />
+	</div>
+	<span class="sr-only visually-hidden">Search</span>
+</label>
 
-<style>
-	@import "~/styles/media.css";
-	form {
-		display: flex;
-		justify-content: flex-end;
-		width: calc(25ch + 2.5rem);
-		min-width: calc(25ch + 2.5rem);
-		margin-inline: auto;
-		margin-block: var(--size-4);
-	}
-	label {
-		display: flex;
-		align-items: center;
-		border-radius: var(--radius-round);
-		background-color: var(--input-color);
-		padding: var(--size-1) var(--size-2);
-		&:focus-within {
-			outline-color: var(--brand, var(--link));
-			outline-style: solid;
-			outline-width: initial;
-			outline-offset: 5px;
-			@media (--motionOK) {
-				transition-duration: 0.25s;
-				transition: outline-offset 145ms var(--ease-2);
-			}
-		}
-	}
-
-	input {
-		background-color: transparent;
-		line-height: 2.5rem;
-		width: 40ch;
-		padding-inline-start: 2ch;
-		outline: none;
-	}
-	div {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.5rem;
-		height: 2.5rem;
-		border-radius: var(--radius-round);
-		background-color: var(--brand);
-		color: var(--always-white);
-	}
-</style>
+<style set:html={inlineStyle}></style>
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=URLSearchParams"
 ></script>
-<script type="module" define:vars={{ selector, groupSelector, id }}>
+<script>
 	/* https://gomakethings.com/how-to-create-a-search-page-for-a-static-website-with-vanilla-js/ */
 	const stopWords = [
 		"a",
@@ -127,23 +85,31 @@ const { id, placeholder, selector, groupSelector } = Astro.props as Props;
 		"javascript",
 		"js",
 	];
-	const input = document.getElementById(id);
+	const input = document.getElementById("resourcesSearch") as HTMLInputElement;
+	const selector = input?.dataset.selector || "article";
+	const groupSelector = input?.dataset.groupSelector;
 	const items = document.querySelectorAll(selector);
 	const groups = groupSelector ? document.querySelectorAll(groupSelector) : [];
 	const FPS_30 = 1000 / 30;
-	function debounce(fn, timeout = 150) {
-		let timer;
-		return (...args) => {
+
+	const debounce = (callback: () => void, timeout = 150) => {
+		let timer: NodeJS.Timeout;
+		return (...args: any) => {
 			clearTimeout(timer);
-			timer = setTimeout(() => fn.apply(this, args), timeout);
+			timer = setTimeout(() => callback.apply(this, args), timeout);
 		};
-	}
+	};
+
+	const updateOpen = () => {
+		requestAnimationFrame(() => {
+			!!input.value || document.activeElement === input
+				? input.parentElement?.setAttribute("open", "")
+				: input.parentElement?.removeAttribute("open");
+		});
+	};
 
 	const update = () => {
-		if (input.value.length === 0) {
-			updateURL();
-			return;
-		}
+		updateOpen();
 		const regexMap = input.value
 			.toLowerCase()
 			.split(" ")
@@ -170,10 +136,10 @@ const { id, placeholder, selector, groupSelector } = Astro.props as Props;
 		if (q) {
 			const params = new URLSearchParams();
 			params.set("q", q);
-			window.history.replaceState(null, null, `?${params.toString()}`);
+			window.history.replaceState(null, "", `?${params.toString()}`);
 		} else {
 			const [href] = window.location.href.split("?");
-			window.history.replaceState(null, null, href);
+			window.history.replaceState(null, "", href);
 		}
 	};
 	const hydrateQuery = () => {
@@ -181,9 +147,38 @@ const { id, placeholder, selector, groupSelector } = Astro.props as Props;
 		input.value = params.get("q") || "";
 	};
 	input.addEventListener("input", debounce(update, FPS_30), true);
+	input.addEventListener("focus", updateOpen, true);
+	input.addEventListener("blur", updateOpen, true);
 	hydrateQuery();
 	update();
-	window.addEventListener("load", function (e) {
-		window.setTimeout(() => input.focus(), 0);
-	});
 </script>
+<style>
+	label {
+		display: flex;
+		padding: 0;
+		border: var(--border) solid var(--text-1);
+	}
+	input {
+		font-family: var(--font-body);
+		padding-inline: 0.5em;
+		background-color: transparent;
+		outline: none;
+		line-height: 2.5rem;
+		width: 25ch;
+	}
+	input::placeholder {
+		color: var(--text-2);
+		opacity: 75%;
+	}
+	div {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		inline-size: 3rem;
+		aspect-ratio: 1;
+		border-radius: 0;
+		border-inline-start: var(--border) solid var(--text-1);
+		background-color: var(--neon);
+		color: var(--surface-1);
+	}
+</style>

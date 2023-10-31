@@ -1,0 +1,509 @@
+<div class="content">
+	<slot />
+</div>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component.markdown {
+		@property --_thickness {
+			syntax: "<length>";
+			inherits: false;
+			initial-value: 0px;
+		}
+		@property --_offset {
+			syntax: "<length>";
+			inherits: false;
+			initial-value: 0px;
+		}
+		.content {
+			max-inline-size: min(60ch, 100%);
+			margin-inline: auto;
+
+			/* Give breathing room */
+			&
+				:global(
+					:not(a, strong, em, del, span, input, code)
+						+ :not(
+							a,
+							strong,
+							em,
+							del,
+							span,
+							input,
+							code,
+							:where(.not-content *)
+						)
+				) {
+				margin-block-start: 1.5em;
+			}
+			/* Headings after non-headings have more spacing. */
+			&
+				:global(
+					:not(h1, h2, h3, h4, h5, h6)
+						+ :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *))
+				) {
+				margin-block-start: 1.5em;
+			}
+
+			& :global(::marker) {
+				color: var(--neon);
+				font-family: var(--font-display);
+			}
+			& :global(:is(ol, ul)) {
+				list-style-type: none;
+
+				@media (--lg-n-above) {
+					margin-inline-start: 0;
+					padding-inline-start: 0;
+				}
+			}
+			& :global(:is(ol, ul) > li) {
+				margin: 0;
+				padding: 0;
+				&::before {
+					color: var(--neon);
+					display: block;
+					font-family: "Roslindale Display";
+					font-weight: 900;
+					font-style: normal;
+					font-size: 1em;
+					block-size: 1rem;
+					position: relative;
+					inset-block-start: 0.8em;
+					inset-inline-end: 1.75em;
+					inline-size: 3em;
+				}
+			}
+			& :global(ol) {
+				counter-reset: counter;
+			}
+			& :global(ol > li) {
+				counter-increment: counter;
+			}
+			& :global(ol > li::before) {
+				content: counter(counter) " ·";
+			}
+			& :global(ul > li::before) {
+				content: "";
+			}
+
+			/* lists have less spacing. */
+			& :global(li + li:not(:where(.not-content *))),
+			& :global(dt + dt:not(:where(.not-content *))),
+			& :global(dt + dd:not(:where(.not-content *))),
+			& :global(dd + dd:not(:where(.not-content *))) {
+				margin-block-start: 0.25em;
+			}
+			&
+				:global(
+					li
+						> :last-child:not(li, ul, ol):not(
+							p,
+							a,
+							strong,
+							em,
+							del,
+							span,
+							input,
+							:where(.not-content *)
+						)
+				) {
+				margin-block-end: 1.25em;
+			}
+
+			& :global(dt:not(:where(.not-content *))) {
+				font-family: var(--font-display);
+			}
+			& :global(dd:not(:where(.not-content *))) {
+				padding-inline-start: 1em;
+			}
+
+			/* Styling media */
+			&
+				:global(
+					:is(img, picture, video, canvas, svg, iframe, embed, object):not(
+							:where(.not-content *)
+						)
+				) {
+				display: block;
+			}
+			& :global(:is(img, svg, video):not(:where(.not-content *))) {
+				max-inline-size: 100%;
+				block-size: auto;
+			}
+
+			/* Styling headings */
+			& :global(:is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *))) {
+				color: var(--text-1);
+				line-height: var(--lineheight-display);
+				font-family: var(--font-display);
+			}
+
+			& :global(h1:not(:where(.not-content *))) {
+				font-size: 1.5em;
+				@media (--xxs-n-above) {
+					font-size: 1.8em;
+				}
+				@media (--xs-n-above) {
+					font-size: 2.5em;
+				}
+				@media (--sm-n-above) {
+					font-size: 3em;
+				}
+				@media (--md-n-above) {
+					font-size: 5em;
+				}
+				@media (--lg-n-above) {
+					font-size: 8em;
+				}
+				@media (--xl-n-above) {
+					font-size: 9em;
+				}
+				@media (--xxl-n-above) {
+					font-size: 9em;
+				}
+			}
+			& :global(h2:not(:where(.not-content *))) {
+				font-size: 1.25em;
+				@media (--xxs-n-above) {
+					font-size: 1.5em;
+				}
+				@media (--xs-n-above) {
+					font-size: 2em;
+				}
+				@media (--sm-n-above) {
+					font-size: 3em;
+				}
+				@media (--md-n-above) {
+					font-size: 4em;
+				}
+				@media (--lg-n-above) {
+					font-size: 4em;
+				}
+				@media (--xl-n-above) {
+					font-size: 4.6em;
+				}
+				@media (--xxl-n-above) {
+					font-size: 5em;
+				}
+			}
+			& :global(h3:not(:where(.not-content *))) {
+				font-size: 1.15em;
+				@media (--xxs-n-above) {
+					font-size: 1.35em;
+				}
+				@media (--xs-n-above) {
+					font-size: 1.7em;
+				}
+				@media (--sm-n-above) {
+					font-size: 2.1em;
+				}
+				@media (--md-n-above) {
+					font-size: 2.75em;
+				}
+				@media (--lg-n-above) {
+					font-size: 2.75em;
+				}
+				@media (--xl-n-above) {
+					font-size: 3.15em;
+				}
+				@media (--xxl-n-above) {
+					font-size: 3.5em;
+				}
+			}
+			& :global(h4:not(:where(.not-content *))) {
+				font-size: 1.1em;
+				@media (--xxs-n-above) {
+					font-size: 1.2em;
+				}
+				@media (--xs-n-above) {
+					font-size: 1.45em;
+				}
+				@media (--sm-n-above) {
+					font-size: 1.65em;
+				}
+				@media (--md-n-above) {
+					font-size: 2.25em;
+				}
+				@media (--lg-n-above) {
+					font-size: 2.25em;
+				}
+				@media (--xl-n-above) {
+					font-size: 2.55em;
+				}
+				@media (--xxl-n-above) {
+					font-size: 2.75em;
+				}
+			}
+			& :global(h5:not(:where(.not-content *))) {
+				font-size: 1.05em;
+				@media (--xxs-n-above) {
+					font-size: 1.125em;
+				}
+				@media (--xs-n-above) {
+					font-size: 1.25em;
+				}
+				@media (--sm-n-above) {
+					font-size: 1.4em;
+				}
+				@media (--md-n-above) {
+					font-size: 1.7em;
+				}
+				@media (--lg-n-above) {
+					font-size: 1.7em;
+				}
+				@media (--xl-n-above) {
+					font-size: 1.85em;
+				}
+				@media (--xxl-n-above) {
+					font-size: 2em;
+				}
+			}
+			& :global(h6:not(:where(.not-content *))) {
+				font-size: 1em;
+				@media (--xxs-n-above) {
+					font-size: 1.1em;
+				}
+				@media (--xs-n-above) {
+					font-size: 1.15em;
+				}
+				@media (--sm-n-above) {
+					font-size: 1.2em;
+				}
+				@media (--md-n-above) {
+					font-size: 1.3em;
+				}
+				@media (--lg-n-above) {
+					font-size: 1.3em;
+				}
+				@media (--xl-n-above) {
+					font-size: 1.4em;
+				}
+				@media (--xxl-n-above) {
+					font-size: 1.5em;
+				}
+			}
+			& :global(:is(h1, h2, h3, h4, h5, h6)[id]) {
+				@media (--xl-n-above) {
+					margin-inline-start: -1rem;
+				}
+				padding-inline-end: 1em;
+				position: relative;
+				& :global(a) {
+					position: absolute;
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					inline-size: 1em;
+					block-size: 1em;
+					padding: 0;
+					margin: 0;
+					inset-inline-end: 0;
+					color: var(--neon);
+					text-decoration: none;
+					font-style: normal;
+					border: var(--border) solid transparent;
+					border-radius: var(--radius-round);
+					&:hover {
+						background-color: var(--neon);
+						color: var(--surface-1);
+						border-color: var(--neon);
+					}
+					@media (--lg-n-above) {
+						inset-block-start: 25%;
+						font-size: 0.65em;
+					}
+					@media (--xl-n-above) {
+						inset-block-start: 50%;
+						inset-inline-end: unset;
+						inset-inline-start: -1rem;
+						transform: translate(-100%, -50%);
+					}
+				}
+			}
+			/* Styling text links */
+			& :global(a:not(.anchor-link, :where(.not-content *))) {
+				--_thickness: 0.1em;
+				--_offset: 0.25em;
+				color: var(--neon);
+				font-style: italic;
+				text-decoration: underline;
+				text-decoration-color: var(--neon);
+				text-decoration-thickness: var(--_thickness);
+				text-underline-offset: var(--_offset);
+				transition:
+					--_thickness 250ms ease,
+					--_offset 250ms ease,
+					outline-offset 145ms ease;
+				&:hover {
+					--_thickness: 0.5em;
+					--_offset: 0.5em;
+				}
+				&:visited {
+					color: var(--text-2);
+				}
+			}
+
+			/* Styling code blocks */
+			& :global(code:not(:where(.not-content *))) {
+				background-color: var(--surface-3);
+				padding: 0.125ch 0.375ch;
+				border-radius: var(--radius);
+			}
+			& :global(:is(h1, h2, h3, h4, h5, h6) code) {
+				font-size: inherit;
+			}
+			& :global(pre:not(:where(.not-content *))) {
+				border: var(--border-size-1) dotted var(--text-1);
+				padding: 0.75em 1em;
+				tab-size: 2;
+			}
+			& :global(pre code:not(:where(.not-content *))) {
+				all: unset;
+				font-family: var(--font-code);
+			}
+			/* Styling blocquotes */
+			& :global(blockquote:not(:where(.not-content *))) {
+				border-inline-start: var(--border) solid var(--neon);
+				padding-inline-start: 1rem;
+			}
+
+			/* Styling custom Asides */
+			& :global(.aside:not(:where(.not-content *))) {
+				--asides-text-accent: var(--neon);
+				padding: 1rem;
+				border-inline-start: var(--border) solid;
+				color: var(--text-1);
+				border-color: var(--asides-text-accent);
+				background-color: var(--surface-1);
+				@supports (color: color-mix(in lab, #fff, #000)) {
+					background-color: color-mix(
+						in lab,
+						var(--asides-text-accent),
+						var(--surface-1) 96%
+					);
+				}
+			}
+			& :global(.aside--note:not(:where(.not-content *))) {
+				--neon-h: 240;
+				--neon-l: 50%;
+			}
+			& :global(.aside--tip:not(:where(.not-content *))) {
+				--neon-h: 310;
+				--neon-l: 50%;
+			}
+			& :global(.aside--caution:not(:where(.not-content *))) {
+				--neon-h: 100;
+				--neon-l: 50%;
+			}
+			& :global(.aside--danger:not(:where(.not-content *))) {
+				--neon-h: 25;
+				--neon-l: 50%;
+			}
+			& :global(.aside--success:not(:where(.not-content *))) {
+				--neon-h: 145;
+				--neon-l: 50%;
+			}
+
+			& :global(.aside__title:not(:where(.not-content *))) {
+				display: flex;
+				gap: 0.5em;
+				align-items: center;
+				margin-block: 0;
+				font-family: var(--font-code);
+				font-variation-settings:
+					"wght" 500,
+					"wdth" 70;
+				line-height: 1em;
+				color: var(--asides-text-accent);
+			}
+
+			& :global(.aside__icon:not(:where(.not-content *))) {
+				font-size: 1.333em;
+				width: 1em;
+				height: 1em;
+			}
+
+			& :global(.aside__title + .aside__content:not(:where(.not-content *))) {
+				margin-block-start: 0.5rem;
+			}
+
+			& :global(.aside__content p:not(:where(.not-content *))) {
+				margin-block: 0;
+				font-family: var(--font-code);
+				font-variation-settings:
+					"wght" 300,
+					"wdth" 70;
+			}
+
+			& :global(table:not(:where(.not-content *))) {
+				display: block;
+				overflow: auto;
+				border-collapse: collapse;
+			}
+			& :global(tr:nth-child(2n):not(:where(.not-content *))) {
+				background-color: var(--surface-2);
+			}
+			& :global(:is(th, td):not(:where(.not-content *))) {
+				border: var(--border) solid var(--surface-3);
+				padding: 0.375rem 0.8125rem;
+			}
+
+			& :global(hr:not(:where(.not-content *))) {
+				position: relative;
+				isolation: isolate;
+				margin: 4rem;
+				height: var(--border);
+				background-color: var(--neon);
+				overflow: visible;
+				&::after {
+					content: "⊙";
+					display: grid;
+					place-items: center;
+					position: absolute;
+					inset-inline-start: 50%;
+					inset-block-start: 50%;
+					inline-size: 2rem;
+					block-size: 2rem;
+					line-height: 0;
+					font-weight: bold;
+					color: var(--neon);
+					border-radius: 50%;
+					transform: translate(-50%, -50%);
+					background: var(--surface-1);
+					text-align: center;
+					z-index: 1;
+				}
+			}
+
+			& > :global(p) {
+				text-wrap: pretty;
+				&:first-of-type {
+					&:first-line {
+						font-weight: bold;
+					}
+					&:first-letter {
+						float: left;
+						float: inline-start;
+						font-size: 5ch;
+						font-size: 2lh;
+						font-weight: bold;
+						line-height: 0.85;
+						margin-inline-end: 0.5rem;
+						text-transform: uppercase;
+						@supports (initial-letter: 2) {
+							initial-letter: 2;
+							float: none;
+							line-height: 1;
+						}
+					}
+				}
+			}
+
+			& :global(pre) {
+				margin-block: 3em;
+				padding: 1ch 2ch;
+			}
+		}
+	}
+</style>

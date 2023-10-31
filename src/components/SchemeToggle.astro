@@ -1,22 +1,29 @@
----
-const randInteger = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
-const suffix = randInteger(1, 1000000);
----
 <button
 	class="theme-toggle"
-	id={`theme-toggle-${suffix}`}
+	id="theme-toggle"
 	title="Toggles light & dark"
-	aria-label="auto"
+	aria-label="dark"
 	aria-live="polite"
 >
-	<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
-		<!-- https://feathericons.com/?query=sun -->
-		<mask id="moon">
+	<svg
+		class="sun-and-moon"
+		aria-hidden="true"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+	>
+		<mask class="moon" id="moon-mask">
 			<rect x="0" y="0" width="100%" height="100%" fill="white"></rect>
-			<circle cx="40" cy="8" r="11" fill="black"></circle>
+			<circle cx="24" cy="10" r="6" fill="black"></circle>
 		</mask>
-		<circle id="sun" cx="12" cy="12" r="11" mask="url(#moon)"></circle>
-		<g id="sun-beams">
+		<circle
+			class="sun"
+			cx="12"
+			cy="12"
+			r="6"
+			mask="url(#moon-mask)"
+			fill="currentColor"></circle>
+		<g class="sun-beams" stroke="currentColor">
 			<line x1="12" y1="1" x2="12" y2="3"></line>
 			<line x1="12" y1="21" x2="12" y2="23"></line>
 			<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
@@ -29,70 +36,99 @@ const suffix = randInteger(1, 1000000);
 	</svg>
 </button>
 
-<style is:global>
-	.theme-toggle {
-		background: none;
-		--nav-icon: var(--_color);
-		--nav-icon-hover: var(--_color);
-		transition: scale 0.15s var(--ease-in-out-3);
-            &:hover {
-                scale: 0.8;
-            }
-	}
-
-	#moon,
-	#sun {
-		fill: var(--nav-icon);
-		stroke: none;
-
-		:hover > svg > & {
-			fill: var(--nav-icon-hover);
-		}
-	}
-
-	#sun {
-		transition: transform 0.5s var(--ease-4);
-		transform-origin: center center;
-	}
-
-	#sun-beams {
-		--_opacity-dur: 0.15s;
-		stroke: var(--nav-icon);
-		stroke-width: 2px;
-		transform-origin: center center;
-		transition: transform 0.5s var(--ease-elastic-4),
-			opacity var(--_opacity-dur) var(--ease-3);
-
-		:hover > svg > & {
-			stroke: var(--nav-icon-hover);
-		}
-	}
-
-	#moon > circle {
-		transition: transform 0.5s var(--ease-out-3);
-	}
-
-	[data-theme="light"] {
-		& #sun {
-			transform: scale(0.5);
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		.theme-toggle {
+			--size: 40px;
+			--icon-fill: var(--surface-1);
+			--icon-fill-hover: var(--neon);
+			:global([data-theme="dark"]) & {
+				--icon-fill: var(--text-1);
+			}
+			-webkit-tap-highlight-color: transparent;
+			aspect-ratio: var(--ratio-square);
+			background: none;
+			block-size: var(--size);
+			border: none;
+			border-radius: var(--radius-round);
+			cursor: pointer;
+			inline-size: var(--size);
+			padding: calc(var(--size-2) + 2px);
+			touch-action: manipulation;
+			outline-color: var(--surface-1);
+			& > svg {
+				stroke-linecap: round;
+				block-size: 100%;
+				inline-size: 100%;
+			}
+			[nojs] & {
+				display: none;
+			}
 		}
 
-		& #sun-beams {
-			transform: rotateZ(0.25turn);
-			--_opacity-dur: 0.5s;
+		.sun-and-moon {
+			& > :is(.moon, .sun, .sun-beams) {
+				transform-origin: center center;
+			}
+			& > :is(.moon, .sun) {
+				fill: var(--icon-fill);
+			}
+			& > .sun-beams {
+				stroke: var(--icon-fill);
+				stroke-width: 2px;
+			}
+			&:is(:hover, :focus-visible) {
+				& :is(.sun-and-moon > :is(.moon, .sun)) {
+					fill: var(--icon-fill-hover);
+				}
+				& :is(.sun-and-moon > .sun-beams) {
+					stroke: var(--icon-fill-hover);
+				}
+			}
+			:global([data-theme="dark"]) & {
+				& > .sun {
+					transform: scale(1.75);
+					transition-duration: 0.25s;
+					transition-timing-function: var(--ease-3);
+				}
+				& > .sun-beams {
+					opacity: 0;
+					transform: rotate(-25deg);
+					transition-duration: 0.15s;
+				}
+				& > .moon > circle {
+					transform: translateX(-7px);
+					transition-delay: 0.25s;
+					transition-duration: 0.5s;
+					@supports (cx: 1) {
+						cx: 17;
+						transform: translateX(0);
+					}
+				}
+			}
 		}
-	}
-
-	[data-theme="dark"] {
-		& #moon > circle {
-			transform: translateX(-20px);
-		}
-
-		& #sun-beams {
-			opacity: 0;
+		@media (--motionOK) {
+			.sun-and-moon {
+				& > .sun {
+					transition: transform 0.5s var(--ease-elastic-out-3);
+					& > .sun-beams {
+						transition:
+							transform 0.5s var(--ease-elastic-out-4),
+							opacity 0.5s var(--ease-3);
+					}
+					& .moon > circle {
+						transition: transform 0.25s var(--ease-out-5);
+						@supports (cx: 1) {
+							transition: cx 0.25s var(--ease-out-5);
+						}
+					}
+				}
+			}
 		}
 	}
 </style>
+
 <script>
 	// theme toggle
 	const getColorPreference = () => {
@@ -114,13 +150,9 @@ const suffix = randInteger(1, 1000000);
 			"data-theme",
 			theme.value ?? "light",
 		);
-		// document
-		// 	.querySelector("#theme-toggle")
-		// 	?.setAttribute("aria-label", theme.value ?? "light");
-
-		document.querySelectorAll(".theme-toggle").forEach((el) => {
-			el.setAttribute("aria-label", theme.value ?? "light");
-		});
+		document
+			.querySelector("#theme-toggle")
+			?.setAttribute("aria-label", theme.value ?? "light");
 	};
 
 	const theme = {
@@ -134,15 +166,10 @@ const suffix = randInteger(1, 1000000);
 		// set on load so screen readers can see latest value on the button
 		reflectPreference();
 
-		// document.querySelector("#theme-toggle")?.addEventListener("click", (e) => {
-		// 	theme.value = theme.value === "light" ? "dark" : "light";
-		// 	setPreference();
-		// });
-		document.querySelectorAll(".theme-toggle").forEach((el) => {
-			el.addEventListener("click", (e) => {
-				theme.value = theme.value === "light" ? "dark" : "light";
-				setPreference();
-			});
+		document.querySelector("#theme-toggle")?.addEventListener("click", () => {
+			theme.value = theme.value === "light" ? "dark" : "light";
+
+			setPreference();
 		});
 	};
 

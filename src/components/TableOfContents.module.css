@@ -1,0 +1,43 @@
+@import "open-props/media" layer(base.media);
+.list {
+	list-style-type: none;
+	padding-inline-start: 0;
+}
+.item {
+	list-style-type: none;
+	font-size: 80%;
+	padding-inline-start: calc(1em * (var(--_level) - 1));
+	border-color: transparent;
+	border-inline-start-width: var(--border-size-1);
+	border-inline-start-color: var(--text-1);
+	@media (forced-colors: active) {
+		border-inline-start-color: Canvas;
+	}
+	& a {
+		display: block;
+		color: var(--text-2);
+		text-decoration: none;
+	}
+	&:hover:not(.active) {
+		border-inline-start-color: var(--neon);
+		box-shadow:
+			inset calc(1.25 * var(--border)) 0 0 0 var(--neon),
+			calc(-1.25 * var(--border)) 0 0 0 var(--neon);
+		& a {
+			color: var(--neon);
+		}
+	}
+}
+
+.active {
+	border-color: var(--neon);
+	/* border-block-color: var(--neon); */
+	border-inline-start-style: solid;
+	box-shadow:
+		inset var(--border) 0 0 0 var(--neon),
+		calc(-1 * var(--border)) 0 0 0 var(--neon);
+	font-weight: 700;
+	@media (forced-colors: active) {
+		border-color: LinkText;
+	}
+}

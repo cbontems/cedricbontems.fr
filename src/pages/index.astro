@@ -1,30 +1,116 @@
 ---
 import { getCollection } from "astro:content";
-import { sortPosts } from "../helpers/posts";
-import Layout from "~/layouts/MainLayout.astro";
-import HomeHeader from "~/components/HomeHeader.astro";
-import HomeBody from "~/components/HomeBody.astro";
-import HomeBodyFooter from "~/components/HomeBodyFooter.astro";
-import PostFooter from "~/components/PostFooter.astro";
-import siteInfo from "~/data/site-info";
-import { getCategories } from "~/helpers/categories";
-import HeroWords from "~/components/HeroWords.astro";
 
-const posts = await getCollection("blog");
-const categories = getCategories(posts);
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PostTitle from "~/components/PostTitle.astro";
+import BlogCard from "~/components/BlogCard.astro";
+import MarkDownContent from "~/components/MarkDownContent.astro";
+import LinkedHeading from "~/components/LinkedHeading.astro";
 
-const [lastPost, ...sortedPosts] = sortPosts(posts).slice(0, siteInfo.postPerPage);
-// get first two words of the string
-const words = lastPost.data.title.split(" ").slice(0, 2).join(" ");
+const allPosts = await getCollection(
+	"blog",
+	({ data }) => data.publishDate <= new Date(),
+);
+const recentPosts = allPosts
+	.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+	.slice(0, 3);
+const recentUpdates = allPosts
+	.filter(
+		(post) =>
+			post.data.updateDate !== undefined && post.data.updateDate < new Date(),
+	)
+	.sort((a, b) => b.data.updateDate!.getTime() - a.data.updateDate!.getTime())
+	.slice(0, 3);
+
+const title = "Welcome Home!";
+const description = "A list of all posts on the site.";
 ---
 
-<Layout
-	title={siteInfo.name}
-	description={siteInfo.description}
-	image={{ src: "/og/blog.jpg", alt: `The ${siteInfo.name} Blog` }}
->	<HeroWords words={words} />
-	<HomeHeader post={lastPost} />
-	<HomeBody posts={sortedPosts} categories={categories} />
-	<HomeBodyFooter />
-	<PostFooter />
-</Layout>
+<BaseLayout title={title} {description} type="home">
+	<PostTitle title={[title]} />
+	<main>
+		<section aria-labelledby="latest-posts">
+			<div>
+				<MarkDownContent>
+					<LinkedHeading level={2} text="Latest Posts" id="latest-posts" />
+				</MarkDownContent>
+			</div>
+			<ul>
+				{
+					recentPosts.map((post) => {
+						return (
+							<li>
+								<BlogCard {post} />
+							</li>
+						);
+					})
+				}
+			</ul>
+		</section>
+		<section aria-labelledby="latest-updates">
+			<div>
+				<MarkDownContent>
+					<LinkedHeading
+						level={2}
+						text="Recently Updated"
+						id="latest-updates"
+					/>
+				</MarkDownContent>
+			</div>
+			<ul>
+				{
+					recentUpdates.map((post) => {
+						return (
+							<li>
+								<BlogCard {post} />
+							</li>
+						);
+					})
+				}
+			</ul>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer layout {
+		main {
+			grid-column: content;
+			grid-row: md;
+			background-color: var(--surface-1);
+			container: main / inline-size;
+		}
+	}
+	@layer component {
+		section {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+		ul {
+			inline-size: 100%;
+			margin-block-start: 2em;
+			display: grid;
+			grid-template-columns: repeat(
+				auto-fill,
+				[col-start] minmax(30ch, 1fr) [col-end]
+			);
+			grid-template-rows: repeat(
+				auto-fill,
+				[row-start] minmax(auto, 100%) [row-end]
+			);
+			padding-block-end: 2em;
+			padding-inline: 0;
+			gap: 1em;
+			@media (--sm-n-above) {
+				gap: 3vi;
+			}
+		}
+		li {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+	}
+</style>

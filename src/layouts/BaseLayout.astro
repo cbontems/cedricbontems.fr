@@ -1,0 +1,119 @@
+---
+import config from "~/site.config";
+import "~/styles/global.css";
+import BaseHead from "~/components/head/BaseHead.astro";
+import Header from "~/components/Header.astro";
+import Footer from "~/components/Footer.astro";
+
+interface Props {
+	title?: string;
+	description?: string;
+	type?: "single" | "home" | undefined;
+}
+
+const { title, description, type = "single" } = Astro.props;
+const lang = "en";
+
+const titleMeta = title ? `${title} | ${config.name}` : config.name;
+const descriptionMeta = description || config.description;
+---
+
+<!doctype html>
+<html {lang}>
+	<BaseHead title={titleMeta} description={descriptionMeta} />
+	<body class={type}>
+		<Header />
+		<slot />
+		<Footer />
+		<style>
+			@import "open-props/media" layer(base.media);
+			@layer layout {
+				body {
+					--_gutter: 0.5em;
+					display: grid;
+					grid-template-rows:
+						[page-start header-start] auto [header-end content-start title-start] auto [title-end meta-start] auto [meta-end] clamp(
+							1rem,
+							5vi,
+							10rem
+						)
+						[taxonomy-start] auto
+						[taxonomy-end] clamp(1rem, 5vi, 10rem)
+						[toc-start] auto
+						[toc-end] clamp(1rem, 5vi, 10rem)
+						[md-start] 1fr [md-end content-end] var(--_gutter)
+						[footer-start] auto [footer-end page-end];
+					@media (--sm-n-above) {
+						--_gutter: 5vi;
+					}
+					@media (--lg-n-above) {
+						grid-template-rows:
+							[page-start header-start] auto [header-end content-start title-start] auto [title-end meta-start] auto [meta-end] clamp(
+								1rem,
+								5vi,
+								10rem
+							)
+							[taxonomy-start] auto
+							[taxonomy-end] clamp(1rem, 5vi, 10rem)
+							[md-start toc-start] 1fr [md-end content-end toc-end] var(
+								--_gutter
+							)
+							[footer-start] auto [footer-end page-end];
+					}
+					@media (--xl-n-above) {
+						grid-template-rows:
+							[page-start header-start] auto [header-end content-start title-start] auto [title-end meta-start] auto [meta-end] clamp(
+								1rem,
+								5vi,
+								10rem
+							)
+							[taxonomy-start md-start toc-start] 1fr [taxonomy-end md-end content-end toc-end] var(
+								--_gutter
+							)
+							[footer-start] auto [footer-end page-end];
+					}
+				}
+				body.single {
+					grid-template-columns:
+						[page-start left-gutter-start header-start footer-start] var(
+							--_gutter
+						)
+						[left-gutter-end nav-start content-start toc-start sidebar-start md-start] 1fr [sidebar-end md-end toc-end content-end nav-end right-gutter-start] var(
+							--_gutter
+						)
+						[footer-end header-end right-gutter-end screen-end];
+					@media (--lg-n-above) {
+						grid-template-columns:
+							[page-start left-gutter-start header-start footer-start] var(
+								--_gutter
+							)
+							[left-gutter-end content-start taxonomy-start sidebar-start md-start] 2.5fr [md-end] 2em [toc-start] 1fr [toc-end taxonomy-end sidebar-end content-end right-gutter-start] var(
+								--_gutter
+							)
+							[footer-end header-end right-gutter-end screen-end];
+					}
+					@media (--xl-n-above) {
+						grid-template-columns:
+							[page-start left-gutter-start header-start footer-start] var(
+								--_gutter
+							)
+							[left-gutter-end content-start taxonomy-start sidebar-start] 12em [taxonomy-end sidebar-end] 2em [md-start] 2fr [md-end] 2em [toc-start] 1fr [toc-end content-end right-gutter-start] var(
+								--_gutter
+							)
+							[footer-end header-end right-gutter-end screen-end];
+					}
+				}
+				body.home {
+					grid-template-columns:
+						[page-start left-gutter-start header-start footer-start] var(
+							--_gutter
+						)
+						[left-gutter-end nav-start content-start toc-start sidebar-start md-start] 1fr [sidebar-end md-end toc-end content-end nav-end right-gutter-start] var(
+							--_gutter
+						)
+						[footer-end header-end right-gutter-end screen-end];
+				}
+			}
+		</style>
+	</body>
+</html>

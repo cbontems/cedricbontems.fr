@@ -1,0 +1,155 @@
+---
+// https://jordemort.dev/blog/adding-copy-buttons-to-code-blocks/
+// derived from https://github.com/jordemort/jordemort.github.io/blob/main/src/components/MagicButtons.astro
+---
+
+<style is:global>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		.code-buttons {
+			position: relative;
+			text-align: end;
+			overflow: visible;
+			background-color: transparent;
+			inline-size: 100%;
+			block-size: 0;
+			& button {
+				--_color: var(--neon);
+				@media (forced-colors: active) {
+					--_color: LinkText;
+					border-color: LinkText;
+				}
+				position: absolute;
+				inset-block-start: 0.5rem;
+				inset-inline-end: 0.5rem;
+				border: var(--border) solid transparent;
+				border-radius: var(--radius);
+				background-color: transparent;
+				padding: 0;
+				z-index: 100;
+				cursor: pointer;
+				&:hover,
+				&:focus-visible {
+					--_color: var(--astro-code-color-background);
+					background-color: var(--neon);
+					@media (forced-colors: active) {
+						--_color: LinkText;
+					}
+				}
+				& svg {
+					width: 1.5em;
+					fill: var(--_color);
+					stroke: none;
+					vertical-align: text-bottom;
+					margin: 0.5em;
+				}
+				&.clicked {
+					--neon-h: 145;
+				}
+			}
+		}
+
+		.copied {
+			--neon-h: 145;
+			position: absolute;
+			inset-block-start: 0.5em;
+			inset-inline-end: calc(2em + 16px);
+			z-index: 100;
+			background-color: var(--neon);
+			color: var(--astro-code-color-background);
+			border: 1px solid var(--neon);
+			border-radius: var(--radius);
+			padding-block: 0.1ch;
+			padding-inline: 1ch;
+			margin: 0;
+			font-family: var(--font-code);
+			&::after {
+				position: absolute;
+				content: "";
+				inset-block-start: 50%;
+				inset-inline-end: 0;
+				transform: translate(100%, -50%);
+				inline-size: 0;
+				block-size: 0;
+				border-block-start: 5px solid transparent;
+				border-inline-start: 5px solid var(--neon);
+				border-block-end: 5px solid transparent;
+				@media (forced-colors: active) {
+					display: none;
+				}
+			}
+		}
+	}
+</style>
+<template id="copyButtonTemplate">
+	<button
+		><svg
+			xmlns="http://www.w3.org/2000/svg"
+			aria-hidden="true"
+			height="16"
+			viewBox="0 0 16 16"
+		>
+			<path
+				d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"
+			></path><path
+				d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"
+			></path>
+		</svg><span class="sr-only">Copy to clipboard</span></button
+	>
+</template>
+<template id="copiedFeedbackTemplate">
+	<div class="copied">Copied!</div>
+</template>
+<script>
+	function makeCopier(
+		block: HTMLElement,
+		button: HTMLButtonElement,
+		feedback: HTMLDivElement,
+	) {
+		let code = block.querySelector("code")!;
+
+		async function copier() {
+			await navigator.clipboard.writeText(code.innerText);
+			button.classList.add("clicked");
+			feedback.style.display = "block";
+
+			setTimeout(() => {
+				button.classList.remove("clicked");
+			}, 250);
+
+			setTimeout(() => {
+				feedback.style.display = "none";
+			}, 750);
+		}
+		return copier;
+	}
+
+	function addMagicButtons() {
+		const copyButton = (
+			document.getElementById("copyButtonTemplate") as HTMLTemplateElement
+		).content.firstElementChild!;
+		const copiedFeedback = (
+			document.getElementById("copiedFeedbackTemplate") as HTMLTemplateElement
+		).content.firstElementChild!;
+
+		document.querySelectorAll("pre").forEach((block) => {
+			if (navigator.clipboard) {
+				let div = document.createElement("div");
+				div.classList.add("code-buttons");
+
+				let feedback = copiedFeedback.cloneNode(true) as HTMLDivElement;
+				feedback.style.display = "none";
+
+				let button = copyButton.cloneNode(true) as HTMLButtonElement;
+				button.addEventListener("click", makeCopier(block, button, feedback));
+
+				div.appendChild(button);
+				div.appendChild(feedback);
+
+				block.parentNode!.insertBefore(div, block);
+			}
+		});
+	}
+
+	addMagicButtons();
+</script>

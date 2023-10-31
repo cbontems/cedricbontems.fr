@@ -1,0 +1,38 @@
+---
+import type { Taxonomy } from "~/helpers/taxonomies";
+
+type Props = {
+	tag: Taxonomy;
+};
+const { tag }: Props = Astro.props;
+---
+
+<a href={`/tag/${tag.name}/`} class="tag">
+	{tag.name}
+</a>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		.tag {
+			--_color: var(--neon);
+			white-space: nowrap;
+			padding: 0.25ch 1ch;
+			margin: 0;
+			border-radius: 0;
+			border-width: var(--border);
+			border-color: var(--_color);
+			color: var(--text-1);
+			text-decoration: none;
+			position: relative;
+			z-index: 1;
+			&:hover {
+				background-color: var(--_color);
+				color: var(--surface-1);
+			}
+			&:visited {
+				--_color: var(--text-2);
+			}
+		}
+	}
+</style>

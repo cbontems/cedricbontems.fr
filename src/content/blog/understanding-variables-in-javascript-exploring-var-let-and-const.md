@@ -1,15 +1,30 @@
 ---
-title: "Understanding Variables in JavaScript: Exploring var, let, and const"
+title:
+  - "Understanding Variables"
+  - "in JavaScript:"
+  - Exploring var,
+  - let, and const
 description: "Dive into the world of JavaScript variables and unravel the differences between var, let, and const. Learn how each keyword works, their scoping rules, and when to use them in your code. Gain a clear understanding of variable declaration in JavaScript and level up your programming skills."
 publishDate: "June 13, 2023"
 authors:
   - cedric
-categories:
+category: javascript
+tags:
   - javascript
-coverIm`age`: "/src/content/blog/_images/mastering-markdown-a-comprehensive-guide-to-formatting-your-content/cover.jpg"
+  - variables
+  - var
+  - let
+  - const
+  - scope
+  - hoisting
+  - redeclaration
+  - reassignment
+  - immutability
+coverImage: "./images/computers.jpg"
 coverImageAlt: "A beautiful cover image"
-socialImage: "/src/content/blog/_images/mastering-markdown-a-comprehensive-guide-to-formatting-your-content/cover.jpg"
+socialImage: "./images/computers.jpg"
 lang: "en"
+featured: true
 ---
 
 Have you ever wondered about the differences between `var`, `let`, and `const` in JavaScript? These three keywords are used for variable declaration, but they have distinct behaviors and purposes. Understanding when and how to use each one is essential for writing clean and maintainable code. In this blog post, we will dive into the nuances of `var`, `let`, and `const`, exploring their scopes, reassignment capabilities, and best practices. By the end, you'll have a solid grasp of when to reach for each of these keywords in your JavaScript projects. Let's get started!
@@ -45,10 +60,10 @@ It's important to note that if you declare a `var` variable outside of any funct
 var age = 47;
 
 function printAge() {
-  console.log(age); 
+  console.log(age);
 }
 
-printAge();       // Output: 47
+printAge(); // Output: 47
 console.log(age); // Output: 47
 ```
 
@@ -64,7 +79,7 @@ With the introduction of ES6, JavaScript gained two new keywords: `let` and `con
 
 Unlike variables declared with `var`, which have function-level scope, variables declared with `let` and `const` have block-level scope. But what does that mean?
 
-variables declared with `let` and `const`  are only available inside the block in which they are defined. A block could be a set of curly braces `{}` defining a block of code within a function, an `if` statement, a `for` loop, or any other block-level construct. This provides more fine-grained control over variable scope and avoids potential issues caused by function-level scoping.
+variables declared with `let` and `const` are only available inside the block in which they are defined. A block could be a set of curly braces `{}` defining a block of code within a function, an `if` statement, a `for` loop, or any other block-level construct. This provides more fine-grained control over variable scope and avoids potential issues caused by function-level scoping.
 
 If we modify our previous example to use the `let` or `const` keyword instead of `var`, it will throw an error. This is because the variable is not defined in an `if` statement (a block) and is not accessible by the second `console.log` which is outside the block.
 
@@ -74,43 +89,41 @@ function printName() {
     let myName = "Cedric";
     console.log(myName); // Output: Cedric
   }
-  console.log(myName);   // Uncaught ReferenceError: myName is not defined
+  console.log(myName); // Uncaught ReferenceError: myName is not defined
 }
 
-printName()
+printName();
 ```
 
 We can solve the problem my moving the `let` declaration up one level, in the `printName` block.
 
 ```javascript
 function printName() {
-
   let myName = "Cedric";
-  
+
   if (true) {
     console.log(myName); // Output: Cedric
   }
-  console.log(myName);   // Output: Cedric
+  console.log(myName); // Output: Cedric
 }
 
-printName()
+printName();
 ```
 
 But if we try to access `myName` outside of the block where it is defined, we get an error.
 
 ```javascript
 function printName() {
-
   let myName = "Cedric";
-  
+
   if (true) {
     console.log(myName); // Output: Cedric
   }
-  console.log(myName);   // Output: Cedric
+  console.log(myName); // Output: Cedric
 }
 
-printName()
-console.log(myName);     // Uncaught ReferenceError: myName is not defined
+printName();
+console.log(myName); // Uncaught ReferenceError: myName is not defined
 ```
 
 ### Benefits of Block Scoping
@@ -141,6 +154,7 @@ var myName = "Cedric";
 In the above code, the variable `myName` is hoisted to the top of the scope, but since its assignment (`myName = "Cedric"`) happens later in the code, the initial value of `myName` is `undefined` when it is first accessed.
 
 ### Block Scoping with let/const
+
 Unlike `var`, variables declared with `let` and `const` are not hoisted. They are only accessible after they are declared in the code. This behavior is referred to as block scoping.
 
 Consider the following example:
@@ -149,10 +163,10 @@ Consider the following example:
 console.log(myName); // Output: ReferenceError: myName is not defined
 let myName = "Cedric";
 ```
+
 In this case, since the `let` variable `myName` is not hoisted, trying to access it before it is declared will result in a `ReferenceError` because it is not defined at that point in the code.
 
 Similarly, variables declared with `const` also adhere to block scoping rules.
-
 
 ## Variable Redeclaration
 
@@ -173,6 +187,7 @@ console.log(myName); // Output: Oscar
 In the above code, the variable `myName` is first declared and assigned the value `"Cedric"`. It is then redeclared with the same name, but this time assigned the value `"Oscar"`. The subsequent declaration overrides the initial one, and the final value of `myName` is `"Oscar"`.
 
 ### Variable Assignment with `let` and `const`
+
 In contrast, variables declared with `let` and `const` do not allow redeclaration within the same scope. Attempting to redeclare a variable with the same name will result in a syntax error. Consider the following example:
 
 ```javascript
@@ -215,11 +230,13 @@ console.log(pi); // Output: 3.14
 
 pi = 3.1415; // TypeError: Assignment to constant variable.
 ```
+
 In this code, the `pi` variable is declared as a constant with the value `3.14`. When an attempt is made to reassign a new value to the `pi` variable, a `TypeError` is thrown, indicating that assignment to a constant variable is not allowed.
 
 The use of `const` is suitable when you have a value that should remain constant and not be modified. It helps enforce immutability and prevents accidental changes to important values.
 
 ### Choosing between `let` and `const`
+
 When deciding whether to use `let` or `const`, consider the following guideline:
 
 - Use `let` when you anticipate the need for variable reassignment or when the value will change during program execution.
@@ -246,10 +263,11 @@ console.log(numbers); // Output: [1, 2, 3, 4]
 In this code, we declare a `const` array called `numbers` and initialize it with three elements. Although we cannot assign a new array to `numbers`, we can modify the array itself by adding elements using the push() method. This means we can update the contents of the array without reassigning the variable.
 
 ### Modifying Properties of a Const Object
+
 Similarly, with objects, we can modify their properties even if the object is declared as a `const` variable. Take a look at the following example:
 
 ```javascript
-const person = { name: 'Paul', age: 25 };
+const person = { name: "Paul", age: 25 };
 console.log(person); // Output: { name: 'Paul', age: 25 }
 
 person.age = 30;
@@ -259,14 +277,16 @@ console.log(person); // Output: { name: 'Paul', age: 30 }
 In this code, we have a `const` object called `person` with properties `name` and `age`. Although we cannot assign a new object to `person`, we can update the values of its properties directly. So, while the object itself remains constant, its individual properties can be modified.
 
 ### Ensuring Immutability with `Object.freeze()`
+
 If you want to enforce complete immutability for arrays or objects, you can use the `Object.freeze()` method. It prevents any modifications to the object, including adding, removing, or changing properties. For example:
 
 ```javascript
-const frozenObject = Object.freeze({ name: 'Sarah', age: 30 });
+const frozenObject = Object.freeze({ name: "Sarah", age: 30 });
 frozenObject.age = 35; // No effect, as the object is frozen
 
 console.log(frozenObject); // Output: { name: 'Sarah', age: 30 }
 ```
+
 In this code, we use `Object.freeze()` to freeze the `frozenObject`. Attempting to modify the `age` property has no effect, and the object remains unchanged.
 
 Remember, while `const` provides immutability for the variable itself, it does not offer deep immutability for the elements or properties within arrays and objects. If you require strict immutability, consider using libraries or techniques designed specifically for immutable data structures.
@@ -290,4 +310,3 @@ By choosing between `let` and `const` based on whether or not you need to reassi
 Remember, mastering variable declaration and scoping is fundamental to becoming proficient in JavaScript development. With a solid understanding of `var`, `let`, and `const`, you'll be well-equipped to write cleaner, more reliable code.
 
 Happy coding!
-

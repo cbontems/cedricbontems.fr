@@ -1,0 +1,61 @@
+---
+import Category from "~/components/Category.astro";
+import type { Taxonomy } from "~/helpers/taxonomies";
+
+type Props = {
+	categories: Taxonomy[];
+};
+
+const { categories }: Props = Astro.props;
+---
+
+{
+	categories.length > 1 ? (
+		<ul aria-label="Categories" class="categories">
+			{categories.map((category) => (
+				<li class="category">
+					<Category {category} />
+				</li>
+			))}
+		</ul>
+	) : (
+		<div class="category">
+			<Category category={categories[0] as Taxonomy} />
+		</div>
+	)
+}
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		.categories {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			font-size: 80%;
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			justify-content: flex-start;
+			flex-wrap: wrap;
+		}
+		.category {
+			--_color: var(--text-1);
+			position: relative;
+			padding-block: 0.5ch;
+			padding-inline: 1ch;
+			border-color: var(--_color);
+			border-block-width: var(--border);
+			&:first-of-type {
+				border-block-start-width: var(--border-size-3);
+			}
+			&:not(first-of-type) {
+				border-block-start-width: 0;
+			}
+			&:hover {
+				background-color: var(--neon);
+				--_color: var(--surface-1);
+			}
+		}
+	}
+</style>

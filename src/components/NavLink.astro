@@ -1,0 +1,105 @@
+---
+type Props = {
+	slug: string;
+	text: string;
+	active: boolean;
+};
+
+const { slug, text, active }: Props = Astro.props;
+---
+
+<a href={`${slug}`} aria-current={active ? "page" : undefined}
+	>{active ? text : text}</a
+>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		a {
+			display: block;
+			inline-size: 100%;
+			font-weight: 700;
+			text-align: center;
+			color: var(--text-1);
+			position: relative;
+			isolation: isolate;
+			border-radius: var(--radius);
+			text-decoration: none;
+			outline-color: var(--surface-1);
+			:global([data-theme="dark"]) & {
+				outline-color: var(--text-1);
+			}
+			&[aria-current="page"] {
+				text-decoration: underline var(--border) transparent;
+			}
+			@media (--sm-n-above) {
+				border-width: 0;
+				border-color: transparent;
+			}
+			@media (--sm-n-above) {
+				&::before {
+					transform: scaleX(0);
+					transform-origin: bottom right;
+					border-radius: var(--round);
+				}
+
+				&:is(:hover) {
+					&::before {
+						transform: scaleX(1);
+						transform-origin: bottom left;
+					}
+				}
+
+				&::before {
+					content: " ";
+					display: block;
+					position: absolute;
+					inset-block: 1px;
+					inset-inline: -1rem;
+					background-color: var(--surface-1);
+					z-index: -1;
+					transition: transform 250ms ease;
+					:global([data-theme="dark"]) & {
+						background-color: var(--surface-2);
+					}
+				}
+			}
+		}
+		span {
+			position: relative;
+			padding: 0;
+			@media (--sm-n-above) {
+				&::before,
+				&::after {
+					position: absolute;
+					color: var(--surface-1);
+					@media (--motionOK) {
+						opacity: 0;
+						animation: fade-in 500ms ease forwards;
+					}
+				}
+				&::before {
+					content: "<";
+					inset-inline-start: -0.7em;
+					padding-inline: 0.25rem;
+					margin-inline: -0.25rem;
+					padding-block: 0.25rem;
+					margin-block: -0.25rem;
+				}
+				&::after {
+					content: "/>";
+					inset-inline-end: -1em;
+					padding-inline: 0.25rem;
+					margin-inline: -0.25rem;
+					padding-block: 0.25rem;
+					margin-block: -0.25rem;
+				}
+			}
+		}
+		@keyframes fade-in {
+			to {
+				opacity: 0.5;
+			}
+		}
+	}
+</style>

@@ -1,0 +1,10 @@
+title: WordPress
+description: "WordPress is a popular open-source content management system that allows users to create and manage websites and blogs with ease. It offers a wide range of customizable themes, plugins, and features, making it a versatile platform for individuals and businesses to establish an online presence."
+category:
+  singular: " CMS"
+  plural: Content Management Systems (CMS)
+checkDate: 2023-10-13
+tags:
+  - cms
+  - php
+link: https://wordpress.org

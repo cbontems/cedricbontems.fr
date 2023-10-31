@@ -1,57 +1,55 @@
 ---
-import siteInfo from "~/data/site-info.js";
-import SocialLinks from "./SocialLinks.astro";
-
-const socialLinks = siteInfo.socialLinks;
+import FooterNavigation from "~/components/FooterNavigation.astro";
 ---
 
-<footer>
-	<nav aria-label="Legal">
-		<a href="/privacy">Privacy Policy</a>
-		<a href="/terms">Terms of Use</a>
-		<p>
-			<a href="/license" target="_blank">MIT License</a> &copy; {
-				new Date().getFullYear()
-			}
-			<a href="/contributors" target="_blank">Cédric Bontems</a>
-		</p>
-		<SocialLinks links={socialLinks} class="footerSocial"/>
-	</nav>
+<footer role="contentinfo">
+	<FooterNavigation />
+	<p class="row2">
+		&copy; <span id="copyYear"></span> — Cédric Bontems. Built with <a
+			href="/astro/">Astro</a
+		> and <a href="/solid/">Solid</a>. Hosted on <a href="/netlify/">Netlify</a
+		>. Analytics by <a href="/fathom/">Fathom</a>.
+	</p>
 </footer>
-
 <style>
-	@import "~/styles/media.css";
-
-	footer {
-		margin-block-start: auto;
-		@media (--md-n-above) {
-			grid-column: 2 / -2;
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		footer {
+			grid-area: footer;
+			padding-inline: var(--_gutter);
+			padding-block-end: var(--_gutter);
+			background-color: var(--surface-2);
+			:global([data-theme="light"]) & {
+				border-block-start: var(--border) solid var(--surface-4);
+			}
+			:global([data-theme="dark"]) & {
+				background-color: var(--surface-2);
+			}
 		}
-	}
-
-	nav {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1rem;
-		align-items: center;
-		padding-block: var(--size-5);
-		margin-inline: var(--size-3);
-		opacity: 0.75;
-		@media (--md-n-above) {
-			grid-template-columns: auto auto 1fr auto;
-			padding-block: var(--size-7);
+		.row2 {
+			font-size: 80%;
+			color: var(--text-2);
+			:global([data-theme="dark"]) & {
+				color: var(--text-2);
+			}
+			inline-size: 100%;
+			margin-inline: auto;
+			text-align: center;
 		}
-	}
-	nav,
-	p {
-		color: white;
-		font-size: var(--font-size-0);
-	}
-	a[href]{
-		color: white;
-		text-decoration: none;
-		&:hover {
-			text-decoration: underline;
+		a {
+			color: var(--neon);
+			text-decoration: var(--neon) underline;
+			text-underline-offset: 0.2em;
+			&:hover {
+				color: var(--text-1);
+			}
+			&:visited {
+				color: var(--text-2);
+			}
 		}
 	}
 </style>
+<script>
+	const copyYear = document.getElementById("copyYear");
+	if (copyYear) copyYear.textContent = new Date().getFullYear().toString();
+</script>

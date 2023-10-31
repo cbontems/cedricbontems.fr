@@ -1,15 +1,20 @@
 ---
-title: "Unlocking the Power of Markdown: A Complete Guide to Effortless Content Formatting"
+title:
+  - Unlocking the Power
+  - "of Markdown:"
+  - A Complete Guide to
+  - Effortless Content Formatting
 description: "Discover Markdown, a powerful tool for formatting your content with ease. In this comprehensive guide, learn the fundamentals of Markdown syntax and explore its advantages over traditional formatting methods. From headers to tables, images to code blocks, this guide covers it all, empowering you to create visually appealing and well-structured content. Enhance your productivity and streamline your writing process with Markdown's simplicity and versatility. Whether you're a blogger, a technical writer, or simply someone who wants to elevate their content, this guide is your key to mastering Markdown."
 publishDate: "June 8, 2023"
 authors:
   - cedric
-categories:
+category: markdown
+tags:
   - astro
   - markdown
-coverImage: "/src/content/blog/_images/mastering-markdown-a-comprehensive-guide-to-formatting-your-content/cover.jpg"
+coverImage: "./images/dance.jpg"
 coverImageAlt: "A beautiful cover image"
-socialImage: "/src/content/blog/_images/mastering-markdown-a-comprehensive-guide-to-formatting-your-content/cover.jpg"
+socialImage: "./images/dance.jpg"
 lang: "en"
 ---
 

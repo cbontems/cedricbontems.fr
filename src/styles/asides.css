@@ -1,0 +1,63 @@
+.aside {
+	margin-block: 3rem;
+	padding: 1rem;
+	border-inline-start: var(--border) solid;
+	color: var(--text-1);
+	--asides-text-accent: var(--neon);
+	border-color: var(--asides-text-accent);
+	background-color: transparent;
+	@supports (color: color-mix(in lab, #fff, #000)) {
+		background-color: color-mix(
+			in lab,
+			var(--asides-text-accent),
+			transparent 90%
+		);
+	}
+}
+.aside--note {
+	--neon-h: 240;
+	--neon-l: 50%;
+}
+.aside--tip {
+	--neon-h: 310;
+	--neon-l: 50%;
+}
+.aside--caution {
+	--neon-h: 100;
+	--neon-l: 50%;
+}
+.aside--danger {
+	--neon-h: 25;
+	--neon-l: 50%;
+}
+.aside--success {
+	--neon-h: 145;
+	--neon-l: 50%;
+}
+
+.aside__title {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+	margin-block: 0;
+	font-family: var(--font-code);
+	font-variation-settings:
+		"wght" 300,
+		"wdth" 90;
+	line-height: 1em;
+	color: var(--asides-text-accent);
+}
+
+.aside__icon {
+	font-size: 1.333em;
+	width: 1em;
+	height: 1em;
+}
+
+.aside__title + .aside__content {
+	margin-block-start: 0.5rem;
+}
+
+.aside__content p {
+	margin-block: 0;
+}

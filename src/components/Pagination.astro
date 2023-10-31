@@ -1,8 +1,9 @@
 ---
 import type { Page } from "astro";
 import type { HTMLAttributes } from "astro/types";
-import { collapseRange } from "~/helpers/posts";
-import { Icon } from "astro-icon";
+import { collapseRange } from "~/helpers/paginate.js";
+import LeftArrowIcon from "~/icons/LeftArrowIcon";
+import RightArrowIcon from "~/icons/RightArrowIcon";
 
 export type Props = Omit<HTMLAttributes<"nav">, "slot"> & {
 	page: Page<unknown>;
@@ -10,13 +11,7 @@ export type Props = Omit<HTMLAttributes<"nav">, "slot"> & {
 	restRoute?: boolean;
 };
 
-const {
-	page,
-	allPages,
-	restRoute = false,
-	"aria-label": ariaLabel = "Pagination",
-	...attrs
-} = Astro.props;
+const { page, allPages, "aria-label": ariaLabel = "Pagination" } = Astro.props;
 
 const pages = allPages.map((href, i) => {
 	return {
@@ -29,14 +24,13 @@ const pages = allPages.map((href, i) => {
 const collapsedPages = collapseRange(page, pages);
 ---
 
-<nav aria-label={ariaLabel} {...attrs}>
+<nav aria-label={ariaLabel}>
 	<ul>
 		{
 			page.url.prev && (
-				<li>
-					<a href={page.url.prev} rel="prefetch">
-						<Icon
-							name="mdi:arrow-left-thick"
+				<li class="prev">
+					<a href={page.url.prev} rel="prefetch" class="pagination">
+						<LeftArrowIcon
 							aria-label={`Go to page ${page.currentPage - 1} of ${
 								page.lastPage
 							}`}
@@ -47,16 +41,16 @@ const collapsedPages = collapseRange(page, pages);
 		}
 		{
 			collapsedPages.map((link) => (
-				<li class="not-small">
+				<li class="link">
 					{!link.href ? (
 						<p>{link.text}</p>
 					) : (
 						<a
-							href={link.href}
+							href={link.href + "/"}
+							class="pagination"
 							aria-current={
 								link.pageNum === page.currentPage ? "page" : undefined
 							}
-							class={link.pageNum === page.currentPage ? "current" : undefined}
 						>
 							{link.pageNum}
 						</a>
@@ -64,15 +58,14 @@ const collapsedPages = collapseRange(page, pages);
 				</li>
 			))
 		}
-		<li class="small-only">
+		<li class="small">
 			<p aria-current="page">Page {page.currentPage} of {page.lastPage}</p>
 		</li>
 		{
 			page.url.next && (
-				<li>
-					<a href={page.url.next} rel="prefetch">
-						<Icon
-							name="mdi:arrow-right-thick"
+				<li class="next">
+					<a href={page.url.next} rel="prefetch" class="pagination">
+						<RightArrowIcon
 							aria-label={`Go to page ${page.currentPage + 1} of ${
 								page.lastPage
 							}`}
@@ -85,57 +78,80 @@ const collapsedPages = collapseRange(page, pages);
 </nav>
 
 <style>
-	@import "~/styles/media.css";
-
-	ul {
-		display: flex;
-		padding: 0;
-		justify-content: center;
-		align-items: center;
-		margin-inline: auto;
-		margin-block: var(--size-7);
-		list-style: none;
-		font-family: var(--font-mono);
-		gap: var(--size-3);
-		& > li {
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		nav {
+			display: flex;
+			justify-content: center;
+			font-size: 130%;
+		}
+		ul {
+			display: flex;
+			align-items: center;
+			gap: 1em;
+			list-style: none;
 			padding: 0;
-			margin: 0;
 		}
-	}
-	[astro-icon] {
-		width: var(--size-4);
-		height: var(--size-4);
-		color: var(--link);
-		&:hover {
-			color: var(--link-hover);
+		li {
+			padding: 0;
 		}
-	}
-	.small-only {
-		display: initial;
-		@media (--sm-n-above) {
+		.next,
+		.prev {
+			border-width: var(--border);
+			border-color: var(--color-bright);
+			border-radius: var(--round);
+			transition: background-color 145ms ease;
+			& a {
+				border-radius: var(--round);
+				color: var(--color-bright);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				inline-size: 2em;
+				block-size: 2em;
+				transition: color 145ms ease;
+			}
+			&:hover {
+				background-color: var(--color-bright);
+				& a {
+					color: var(--surface-1);
+				}
+			}
+		}
+
+		.small {
+			display: block;
+			@media (--sm-n-above) {
+				display: none;
+			}
+		}
+
+		.link {
 			display: none;
+			@media (--sm-n-above) {
+				display: inline-block;
+			}
+			& a {
+				color: var(--text-2);
+				position: relative;
+				border-radius: var(--radius);
+				inline-size: 2em;
+				block-size: 2em;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-width: var(--border);
+				&:hover {
+					color: var(--color-bright);
+					text-decoration: none;
+				}
+			}
 		}
-	}
-	.not-small {
-		display: none;
+
 		@media (--sm-n-above) {
-			display: inline-block;
-		}
-	}
-	a,
-	a:visited {
-		color: var(--text-2);
-		&.current {
-			display: grid;
-			place-items: center;
-			border-radius: var(--radius-round);
-			color: var(--surface-1);
-			background-color: var(--brand);
-			inline-size: var(--size-6);
-			block-size: var(--size-6);
-			line-height: 1;
-			font-size: var(--font-size-1);
-			font-weight: var(--font-weight-9);
+			[aria-current="page"] {
+				border-color: var(--color-bright);
+			}
 		}
 	}
 </style>

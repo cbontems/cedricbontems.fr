@@ -1,0 +1,147 @@
+---
+import { categoriesAndCounts, tagsAndCounts } from "~/helpers/taxonomies";
+
+const tagCounts = tagsAndCounts();
+const categoryCounts = categoriesAndCounts();
+---
+
+<nav aria-label="Footer">
+	<div>
+		<h2>Categories</h2>
+		<uL>
+			{
+				categoryCounts.map(
+					({ name, count }) =>
+						name && (
+							<li>
+								<a href={`/category/${name}/`}>
+									{name}&nbsp;({count}&nbsp;posts)
+								</a>
+							</li>
+						),
+				)
+			}
+		</uL>
+	</div>
+	<div>
+		<h2 id="feeds">Feeds</h2>
+		<uL aria-labelledby="feeds">
+			<li>
+				<a href="/blog/">Blog</a>
+			</li>
+			<li>
+				<a href="/bookmarks/">Bookmarks</a>
+			</li>
+		</uL>
+	</div>
+	<div>
+		<h2 id="feeds">Site</h2>
+		<uL aria-labelledby="feeds">
+			<li>
+				<a href="/terms/">Terms</a>
+			</li>
+			<li>
+				<a href="/accessibility-statement/">Accessibility Statement</a>
+			</li>
+			<li>
+				<a href="/privacy/">Privacy and Security</a>
+			</li>
+		</uL>
+	</div>
+	<div>
+		<h2>Social</h2>
+		<uL>
+			<li>
+				<a href="/discord/">Discord</a>
+			</li>
+			<li>
+				<a href="/facebook/">Facebook</a>
+			</li>
+			<li>
+				<a href="/linkedin/">LinkedIn</a>
+			</li>
+			<li>
+				<a href="/x/">X - Twitter</a>
+			</li>
+			<li>
+				<a href="/youtube/">YouTube</a>
+			</li>
+		</uL>
+	</div>
+	<div>
+		<h2>Tags</h2>
+		<uL>
+			{
+				tagCounts.map(({ name, count }) => (
+					<li>
+						<a href={`/tag/${name}/`}>
+							{name}&nbsp;({count}&nbsp;posts)
+						</a>
+					</li>
+				))
+			}
+		</uL>
+	</div>
+</nav>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		nav {
+			max-inline-size: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+			gap: 2em;
+			padding-block: 2em;
+			@media (--lg-n-above) {
+				justify-content: flex-start;
+				padding-block: 4em;
+				gap: 4em;
+			}
+		}
+
+		div {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+		}
+
+		h2 {
+			font-size: 1.5em;
+			color: var(--text-1);
+			:global([data-theme="dark"]) & {
+				color: var(--text-1);
+			}
+			padding: 0;
+			margin: 0;
+		}
+
+		ul {
+			display: flex;
+			flex-direction: column;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			margin-top: 1rem;
+		}
+
+		li {
+			padding-inline-start: 0;
+		}
+		a {
+			color: var(--neon);
+			&:hover {
+				color: var(--text-1);
+				:global([data-theme="dark"]) & {
+					color: var(--text-1);
+				}
+				text-decoration: var(--neon) underline;
+				text-underline-offset: 0.2em;
+			}
+			&:visited {
+				color: var(--text-2);
+			}
+		}
+	}
+</style>

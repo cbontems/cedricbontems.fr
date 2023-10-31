@@ -1,0 +1,48 @@
+:root {
+	/* Typography */
+	--font-body: "RoslindaleText", var(--font-sans);
+	--font-display: "RoslindaleDisplayCondensed", var(--font-sans);
+	--font-code: "Input Cipher Web", var(--font-mono);
+	--lineheight-display: 1em;
+	--lineheight-body: 1.5em;
+
+	/* Borders */
+	--radius: var(--radius-2);
+	--border: var(--border-size-2);
+	--outline: var(--border-size-3);
+
+	/* Colors */
+	--neon-red: var(--red-6);
+	--neon-cyan: cyan;
+	--neon-pink: #ff1493;
+	--neon-purple: var(--purple-6);
+	--neon-purple-on-dark: #9461fd;
+	--neon-blue: #2dd9fe;
+	--neon-green: var(--lime-6);
+	--neon-orange: var(--orange-6);
+	--neon-yellow: var(--yellow-3);
+
+	@media (dynamic-range: high) or (color-gamut: p3) {
+		@supports (color: color(display-p3 0 0 0)) {
+			--neon-red: color(display-p3 1 0 0);
+			--neon-cyan: color(display-p3 0 0.75 1);
+			--neon-pink: color(display-p3 1 0 1);
+			--neon-purple: color(display-p3 0.5 0 1);
+			--neon-purple-on-dark: color(display-p3 0.5 0.35 1);
+			--neon-blue: color(display-p3 0 0 1);
+			--neon-green: color(display-p3 0 1 0);
+			--neon-orange: color(display-p3 1 0.5 0);
+			--neon-yellow: color(display-p3 1 1 0);
+		}
+	}
+}
+*,
+*::before,
+*::after {
+	--neon: hsl(var(--neon-h) 100% var(--neon-l));
+	@media (dynamic-range: high) or (color-gamut: p3) {
+		@supports (color: oklch(0% 0 0)) {
+			--neon: oklch(var(--neon-l) 0.3 var(--neon-h));
+		}
+	}
+}

@@ -7,3 +7,7 @@ node_modules/
 public/_redirects
 public/_headers
 *.svg
+*.woff
+*.woff2
+bun.lockb
+*.txt

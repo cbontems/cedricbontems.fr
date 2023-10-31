@@ -1,0 +1,10 @@
+title: Developing an Accessibility Statement
+description: "This W3C tool helps you create an accessibility statement for your own website, mobile application, or other digital content. You can download the statement you created, and further customize, style, and brand it."
+category:
+  singular: ""
+  plural: Accessibility
+checkDate: 2023-10-13
+tags:
+  - a11y
+  - tool
+link: https://www.w3.org/WAI/planning/statements/

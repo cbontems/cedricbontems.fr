@@ -1,0 +1,140 @@
+---
+import { type CollectionEntry } from "astro:content";
+import { Picture } from "astro:assets";
+import { getLocalizedDate, getIsoDate } from "~/helpers/localizedDate";
+import { taxonomize } from "~/helpers/taxonomies";
+import TagsList from "./TagsList.astro";
+import CategoriesList from "./CategoriesList.astro";
+
+export interface Props {
+	post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const {
+	title,
+	description,
+	coverImage,
+	publishDate,
+	updateDate,
+	category,
+	tags,
+} = post.data;
+---
+
+<article>
+	<header>
+		<h2 id={post.slug}>
+			<a href={`/blog/${post.slug}/`}>
+				{title.join(" ")}
+			</a>
+		</h2>
+		{category && <CategoriesList categories={taxonomize([category])} />}
+		{tags && tags.length > 0 && <TagsList tags={taxonomize(tags)} />}
+	</header>
+	{
+		false && coverImage && (
+			<Picture
+				src={coverImage}
+				widths={[400, 650, 900]}
+				sizes="(max-width: 450px) 400w, (max-width: 650px) 650w, 900w"
+				formats={["avif", "webp"]}
+				alt={title.join(" ")}
+				class="img"
+			/>
+		)
+	}
+
+	<p class="description">{description}</p>
+	<footer>
+		{
+			updateDate && (
+				<p>
+					{`Updated: `}
+					<time datetime={getIsoDate(updateDate)}>
+						{getLocalizedDate("en", updateDate)}
+					</time>
+				</p>
+			)
+		}
+		<p>
+			{`Published: `}<time datetime={getIsoDate(publishDate)}
+				>{getLocalizedDate("en", publishDate)}</time
+			>
+		</p>
+	</footer>
+</article>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer component {
+		article {
+			position: relative;
+			isolation: isolate;
+			block-size: 100%;
+			&:hover,
+			&:focus-within {
+				outline: var(--border) solid var(--neon);
+				outline-offset: 5px;
+			}
+			container: card / inline-size;
+			background-color: var(--surface-1);
+			padding-inline: 1rem;
+			padding-block: 2rem;
+			& > header {
+				display: flex;
+				flex-direction: column;
+				gap: 1em;
+				& > h2 {
+					min-block-size: 2.8em;
+					@media (--sm-n-above) {
+						@container (width < 28ch ) {
+							min-block-size: 4em;
+						}
+					}
+					& > a {
+						color: var(--neon);
+						display: block;
+						inline-size: 100%;
+						&::before {
+							content: "";
+							display: block;
+							position: absolute;
+							inset: 0;
+						}
+						&:hover,
+						&:focus {
+							background-color: unset;
+							color: unset;
+						}
+					}
+				}
+			}
+		}
+		.img {
+			block-size: auto;
+			border-radius: 0;
+			object-position: center;
+			margin-block: 1em;
+			margin-inline: calc(-1rem - var(--border));
+			inline-size: calc(100% + 2rem + 2 * var(--border));
+			max-inline-size: unset;
+		}
+		.description {
+			margin-block-start: 1em;
+			overflow: hidden;
+			position: relative;
+			z-index: 1;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 5;
+		}
+		footer {
+			margin-block-start: 1em;
+			font-size: 80%;
+			p {
+				max-inline-size: fit-content;
+			}
+		}
+	}
+</style>
