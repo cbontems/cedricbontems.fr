@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PostTitle from "~/components/PostTitle.astro";
+import MarkDownContent from "~/components/MarkDownContent.astro";
+
+const title = "404";
+const description = "A list of all posts on the site.";
+---
+
+<BaseLayout title={title} {description} type="home">
+	<PostTitle title={[title]} />
+	<main>
+		<section class="content">
+			<p>Oups, we could not find the page you are looking for.</p>
+			<MarkDownContent>
+				<a href="/">Go Back Home →</a>
+			</MarkDownContent>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer layout {
+		main {
+			grid-column: content;
+			grid-row: md;
+			background-color: var(--surface-1);
+			container: main / inline-size;
+		}
+	}
+	@layer component {
+		section {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 2em;
+		}
+	}
+</style>
