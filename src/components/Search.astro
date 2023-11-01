@@ -88,8 +88,10 @@ const inlineStyle = `
 	const input = document.getElementById("resourcesSearch") as HTMLInputElement;
 	const selector = input?.dataset.selector || "article";
 	const groupSelector = input?.dataset.groupSelector;
-	const items = document.querySelectorAll(selector);
-	const groups = groupSelector ? document.querySelectorAll(groupSelector) : [];
+	const items = Array.from(document.querySelectorAll(selector));
+	const groups = groupSelector
+		? Array.from(document.querySelectorAll(groupSelector))
+		: [];
 	const FPS_30 = 1000 / 30;
 
 	const debounce = (callback: () => void, timeout = 150) => {
@@ -118,7 +120,7 @@ const inlineStyle = `
 		for (const item of items) {
 			const isMatch =
 				!regexMap.length ||
-				regexMap.some((regex) => !!item.textContent.match(regex));
+				regexMap.some((regex) => !!item.textContent?.match(regex));
 			isMatch
 				? item.removeAttribute("hidden")
 				: item.setAttribute("hidden", "");

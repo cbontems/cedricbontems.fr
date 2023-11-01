@@ -23,6 +23,23 @@ const blogCollection = defineCollection({
 		}),
 });
 
+const pagesCollection = defineCollection({
+	type: "content",
+	schema: z.object({
+		title: z.array(z.string()),
+		description: z.string(),
+		publishDate: z
+			.string()
+			.or(z.date())
+			.transform((value) => new Date(value)),
+		updateDate: z
+			.string()
+			.or(z.date())
+			.transform((value) => new Date(value))
+			.optional(),
+	}),
+});
+
 const resourcesCollection = defineCollection({
 	type: "data",
 	schema: z.object({
@@ -45,5 +62,6 @@ const resourcesCollection = defineCollection({
 
 export const collections = {
 	blog: blogCollection,
+	pages: pagesCollection,
 	resources: resourcesCollection,
 };

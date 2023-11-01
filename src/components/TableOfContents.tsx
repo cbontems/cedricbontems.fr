@@ -7,7 +7,10 @@ export type Heading = {
 	slug: string;
 };
 
-function TableOfContents(props: { headings: Heading[]; publishDate?: Date }) {
+const TableOfContents = (props: {
+	headings: Heading[];
+	publishDate?: Date;
+}) => {
 	const headers = props.headings.filter((f) => f.depth > 1 && f.depth < 4);
 	const publishDate = props.publishDate;
 
@@ -18,31 +21,29 @@ function TableOfContents(props: { headings: Heading[]; publishDate?: Date }) {
 	}
 
 	return (
-		<>
-			{headers.length > 0 && (
-				<ol class={styles.list}>
-					{headers.map((header) => {
-						return (
-							<li
-								style={`--_level: ${header.depth};`}
-								class={`${styles.item} ${
-									header.slug === activeId() ? styles.active : ""
-								}`}
-							>
-								{(!publishDate || publishDate <= new Date()) && (
-									<a href={`#${header.slug}`}>{header.text.split("#")[0]}</a>
-								)}
-								{publishDate && publishDate > new Date() && (
-									<a href="#">{header.text.split("#")[0]}</a>
-								)}
-							</li>
-						);
-					})}
-				</ol>
-			)}
-		</>
+		headers.length > 0 && (
+			<ol class={styles.list}>
+				{headers.map((header) => {
+					return (
+						<li
+							style={`--_level: ${header.depth};`}
+							class={`${styles.item} ${
+								header.slug === activeId() ? styles.active : ""
+							}`}
+						>
+							{(!publishDate || publishDate <= new Date()) && (
+								<a href={`#${header.slug}`}>{header.text.split("#")[0]}</a>
+							)}
+							{publishDate && publishDate > new Date() && (
+								<a href="#">{header.text.split("#")[0]}</a>
+							)}
+						</li>
+					);
+				})}
+			</ol>
+		)
 	);
-}
+};
 
 export default TableOfContents;
 
@@ -65,7 +66,7 @@ const useIntersectionObserver = (setActiveId: Setter<string>) => {
 		const getContentHeadingIndexFromId = (id: string) =>
 			contentHeadings.findIndex((heading) => heading.id === id);
 
-		const callback: IntersectionObserverCallback = (entries, observer) => {
+		const callback: IntersectionObserverCallback = (entries, _) => {
 			// Update the map with the new entries
 			setContentHeadingsMap((prev) => {
 				return entries.reduce((map, entry) => {
@@ -78,14 +79,17 @@ const useIntersectionObserver = (setActiveId: Setter<string>) => {
 			const visibleHeadings = [] as IntersectionObserverEntry[];
 			Object.keys(contentHeadingsMap()).forEach((id) => {
 				const headingEntry = contentHeadingsMap()[id];
+				if (!headingEntry) return;
 				if (headingEntry.isIntersecting) visibleHeadings.push(headingEntry);
 			});
+
+			console.log("visibleHeadings", visibleHeadings);
 
 			// If there are no visible headings, do nothing
 			if (visibleHeadings.length === 0) return;
 
 			// If there is only one visible heading, set it as active
-			if (visibleHeadings.length === 1)
+			if (visibleHeadings.length === 1 && visibleHeadings[0])
 				return setActiveId(visibleHeadings[0].target.id);
 
 			// If there is more than one visible heading, find the one that is first in DOM
@@ -97,7 +101,11 @@ const useIntersectionObserver = (setActiveId: Setter<string>) => {
 					: -1,
 			);
 			// Set the first heading as active
-			return setActiveId(sortedVisibleHeadings[0].target.id);
+			if (sortedVisibleHeadings[0])
+				return setActiveId(sortedVisibleHeadings[0].target.id);
+
+			// If we get here, do nothing
+			return;
 		};
 
 		// Create the IntersectionObserver instance with the callback and options passed in as arguments

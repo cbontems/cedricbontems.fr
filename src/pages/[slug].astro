@@ -1,0 +1,52 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import MarkDownContent from "~/components/MarkDownContent.astro";
+import PostTitle from "~/components/PostTitle.astro";
+import PostToc from "~/components/PostToc.astro";
+import PostMeta from "~/components/PostMeta.astro";
+
+type Props = {
+	page: CollectionEntry<"pages">;
+};
+
+export async function getStaticPaths() {
+	const pagesEntries = await getCollection("pages");
+	return pagesEntries.map((page) => ({
+		params: { slug: page.slug },
+		props: { page },
+	}));
+}
+
+const { page } = Astro.props as Props;
+const { Content, headings, remarkPluginFrontmatter } = await page.render();
+const { title, description, publishDate, updateDate } = page.data;
+---
+
+<BaseLayout title={title.join(" ")} {description} type="single">
+	<PostTitle {title} />
+	<PostMeta
+		{publishDate}
+		{updateDate}
+		rawDate
+		readingTime={remarkPluginFrontmatter.readingStats}
+	/>
+	<PostToc {headings} />
+	<main>
+		<MarkDownContent>
+			<Content />
+		</MarkDownContent>
+	</main>
+</BaseLayout>
+
+<style>
+	@import "open-props/media" layer(base.media);
+	@layer layout {
+		main {
+			grid-column: md;
+			grid-row: md;
+			background-color: var(--surface-1);
+			container: main / inline-size;
+		}
+	}
+</style>

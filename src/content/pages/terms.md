@@ -1,8 +1,8 @@
 ---
-seo:
-  title: Terms of Service
-  description: "Understand the guidelines, rights, and responsibilities that govern your usage of our services."
-updated_date: 2023-06-07
+title:
+  - Terms of Service
+description: "Understand the guidelines, rights, and responsibilities that govern your usage of our services."
+publishDate: 2023-06-07
 ---
 
 _These terms of use ("Terms") apply to your access and use of the cedricbontems.fr website (the "Service"). Please read them carefully._

@@ -13,9 +13,15 @@ import TimerIcon from "~/icons/TimerIcon";
 type Props = {
 	publishDate: Date;
 	updateDate?: Date | undefined;
+	rawDate?: boolean | undefined;
 	readingTime: ReadTimeResults;
 };
-const { publishDate, updateDate, readingTime }: Props = Astro.props;
+const {
+	publishDate,
+	updateDate,
+	rawDate = false,
+	readingTime,
+}: Props = Astro.props;
 const dummyDate = new Date();
 const interval = {
 	start: dummyDate,
@@ -29,7 +35,11 @@ const duration = intervalToDuration(interval);
 		updateDate && (
 			<p>
 				<span>Updated:</span>
-				<time id="update-date" datetime={formatISO(updateDate)}>
+				<time
+					id="update-date"
+					datetime={formatISO(updateDate)}
+					data-raw={rawDate ? true : false}
+				>
 					{format(updateDate, "PPP", { locale: enLocale })}
 				</time>
 			</p>
@@ -37,7 +47,11 @@ const duration = intervalToDuration(interval);
 	}
 	<p>
 		<span>Published:</span>
-		<time id="publish-date" datetime={formatISO(publishDate)}>
+		<time
+			id="publish-date"
+			datetime={formatISO(publishDate)}
+			data-raw={rawDate}
+		>
 			{format(publishDate, "PPP", { locale: enLocale })}
 		</time>
 	</p>
@@ -159,12 +173,20 @@ const duration = intervalToDuration(interval);
 	const updateDateElement = document.getElementById(
 		"update-date",
 	) as HTMLTimeElement;
-	if (publishDateElement && publishDateElement.dateTime) {
+	if (
+		publishDateElement &&
+		publishDateElement.dateTime &&
+		publishDateElement.dataset.raw !== ""
+	) {
 		publishDateElement.textContent = timeAgo(
 			new Date(publishDateElement.dateTime),
 		);
 	}
-	if (updateDateElement) {
+	if (
+		updateDateElement &&
+		updateDateElement.dateTime &&
+		!updateDateElement.dataset.raw !== ""
+	) {
 		updateDateElement.textContent = timeAgo(
 			new Date(updateDateElement.dateTime),
 		);
