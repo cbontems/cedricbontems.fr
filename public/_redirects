@@ -1,7 +1,15 @@
 # Vendor Redirects
 /astro                  https://astro.build
 /astro-doc              https://docs.astro.build/en/getting-started/
-/usefathom              https://usefathom.com/ref/GDDKYS
+/fathom              https://usefathom.com/ref/GDDKYS
+/netlify                https://www.netlify.com
+
+# Community Redirects
+/discord                https://discord.gg/Np88J479Hr
+/facebook               https://www.facebook.com/groups/oxyprops
+/linkedin               https://www.linkedin.com/in/cbontems/
+/x                      https://x.com/cedricbontems
+/youtube                https://www.youtube.com/@oxyprops
 
 # Project GitHub destinations
 /changelog              https://github.com/cbontems/cedricbontems.fr/releases/            301
