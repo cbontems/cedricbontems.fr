@@ -11,3 +11,4 @@ public/_headers
 *.woff2
 bun.lockb
 *.txt
+*.mdx
