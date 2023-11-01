@@ -10,16 +10,9 @@ authors:
   - cedric
 category: javascript
 tags:
-  - javascript
   - variables
-  - var
-  - let
-  - const
   - scope
   - hoisting
-  - redeclaration
-  - reassignment
-  - immutability
 coverImage: "./images/computers.jpg"
 coverImageAlt: "A beautiful cover image"
 socialImage: "./images/computers.jpg"

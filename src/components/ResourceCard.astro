@@ -31,19 +31,28 @@ const { title, description, link, category } = Astro.props.resource.data;
 		gap: 1em;
 		background-color: var(--surface-1);
 		&:hover,
-		&:focus-within {
+		&:not(:active):focus-within {
 			outline: var(--border) solid var(--neon);
 			outline-offset: 5px;
+			outline-offset: 5px;
+			outline-style: solid;
+			outline-width: var(--outline);
+			outline-color: var(--accent);
+			transition-duration: 0.25s;
+			@media (--motionOK) {
+				transition: outline-offset 145ms ease;
+			}
+
 			& h3,
 			a {
 				color: var(--text-1);
 				text-decoration: underline;
+				outline: none;
 			}
 		}
 		& h3 {
 			inline-size: 100%;
 			padding-block-end: 0.5em;
-			color: var(--neon);
 			border-block-end-width: var(--border);
 			border-block-end-style: solid;
 			border-color: var(--text-1);

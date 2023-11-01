@@ -73,10 +73,17 @@ const {
 			isolation: isolate;
 			block-size: 100%;
 			&:hover,
-			&:focus-within {
-				outline: var(--border) solid var(--neon);
+			&:not(:active):focus-within {
 				outline-offset: 5px;
+				outline-style: solid;
+				outline-width: var(--outline);
+				outline-color: var(--accent);
+				transition-duration: 0.25s;
+				@media (--motionOK) {
+					transition: outline-offset 145ms ease;
+				}
 			}
+
 			container: card / inline-size;
 			background-color: var(--surface-1);
 			padding-inline: 1rem;
@@ -93,9 +100,11 @@ const {
 						}
 					}
 					& > a {
-						color: var(--neon);
+						color: var(--text-1);
 						display: block;
 						inline-size: 100%;
+						outline: none;
+
 						&::before {
 							content: "";
 							display: block;
@@ -105,7 +114,7 @@ const {
 						&:hover,
 						&:focus {
 							background-color: unset;
-							color: unset;
+							text-decoration-color: var(--neon);
 						}
 					}
 				}
