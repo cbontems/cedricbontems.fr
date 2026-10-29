@@ -1,5 +1,5 @@
 [data-theme] {
-	--neon-h: 50;
+	--neon-h: 10;
 	--neon-l: 65%;
 	@media print {
 		--text-1: black;

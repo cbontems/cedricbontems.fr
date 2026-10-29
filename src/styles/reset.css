@@ -53,7 +53,7 @@ html {
 body {
 	font-family: var(--font-body);
 	font-size: 1.25em;
-	font-weight: 400;
+	font-variation-settings: var(--vf-text);
 	font-feature-settings: "kern" 1;
 	font-kerning: normal;
 	line-height: 150%;
@@ -81,13 +81,13 @@ body {
 :is(h1, h2, h3, h4, h5, h6) {
 	color: var(--text-1);
 	font-family: var(--font-display);
-	font-weight: 400;
 	line-height: 0.95em;
 	text-wrap: balance;
 }
 
 h1 {
 	font-size: 1.5em;
+	font-variation-settings: var(--vf-cover);
 	@media (--xxs-n-above) {
 		font-size: 1.8em;
 	}
@@ -109,6 +109,14 @@ h1 {
 	@media (--xxl-n-above) {
 		font-size: 9em;
 	}
+}
+
+h2 {
+    font-variation-settings: var(--vf-article);
+}
+
+h3 {
+    font-variation-settings: var(--vf-article);
 }
 
 a {

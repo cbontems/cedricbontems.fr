@@ -1,10 +1,13 @@
 :root {
 	/* Typography */
-	--font-body: "RoslindaleText", var(--font-sans);
-	--font-display: "RoslindaleDisplayCondensed", var(--font-sans);
+	--font-body: "Roslindale Variable", var(--font-serif);
+	--font-display: "Roslindale Variable", var(--font-sans);
 	--font-code: "Input Cipher Web", var(--font-mono);
 	--lineheight-display: 1em;
 	--lineheight-body: 1.5em;
+	--vf-text: "wght" 425, "wdth" 100, "opsz" 10;
+	--vf-article: "wght" 650, "wdth" 90, "opsz" 32;
+	--vf-cover: "wght" 750, "wdth" 75, "opsz" 48;
 
 	/* Borders */
 	--radius: var(--radius-2);
