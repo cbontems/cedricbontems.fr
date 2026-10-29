@@ -1,5 +1,5 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getCollection, render, type CollectionEntry } from "astro:content";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import MarkDownContent from "~/components/MarkDownContent.astro";
 import PostTitle from "~/components/PostTitle.astro";
@@ -13,13 +13,13 @@ type Props = {
 export async function getStaticPaths() {
 	const pagesEntries = await getCollection("pages");
 	return pagesEntries.map((page) => ({
-		params: { slug: page.slug },
+		params: { slug: page.id },
 		props: { page },
 	}));
 }
 
 const { page } = Astro.props as Props;
-const { Content, headings, remarkPluginFrontmatter } = await page.render();
+const { Content, headings, remarkPluginFrontmatter } = await render(page);
 const { title, description, publishDate, updateDate } = page.data;
 ---
 

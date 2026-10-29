@@ -1,6 +1,6 @@
 import { format, formatISO } from "date-fns";
-import frLocale from "date-fns/locale/fr";
-import enUsLocale from "date-fns/locale/en-US";
+import frLocale from "date-fns/locale/fr/index.js";
+import enUsLocale from "date-fns/locale/en-US/index.js";
 
 const locales = {
 	en: enUsLocale,

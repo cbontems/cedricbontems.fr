@@ -23,7 +23,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 	// const allLangs = Object.keys(config.locales);
 	//   return allLangs.flatMap((lang) => {
 	//     const filteredPosts = sortedPosts.filter((post) => {
-	//       const [postLang, ..._] = post.slug.split("/");
+	//       const [postLang, ..._] = post.id.split("/");
 	//       return postLang === lang;
 	//     });
 	//     return paginate(filteredPosts, {
