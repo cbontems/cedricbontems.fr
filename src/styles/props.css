@@ -1,51 +1,99 @@
 :root {
 	/* Typography */
+
 	--font-body: "Roslindale Variable", var(--font-serif);
 	--font-display: "Roslindale Variable", var(--font-sans);
 	--font-code: "Input Cipher Web", var(--font-mono);
+
 	--lineheight-display: 1em;
 	--lineheight-body: 1.5em;
+
 	--vf-text: "wght" 425, "wdth" 100, "opsz" 10;
 	--vf-article: "wght" 650, "wdth" 90, "opsz" 32;
 	--vf-cover: "wght" 750, "wdth" 75, "opsz" 48;
 
 	/* Borders */
+
 	--radius: var(--radius-2);
 	--border: var(--border-size-2);
 	--outline: var(--border-size-3);
 
-	/* Colors */
-	--neon-red: var(--red-6);
-	--neon-cyan: cyan;
-	--neon-pink: #ff1493;
-	--neon-purple: var(--purple-6);
-	--neon-purple-on-dark: #9461fd;
-	--neon-blue: #2dd9fe;
-	--neon-green: var(--lime-6);
-	--neon-orange: var(--orange-6);
-	--neon-yellow: var(--yellow-3);
+	/* ==================================================
+       Industrial Editorial Palette (sRGB fallback)
+       ================================================== */
+
+	/* Materials */
+
+	--graphite: #111110;
+	--fonte: #1a1a18;
+	--acier: #272623;
+	--acier-clair: #3c3934;
+
+	--beton-fonce: #514d46;
+	--beton: #817a6f;
+	--beton-clair: #c3beb6;
+
+	--papier: #f1eee8;
+
+	--papier-vieilli: #ece8e2;
+	--beton-pale: #ddd7cf;
+	--beton-chaud: #c6bfb6;
+
+	/* Signals */
+
+	--signal-orange: hsl(23 100% 50%);
+	--signal-red: hsl(8 92% 48%);
+	--signal-yellow: hsl(49 100% 56%);
+	--signal-green: hsl(136 74% 40%);
+	--signal-blue: hsl(214 100% 55%);
+
+	/* Semantic status */
+
+	--status-info: var(--signal-blue);
+	--status-success: var(--signal-green);
+	--status-warning: var(--signal-yellow);
+	--status-danger: var(--signal-red);
+
+	/* Print */
+
+	--encre: #111111;
+	--encre-secondaire: #444444;
+
+	--papier-print: #ffffff;
+	--papier-print-secondaire: #faf8f4;
+	--papier-print-tertiaire: #ece9e3;
+	--papier-print-quaternaire: #d7d2c8;
+
+	/* ==================================================
+       Wide Gamut / P3 / HDR
+       ================================================== */
 
 	@media (dynamic-range: high) or (color-gamut: p3) {
-		@supports (color: color(display-p3 0 0 0)) {
-			--neon-red: color(display-p3 1 0 0);
-			--neon-cyan: color(display-p3 0 0.75 1);
-			--neon-pink: color(display-p3 1 0 1);
-			--neon-purple: color(display-p3 0.5 0 1);
-			--neon-purple-on-dark: color(display-p3 0.5 0.35 1);
-			--neon-blue: color(display-p3 0 0 1);
-			--neon-green: color(display-p3 0 1 0);
-			--neon-orange: color(display-p3 1 0.5 0);
-			--neon-yellow: color(display-p3 1 1 0);
-		}
-	}
-}
-*,
-*::before,
-*::after {
-	--neon: hsl(var(--neon-h) 100% var(--neon-l));
-	@media (dynamic-range: high) or (color-gamut: p3) {
-		@supports (color: oklch(0% 0 0)) {
-			--neon: oklch(var(--neon-l) 0.3 var(--neon-h));
+		@supports (color: oklch(0 0 0)) {
+			/* Materials */
+
+			--graphite: oklch(0.17 0.005 85);
+			--fonte: oklch(0.22 0.006 85);
+			--acier: oklch(0.3 0.007 85);
+			--acier-clair: oklch(0.4 0.008 85);
+
+			--beton-fonce: oklch(0.48 0.01 85);
+			--beton: oklch(0.62 0.012 85);
+			--beton-clair: oklch(0.82 0.01 85);
+
+			--papier: oklch(0.95 0.01 90);
+
+			--papier-vieilli: oklch(0.92 0.012 90);
+			--beton-pale: oklch(0.86 0.012 88);
+			--beton-chaud: oklch(0.78 0.013 88);
+
+			/* Signals */
+
+			--signal-orange: oklch(0.7 0.24 45);
+			--signal-red: oklch(0.63 0.25 28);
+			--signal-yellow: oklch(0.9 0.18 103);
+			--signal-green: oklch(0.8 0.19 145);
+			--signal-blue: oklch(0.67 0.22 255);
 		}
 	}
 }

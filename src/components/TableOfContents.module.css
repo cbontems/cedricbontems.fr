@@ -20,23 +20,23 @@
 		text-decoration: none;
 	}
 	&:hover:not(.active) {
-		border-inline-start-color: var(--neon);
+		border-inline-start-color: var(--signal);
 		box-shadow:
-			inset calc(1.25 * var(--border)) 0 0 0 var(--neon),
-			calc(-1.25 * var(--border)) 0 0 0 var(--neon);
+			inset calc(1.25 * var(--border)) 0 0 0 var(--signal),
+			calc(-1.25 * var(--border)) 0 0 0 var(--signal);
 		& a {
-			color: var(--neon);
+			color: var(--signal);
 		}
 	}
 }
 
 .active {
-	border-color: var(--neon);
-	/* border-block-color: var(--neon); */
+	border-color: var(--signal);
+	/* border-block-color: var(--signal); */
 	border-inline-start-style: solid;
 	box-shadow:
-		inset var(--border) 0 0 0 var(--neon),
-		calc(-1 * var(--border)) 0 0 0 var(--neon);
+		inset var(--border) 0 0 0 var(--signal),
+		calc(-1 * var(--border)) 0 0 0 var(--signal);
 	font-weight: 700;
 	@media (forced-colors: active) {
 		border-color: LinkText;

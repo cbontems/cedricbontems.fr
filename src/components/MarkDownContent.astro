@@ -46,7 +46,7 @@
 			}
 
 			& :global(::marker) {
-				color: var(--neon);
+				color: var(--signal);
 				font-family: var(--font-display);
 			}
 			& :global(:is(ol, ul)) {
@@ -61,7 +61,7 @@
 				margin: 0;
 				padding: 0;
 				&::before {
-					color: var(--neon);
+					color: var(--signal);
 					display: block;
 					font-family: "RoslindaleDisplay";
 					font-weight: 900;
@@ -299,15 +299,15 @@
 					padding: 0;
 					margin: 0;
 					inset-inline-end: 0;
-					color: var(--neon);
+					color: var(--signal);
 					text-decoration: none;
 					font-style: normal;
 					border: var(--border) solid transparent;
 					border-radius: var(--radius-round);
 					&:hover {
-						background-color: var(--neon);
+						background-color: var(--signal);
 						color: var(--surface-1);
-						border-color: var(--neon);
+						border-color: var(--signal);
 					}
 					@media (--lg-n-above) {
 						inset-block-start: 25%;
@@ -325,10 +325,10 @@
 			& :global(a:not(.anchor-link, :where(.not-content *))) {
 				--_thickness: 0.1em;
 				--_offset: 0.25em;
-				color: var(--neon);
+				color: var(--signal);
 				font-style: italic;
 				text-decoration: underline;
-				text-decoration-color: var(--neon);
+				text-decoration-color: var(--signal);
 				text-decoration-thickness: var(--_thickness);
 				text-underline-offset: var(--_offset);
 				transition:
@@ -364,13 +364,13 @@
 			}
 			/* Styling blocquotes */
 			& :global(blockquote:not(:where(.not-content *))) {
-				border-inline-start: var(--border) solid var(--neon);
+				border-inline-start: var(--border) solid var(--signal);
 				padding-inline-start: 1rem;
 			}
 
 			/* Styling custom Asides */
 			& :global(.aside:not(:where(.not-content *))) {
-				--asides-text-accent: var(--neon);
+				--asides-text-accent: var(--signal);
 				padding: 1rem;
 				border-inline-start: var(--border) solid;
 				color: var(--text-1);
@@ -385,24 +385,24 @@
 				}
 			}
 			& :global(.aside--note:not(:where(.not-content *))) {
-				--neon-h: 240;
-				--neon-l: 50%;
+				--signal-h: 240;
+				--signal-l: 50%;
 			}
 			& :global(.aside--tip:not(:where(.not-content *))) {
-				--neon-h: 310;
-				--neon-l: 50%;
+				--signal-h: 310;
+				--signal-l: 50%;
 			}
 			& :global(.aside--caution:not(:where(.not-content *))) {
-				--neon-h: 100;
-				--neon-l: 50%;
+				--signal-h: 100;
+				--signal-l: 50%;
 			}
 			& :global(.aside--danger:not(:where(.not-content *))) {
-				--neon-h: 25;
-				--neon-l: 50%;
+				--signal-h: 25;
+				--signal-l: 50%;
 			}
 			& :global(.aside--success:not(:where(.not-content *))) {
-				--neon-h: 145;
-				--neon-l: 50%;
+				--signal-h: 145;
+				--signal-l: 50%;
 			}
 
 			& :global(.aside__title:not(:where(.not-content *))) {
@@ -454,7 +454,7 @@
 				isolation: isolate;
 				margin: 4rem;
 				height: var(--border);
-				background-color: var(--neon);
+				background-color: var(--signal);
 				overflow: visible;
 				&::after {
 					content: "⊙";
@@ -467,7 +467,7 @@
 					block-size: 2rem;
 					line-height: 0;
 					font-weight: bold;
-					color: var(--neon);
+					color: var(--signal);
 					border-radius: 50%;
 					transform: translate(-50%, -50%);
 					background: var(--surface-1);
@@ -476,7 +476,7 @@
 				}
 			}
 
-			& > :global(p) {
+			/* & > :global(p) {
 				text-wrap: pretty;
 				&:first-of-type {
 					&:first-line {
@@ -498,6 +498,73 @@
 						}
 					}
 				}
+			} */
+
+			& > :global(p) {
+				text-wrap: pretty;
+			}
+
+			/*
+			& > :global(p:first-of-type) {
+				color: var(--text-1);
+
+				font-size: 1.125em;
+
+				line-height: 1.6;
+
+				font-variation-settings:
+					"wght" 450,
+					"wdth" 100,
+					"opsz" 14;
+
+				max-inline-size: 48ch;
+
+				margin-block-end: 2rem;
+
+				&:first-line {
+					color: var(--text-1);
+				}
+
+				&:first-letter {
+					float: left;
+					float: inline-start;
+
+					font-size: 2lh;
+
+					line-height: 0.85;
+
+					margin-inline-end: 0.5rem;
+
+					color: var(--signal);
+
+					font-variation-settings:
+						"wght" 750,
+						"wdth" 75,
+						"opsz" 48;
+
+					@supports (initial-letter: 2) {
+						initial-letter: 2;
+						float: none;
+						line-height: 1;
+					}
+				}
+			} */
+
+			& > :global(p:first-of-type) {
+				color: var(--text-1);
+
+				font-size: 1.15em;
+
+				font-variation-settings:
+					"wght" 450,
+					"wdth" 100,
+					"opsz" 14;
+
+				border-inline-start: 3px solid var(--signal);
+
+				padding-inline-start: 2rem;
+
+				max-inline-size: 48ch;
 			}
 
 			& :global(pre) {

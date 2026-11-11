@@ -3,7 +3,7 @@
 	padding: 1rem;
 	border-inline-start: var(--border) solid;
 	color: var(--text-1);
-	--asides-text-accent: var(--neon);
+	--asides-text-accent: var(--signal);
 	border-color: var(--asides-text-accent);
 	background-color: transparent;
 	@supports (color: color-mix(in lab, #fff, #000)) {
@@ -15,24 +15,24 @@
 	}
 }
 .aside--note {
-	--neon-h: 240;
-	--neon-l: 50%;
+	--signal-h: 240;
+	--signal-l: 50%;
 }
 .aside--tip {
-	--neon-h: 310;
-	--neon-l: 50%;
+	--signal-h: 310;
+	--signal-l: 50%;
 }
 .aside--caution {
-	--neon-h: 100;
-	--neon-l: 50%;
+	--signal-h: 100;
+	--signal-l: 50%;
 }
 .aside--danger {
-	--neon-h: 25;
-	--neon-l: 50%;
+	--signal-h: 25;
+	--signal-l: 50%;
 }
 .aside--success {
-	--neon-h: 145;
-	--neon-l: 50%;
+	--signal-h: 145;
+	--signal-l: 50%;
 }
 
 .aside__title {

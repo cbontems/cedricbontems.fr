@@ -14,7 +14,7 @@
 			inline-size: 100%;
 			block-size: 0;
 			& button {
-				--_color: var(--neon);
+				--_color: var(--signal);
 				@media (forced-colors: active) {
 					--_color: LinkText;
 					border-color: LinkText;
@@ -31,7 +31,7 @@
 				&:hover,
 				&:focus-visible {
 					--_color: var(--astro-code-color-background);
-					background-color: var(--neon);
+					background-color: var(--signal);
 					@media (forced-colors: active) {
 						--_color: LinkText;
 					}
@@ -44,20 +44,20 @@
 					margin: 0.5em;
 				}
 				&.clicked {
-					--neon-h: 145;
+					--signal-h: 145;
 				}
 			}
 		}
 
 		.copied {
-			--neon-h: 145;
+			--signal-h: 145;
 			position: absolute;
 			inset-block-start: 0.5em;
 			inset-inline-end: calc(2em + 16px);
 			z-index: 100;
-			background-color: var(--neon);
+			background-color: var(--signal);
 			color: var(--astro-code-color-background);
-			border: 1px solid var(--neon);
+			border: 1px solid var(--signal);
 			border-radius: var(--radius);
 			padding-block: 0.1ch;
 			padding-inline: 1ch;
@@ -72,7 +72,7 @@
 				inline-size: 0;
 				block-size: 0;
 				border-block-start: 5px solid transparent;
-				border-inline-start: 5px solid var(--neon);
+				border-inline-start: 5px solid var(--signal);
 				border-block-end: 5px solid transparent;
 				@media (forced-colors: active) {
 					display: none;

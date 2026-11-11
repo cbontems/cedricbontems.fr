@@ -16,7 +16,7 @@
 }
 /* 
 * {
-    scrollbar-color: var(--neon) transparent;
+    scrollbar-color: var(--signal) transparent;
   }
 
 *::-webkit-scrollbar {
@@ -29,7 +29,7 @@
   }
 
 *::-webkit-scrollbar-thumb {
-    background-color: var(--neon);
+    background-color: var(--signal);
     border-radius: 0px; 
 } */
 
@@ -112,11 +112,11 @@ h1 {
 }
 
 h2 {
-    font-variation-settings: var(--vf-article);
+	font-variation-settings: var(--vf-article);
 }
 
 h3 {
-    font-variation-settings: var(--vf-article);
+	font-variation-settings: var(--vf-article);
 }
 
 a {
